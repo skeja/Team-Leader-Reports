@@ -1,0 +1,48 @@
+{
+  "name": "team-leader-reports",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build": "poi build",
+    "dev": "poi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skeja/Team-Leader-Reports.git"
+  },
+  "author": "Ante Skejic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skeja/Team-Leader-Reports/issues"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8" ],
+
+  "homepage": "https://github.com/skeja/Team-Leader-Reports#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "poi": "^10.1.6"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "express": "^4.16.3",
+    "passport": "^0.4.0",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.37.7",
+    "vue": "^2.5.16"
+  }
+}
