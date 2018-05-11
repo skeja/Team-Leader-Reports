@@ -1,30 +1,36 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
   parserOptions: {
+    parser: 'babel-eslint',
     sourceType: 'module'
   },
 
-  extends: 'standard',
-
-  // plugin for linting .vue files
-  plugins: [
-    'vue'
+  extends: [
+    'standard',
+    'plugin:vue/recommended'
   ],
 
-  "rules": {
-    // allow paren-less arrow fun
-    'allow-parens': 0,
-    // warn if trailing comma
+  // plugin for linting .vue files
+  plugins: [ 'vue' ],
+
+  // add your custom rules here
+  'rules': {
+    // allow paren-less arrow functions
+    'arrow-parens': 0,
+
+    // warn if there is a trailing comma
     'comma-dangle': [1, 'never'],
+
     // allow async-await
     'generator-star-spacing': 0,
-    // semicolon needed
+
+    // semicolons are necessary
     'semi': ['warn', 'always'],
+
     // add space before function parameters
     'space-before-function-paren': ['error', {
       anonymous: 'always',
       named: 'never'
     }]
   }
-};
+}
