@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       }
     },
-    description: DataTypes.STRING,
+    description: DataTypes.TEXT,
     startDate: {
       type: DataTypes.DATE,
       field: 'start_date'

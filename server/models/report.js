@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Report = sequelize.define('report', {
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     createdAt: {
