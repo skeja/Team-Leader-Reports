@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true
   });
 
-  TeamHistory.associate = function ({team, user}) {
+  TeamHistory.associate = function ({ team, user }) {
     this.belongsTo(team, {
       foreignKey: { name: 'teamId', field: 'team_id' }
     });

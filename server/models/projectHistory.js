@@ -22,9 +22,9 @@ module.exports = (sequelize, DataTypes) => {
 
   ProjectHistory.associate = function ({ user, project }) {
     this.belongsTo(user, {
-      foreignKey: {name: 'userId', field: 'user_id'} });
+      foreignKey: { name: 'userId', field: 'user_id' } });
     this.belongsTo(project, {
-      foreignKey: {name: 'projectId', field: 'project_id'} });
+      foreignKey: { name: 'projectId', field: 'project_id' } });
   };
   return ProjectHistory;
 };

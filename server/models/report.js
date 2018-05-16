@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true
   });
 
-  Report.associate = function ({user}) {
+  Report.associate = function ({ user }) {
     this.belongsTo(user, {
       foreignKey: { as: 'reporter', name: 'reporterId', field: 'reporter_id' }
     });

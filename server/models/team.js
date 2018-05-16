@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true
   });
 
-  Team.associate = function ({user, teamHistory}) {
+  Team.associate = function ({ user, teamHistory }) {
     this.hasMany(teamHistory, {
       foreignKey: { name: 'teamId', field: 'team_id' }
     });

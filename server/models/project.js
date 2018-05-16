@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true
   });
 
-  Project.associate = function ({projectHistory}) {
+  Project.associate = function ({ projectHistory }) {
     this.hasMany(projectHistory, {
       foreignKey: { name: 'projectId', field: 'project_id' }
     });
