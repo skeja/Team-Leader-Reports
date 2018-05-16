@@ -7,13 +7,11 @@ const projectHistoryData = require('./projectHistory.json').data;
 const reports = require('./reports.json').data;
 const teamHistoryData = require('./teamHistory.json').data;
 
-async function seedDb() {
+module.exports = async function seedDb() {
   await db.sequelize.sync({ force: true });
   await seed();
   console.log('/////////////////////////////////Seed ended');
 };
-
-seedDb();
 
 async function seed() {
   let models = {};
