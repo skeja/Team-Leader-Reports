@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "firstName": "ivo",
+      "lastName": "ivic",
+      "email": "ivo@ivo.hr",
+      "password": "sifra",
+      "role": "DEVELOPER",
+      "office": "C7"
+    },
+    {
+      "firstName": "mate",
+      "lastName": "matic",
+      "email": "mate@mate.hr",
+      "password": "sifra",
+      "role": "DEVELOPER",
+      "office": "C5"
+    },
+    {
+      "firstName": "sime",
+      "lastName": "simic",
+      "email": "sime@sime.hr",
+      "password": "sifra",
+      "role": "DEVELOPER",
+      "office": "C2"
+    },
+    {
+      "firstName": "luka",
+      "lastName": "lukic",
+      "email": "luka@luka.hr",
+      "password": "sifra",
+      "role": "TEAM_LEAD",
+      "office": "C7"
+    },
+    {
+      "firstName": "pero",
+      "lastName": "peric",
+      "email": "pero@pero.hr",
+      "password": "sifra",
+      "role": "TEAM_LEAD",
+      "office": "C5"
+    },
+    {
+      "firstName": "ante",
+      "lastName": "antic",
+      "email": "ante@ante.hr",
+      "password": "sifra",
+      "role": "TEAM_LEAD",
+      "office": "C2"
+    },
+    {
+      "firstName": "puki",
+      "lastName": "pukic",
+      "email": "puki@puki.hr",
+      "password": "sifra",
+      "role": "ADMIN",
+      "office": "C7"
+    }
+  ]
+}
