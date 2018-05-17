@@ -1,0 +1,22 @@
+{
+  "data": [
+    {
+      "name": "facebook",
+      "description": "Some description",
+      "startDate": "2000-05-25",
+      "endDate": "2017-05-25"
+    },
+    {
+      "name": "google",
+      "description": "This is description",
+      "startDate": "1996-05-25",
+      "endDate": "2020-01-01"
+    },
+    {
+      "name": "youTube",
+      "description": "This description is awesome",
+      "startDate": "2008-06-07",
+      "endDate": "20140-09-17"
+    }
+  ]
+}

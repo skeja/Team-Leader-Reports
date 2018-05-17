@@ -31,6 +31,7 @@ module.exports = {
     'space-before-function-paren': ['error', {
       anonymous: 'always',
       named: 'never'
-    }]
+    }],
+    'object-curly-spacing': ['error', 'always']
   }
 }
