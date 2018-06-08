@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import url('https://use.fontawesome.com/releases/v5.0.13/css/all.css');
+@import './constants';
 
 * {
   box-sizing: border-box;
@@ -10,6 +11,8 @@ body {
   font-weight: 400;
   line-height: 1.5;
   font-family: 'Roboto', sans-serif;
+  margin: 0;
+  background-color: $background-color;
 }
 
 .container {
@@ -52,7 +55,7 @@ body {
     color: white;
     border: 1px solid #ddd;
     padding: 8px;
-    background-color: #4971b2;
+    background-color: $main-color;
   }
   & td {
     border: 1px solid #ddd;
