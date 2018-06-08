@@ -9,9 +9,9 @@ async function login({ body }, res) {
   await db.user.findOne({
     where: { email: body.email }
   }).then(async it => {
-    if (it === null) return res.send('wrong password');
+    if (it === null) return res.send('Email & password combination not found');
     const authenticated = await it.validatePassword(body.password);
-    if (!authenticated) return res.send('Wrong password');
+    if (!authenticated) return res.send('Email & password combination not found');
     const payload = { id: it.id };
     const token = jwt.sign(payload, 'secret');
     const user = {
