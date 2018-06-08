@@ -40,28 +40,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.auth {
+  display: flex;
+  margin-left: auto;
+}
 ul {
   display: flex;
   flex-direction: row;
   list-style-type: none;
-  padding: 0;
-  border-bottom: 1px solid #4971b2;
+  padding: 10px;
+  background: #283648;
+  margin: 0;
+  color: white;
   li {
-    padding: 0 20px;
-    border: 1px solid transparent;
-
+    padding: 10px 20px;
     &:hover {
       cursor: pointer;
-      border-bottom: 1px solid #4971b2;
+      background: rgba(0, 0, 0, 0.336);
     }
 
     &.router-link-exact-active {
-      border-bottom: 1px solid #4971b2;
+      background: rgba(0, 0, 0, 0.336);
     }
   }
-}
-.auth {
-  display: flex;
-  margin-left: auto;
 }
 </style>
