@@ -7,9 +7,13 @@
         to="/login"
         tag="li">Login</router-link>
       <template v-else>
-        <router-link to="/" tag="li"><i class="fa fa-home"></i></router-link>
-        <router-link to="/users" tag="li">Find User</router-link>
-        <router-link to="/newUser" tag="li">Add User</router-link>
+        <router-link
+          to="/"
+          tag="li"
+          exact>
+          <i class="fa fa-home">
+        </i></router-link>
+        <router-link to="/users" tag="li">Users</router-link>
         <li v-if="isAuthenticated" class="auth" >
           <a @click="logout">Logout</a>
         </li>
@@ -61,6 +65,9 @@ ul {
     }
 
     &.router-link-exact-active {
+      background: rgba(0, 0, 0, 0.336);
+    }
+    &.router-link-active {
       background: rgba(0, 0, 0, 0.336);
     }
   }

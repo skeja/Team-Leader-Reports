@@ -45,11 +45,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.center {
-  margin: 10px 20px;
-  padding-top: 20px;
-  border-radius: 0%;
-}
 td {
   &:nth-child(even) {
     color: #4971b2;

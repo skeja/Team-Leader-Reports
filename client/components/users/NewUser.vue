@@ -160,7 +160,7 @@ export default {
       axios.post('/newUser', this.newUser)
         .then(response => {
           console.log(response);
-          this.$router.push('/');
+          this.$router.push('/users');
         });
     }
   },
