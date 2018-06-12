@@ -57,6 +57,7 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.37.7",
     "vue": "^2.5.16",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuelidate": "^0.7.4"
   }
 }
