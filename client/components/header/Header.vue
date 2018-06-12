@@ -9,6 +9,7 @@
       <template v-else>
         <router-link to="/" tag="li"><i class="fa fa-home"></i></router-link>
         <router-link to="/users" tag="li">Find User</router-link>
+        <router-link to="/newUser" tag="li">Add User</router-link>
         <li v-if="isAuthenticated" class="auth" >
           <a @click="logout">Logout</a>
         </li>
