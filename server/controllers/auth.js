@@ -23,23 +23,6 @@ async function login({ body }, res) {
     .catch(err => console.log(err));
 }
 
-async function findOne({ body }, res) {
-  db.user.findAll({
-    where: {
-      $and: [ { firstName: { $like: `${body.firstName}%` } }, { lastName: { $like: `${body.lastName}%` } } ]
-    }
-  }).then(it => res.send(it))
-    .catch(err => console.log(err));
-}
-
-async function findById({ body }, res) {
-  db.user.findOne({
-    where: { id: body.id }
-  }).then(it => res.send(it));
-}
-
 module.exports = {
-  login,
-  findOne,
-  findById
+  login
 };
