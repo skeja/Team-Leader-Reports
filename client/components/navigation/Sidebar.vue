@@ -3,6 +3,7 @@
     <ul>
       <router-link to="/users/findUser" tag="li">Find User</router-link>
       <router-link to="/users/newUser" tag="li">Create User</router-link>
+      <router-link to="/users/updateUser" tag="li">Update User</router-link>
     </ul>
   </div>
 </template>

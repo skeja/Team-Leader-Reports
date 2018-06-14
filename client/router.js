@@ -7,6 +7,7 @@ import FindUser from './components/users/FindUsers.vue';
 import User from './components/users/User.vue';
 import Login from './components/auth/Login.vue';
 import NewUser from './components/users/NewUser.vue';
+import UpdateUser from './components/users/UpdateUser.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,9 @@ const routes = [
     }, {
       path: 'newUser',
       component: NewUser
+    }, {
+      path: 'updateUser',
+      component: UpdateUser
     }, {
       path: ':userId',
       component: User

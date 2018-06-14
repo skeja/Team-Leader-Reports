@@ -11,9 +11,9 @@
           to="/"
           tag="li"
           exact>
-          <i class="fa fa-home">
-        </i></router-link>
-        <router-link to="/users" tag="li">Users</router-link>
+          TL;DR
+        </router-link>
+        <router-link to="/users/findUser" tag="li">Users</router-link>
         <li v-if="isAuthenticated" class="auth" >
           <a @click="logout">Logout</a>
         </li>
@@ -49,6 +49,7 @@ export default {
   display: flex;
   margin-left: auto;
 }
+
 ul {
   display: flex;
   flex-direction: row;
