@@ -159,8 +159,7 @@ export default {
     submit() {
       axios.post('/newUser', this.newUser)
         .then(response => {
-          console.log(response);
-          this.$router.push('/users');
+          this.$router.push('/users/findUser');
         });
     }
   },
@@ -197,35 +196,10 @@ export default {
 <style lang="scss" scoped>
 input:focus {
   outline: none;
-  border-color: rgb(167, 165, 165);
+  border-color: #a7a5a5;
   .form__error & {
     border-color: #f79483;
   }
-}
-.form {
-  width: 20vw;
-}
-.form__group {
-  margin-bottom: 2rem;
-}
-.form__label {
-  font-size: 0.8rem;
-  margin-bottom: 0.3rem;
-  margin-left: 0.8rem;
-  display: block;
-}
-.form__input {
-  font-size: 0.875rem;
-  // font-weight: 300;
-  line-height: 2rem;
-  min-height: 2rem;
-  position: relative;
-  border: 1px solid #e8e8e8;
-  border-radius: 5px;
-  background: #fff;
-  padding: 0 0.8rem;
-  width: 100%;
-  box-sizing: border-box;
 }
 .error {
   color:#f57f6c;
@@ -234,13 +208,8 @@ input:focus {
   margin-left: 14px;
   margin-top: -1.6rem;
   margin-bottom: 0.475rem;
-  .form__error & {
+  &.form__error {
     display: block;
   }
-}
-.form__error {
-  display: block;
-  color: #f57f6c;
-  border-color: #f79483;
 }
 </style>

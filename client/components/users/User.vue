@@ -37,7 +37,6 @@ export default {
   created() {
     axios.post(`/users/${this.id}`, { id: this.id })
       .then(response => {
-        console.log(response);
         this.user = response.data;
       });
   }

@@ -50,7 +50,6 @@ export default {
     submit: debounce(function () {
       axios.post('/users', this.user)
         .then(response => {
-          console.log(response);
           if (typeof response.data === 'string') {
             this.message = response.data;
           } else {
@@ -60,7 +59,6 @@ export default {
         });
     }, 500),
     selected(it) {
-      console.log(it);
       this.$router.push(`/users/${it.id}`);
     }
   }
