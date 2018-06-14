@@ -52,6 +52,7 @@ export default {
   },
   methods: {
     deleteUser() {
+      if (!confirm('Deleting user')) return;
       axios.delete(`/users/${this.id}`)
         .then(
           this.$router.push('/users/findUser')
