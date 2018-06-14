@@ -111,8 +111,18 @@
           </div>
 
           <div class="form__buttons">
-            <button :disabled="$v.$invalid" type="submit">Submit</button>
-            <button type="button" @click="setUpdatedUser">Reset</button>
+            <button
+              :disabled="$v.$invalid"
+              class="button"
+              type="submit">
+              Submit
+            </button>
+            <button
+              class="button"
+              type="button"
+              @click="setUpdatedUser">
+              Reset
+            </button>
           </div>
         </form>
       </div>
