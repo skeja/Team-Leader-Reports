@@ -133,7 +133,10 @@
           {{ $v.newUser.office.$params.minLength.min }} letters.
         </div>
 
-        <button :disabled="$v.$invalid" type="submit">Submit</button>
+        <button
+          :disabled="$v.$invalid"
+          class="button"
+          type="submit">Submit</button>
       </form>
     </div>
   </div>

@@ -43,10 +43,17 @@ async function update({ body }, res) {
   );
 }
 
+async function remove({ params }, res) {
+  db.user.destroy(
+    { where: { id: params.id } }
+  );
+}
+
 module.exports = {
   create,
   findAll,
   findOne,
   findById,
-  update
+  update,
+  remove
 };
