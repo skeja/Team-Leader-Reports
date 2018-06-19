@@ -26,12 +26,20 @@
             @focus="focus.password = true"
             @blur="focus.password = false">
         </div>
-        <button class="login-submit" type="submit">Submit</button>
-        <div v-show="message" class="warning">
-          {{ message }}
-        </div>
+        <button
+          :disabled="isEmpty"
+          class="button"
+          type="submit">Submit</button>
       </form>
     </div>
+    <transition name="slide-fade">
+      <div
+        v-show="toggle"
+        class="warning"
+        @click="toggle = !toggle">
+        {{ message }}
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -46,8 +54,15 @@ export default {
         password: false
       },
       user: {},
-      message: ''
+      message: '',
+      toggle: false
     };
+  },
+  computed: {
+    isEmpty() {
+      if (this.user.email && this.user.password) return false;
+      return true;
+    }
   },
   mounted() {
     this.$refs.emailInput.focus();
@@ -56,17 +71,18 @@ export default {
     submit() {
       axios.post('/login', this.user)
         .then(response => {
-          console.log(response);
           if (typeof response.data === 'string') {
             this.message = response.data;
+            this.toggle = true;
             return;
           }
           localStorage.setItem('user', JSON.stringify(response.data));
-          const a = JSON.parse(localStorage.getItem('user'));
-          console.log(a);
-          location.reload();
           this.$router.push('/');
+          location.reload();
         });
+    },
+    showMessage() {
+      this.message = false;
     }
   }
 };
@@ -76,10 +92,14 @@ export default {
 @import '../../style/constants';
 
 .warning {
-    color: rgb(226, 2, 13);
-    background-color: rgb(248, 171, 171);
-    padding: 10px;
-    border-radius: 10px;
+  position: absolute;
+  top: 10%;
+  right: 1%;
+  cursor: pointer;
+  color: rgb(226, 2, 13);
+  background-color: rgb(248, 171, 171);
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .cont {
@@ -90,6 +110,7 @@ export default {
   text-align: center;
   min-height: 90vh;
 }
+
 .login {
   position: relative;
   height: 100%;
@@ -97,10 +118,13 @@ export default {
   top: 25%;
   margin: auto;
   background: rgba(216, 217, 224, 0.582);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 .login-msg {
   width: 100;
 }
+
 .login-form {
   position: relative;
   left: 0;
@@ -108,6 +132,7 @@ export default {
   height: 100%;
   padding: 1.5rem 3rem;
 }
+
 .login-item {
   display: inline-flex;
   height: 4rem;
@@ -122,6 +147,7 @@ export default {
     i { color: $alt-color }
   }
 }
+
 .login-input {
   width: 100%;
   height: 100%;
@@ -130,22 +156,44 @@ export default {
   border: none;
   background-color: transparent;
 }
+
 .login-submit {
   width: 100%;
   height: 2rem;
   margin: 2rem 0 1rem;
   color: white;
-  background: darkslategray;
+  background: $main-color;
   font-size: 1rem;
   border-radius: 2rem;
   cursor: pointer;
 }
+
+.button {
+  font-size: 1rem;
+  margin: 2rem 0 1rem;
+}
+
 input:focus {
   outline: none;
 }
+
 i {
   position: absolute;
   padding-top: 5%;
   color: gray;
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
