@@ -23,7 +23,8 @@
           <td>{{ user.office }}</td>
         </tr>
       </table>
-      <div class="button-delete">
+      <div class="buttons">
+        <button class="button" @click="goBack">Back</button>
         <button
           class="button"
           type="button"
@@ -57,6 +58,9 @@ export default {
         .then(
           this.$router.push('/users/findUser')
         );
+    },
+    goBack() {
+      window.history.back();
     }
   }
 };
@@ -70,9 +74,14 @@ td {
   }
   width: 50vw;
 }
-.button-delete {
-  margin-left: auto;
-  margin-top: 1rem;
-  padding-right: 2rem;
+
+.buttons {
+  padding: 1%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.button {
+  max-width: 10rem;
 }
 </style>

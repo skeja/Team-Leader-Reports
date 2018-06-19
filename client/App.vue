@@ -10,10 +10,6 @@ import Header from './components/navigation/Header.vue';
 export default {
   components: {
     Header
-  },
-  data() {
-    return {
-    };
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <nav>
-    <ul class="nav">
+  <nav class="navigation">
+    <ul class="nav horizontal">
       <router-link
         v-if="!isAuthenticated"
         class="auth"
@@ -10,10 +10,16 @@
         <router-link
           to="/"
           tag="li"
-          exact>
-          TL;DR
+          exact
+          exact-active-class="highlighted">
+          <i class="fa fa-home"></i>
         </router-link>
-        <router-link to="/users/findUser" tag="li">Users</router-link>
+        <router-link
+          to="/users"
+          tag="li"
+          active-class="highlighted">
+          Users
+        </router-link>
         <li v-if="isAuthenticated" class="auth" >
           <a @click="logout">Logout</a>
         </li>
@@ -24,11 +30,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-
-    };
-  },
   computed: {
     isAuthenticated() {
       return JSON.parse(localStorage.getItem('user')) !== null;
@@ -37,7 +38,6 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem('user');
-      this.$router.push('/');
       location.reload();
     }
   }
@@ -48,29 +48,5 @@ export default {
 .auth {
   display: flex;
   margin-left: auto;
-}
-
-ul {
-  display: flex;
-  flex-direction: row;
-  list-style-type: none;
-  padding: 10px;
-  background: #283648;
-  margin: 0;
-  color: white;
-  li {
-    padding: 10px 20px;
-    &:hover {
-      cursor: pointer;
-      background: rgba(0, 0, 0, 0.336);
-    }
-
-    &.router-link-exact-active {
-      background: rgba(0, 0, 0, 0.336);
-    }
-    &.router-link-active {
-      background: rgba(0, 0, 0, 0.336);
-    }
-  }
 }
 </style>

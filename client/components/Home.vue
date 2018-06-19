@@ -8,6 +8,6 @@
 
 <style lang="scss" scoped>
 .center {
-border-radius: 0;
+  border-radius: 0;
 }
 </style>

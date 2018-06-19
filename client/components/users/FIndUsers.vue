@@ -42,8 +42,7 @@ export default {
   data() {
     return {
       user: { firstName: '', lastName: '' },
-      foundUsers: [],
-      message: ''
+      foundUsers: []
     };
   },
   methods: {
@@ -51,10 +50,8 @@ export default {
       axios.post('/users', this.user)
         .then(response => {
           if (typeof response.data === 'string') {
-            this.message = response.data;
           } else {
             this.foundUsers = response.data;
-            this.message = false;
           }
         });
     }, 500),
@@ -71,9 +68,11 @@ export default {
   flex-direction: row;
   justify-content: space-around;
 }
+
 div.lastName {
   padding-left: 1vw;
 }
+
 td {
   cursor: pointer;
 }

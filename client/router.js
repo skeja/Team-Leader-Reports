@@ -17,7 +17,7 @@ const routes = [
   { path: '/users',
     component: Users,
     children: [{
-      path: 'findUser',
+      path: '',
       component: FindUser
     }, {
       path: 'newUser',
