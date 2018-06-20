@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
-const passport = require('./server/auth/');
 const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-const path = require('path');
 const cors = require('cors');
+const dotenv = require('dotenv');
+const passport = require('./server/auth/');
+const path = require('path');
+
 dotenv.config();
 
 app.use(passport.initialize());
@@ -16,10 +17,13 @@ app.use(cors({ origin: true }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-const seedDb = require('./server/seed');
-seedDb();
+require('./server/seed')(app);
 
 require('./server/api')(app);
+
+app.use((err, req, res, next) => {
+  res.status(500).send(err.message);
+});
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('Running at 3000');

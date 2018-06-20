@@ -19,8 +19,7 @@ async function login({ body }, res) {
       token: token
     };
     res.send(user);
-  })
-    .catch(err => console.log(err));
+  });
 }
 
 module.exports = {

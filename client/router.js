@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Home from './components/Home.vue';
-import Users from './components/users/Users.vue';
 import FindUser from './components/users/FindUsers.vue';
-import User from './components/users/User.vue';
+import Home from './components/Home.vue';
 import Login from './components/auth/Login.vue';
 import NewUser from './components/users/NewUser.vue';
 import UpdateUser from './components/users/UpdateUser.vue';
+import User from './components/users/User.vue';
+import Users from './components/users/Users.vue';
 
 Vue.use(VueRouter);
 
