@@ -2,99 +2,89 @@
   <form
     class="form"
     @submit.prevent="$emit('submitUser', user);">
+
     <div
-      :class="{ form__error: $v.user.firstName.$error }"
+      :class="{ form__error: firstName.$error }"
       class="form__group">
-      <label
-        class="form__label">First name</label>
+      <label class="form__label">First name</label>
       <input
-        v-model="$v.user.firstName.$model"
+        v-model="firstName.$model"
         class="form__input"
         type="text">
     </div>
     <div
-      v-if="!$v.user.firstName.required"
-      :class="{ form__error: $v.user.firstName.$error }"
+      v-if="firstName.$error && !firstName.required"
       class="error">Field is required.
     </div>
     <div
-      v-if="!$v.user.firstName.minLength"
-      :class="{ form__error: $v.user.firstName.$error }"
+      v-if="firstName.$error && !firstName.minLength"
       class="error">Name must have at least
-      {{ $v.user.firstName.$params.minLength.min }} letters.
+      {{ firstName.$params.minLength.min }} letters.
     </div>
+
     <div
-      :class="{ form__error: $v.user.lastName.$error }"
+      :class="{ form__error: lastName.$error }"
       class="form__group">
-      <label
-        :class="{ form__error: $v.user.lastName.$error }"
-        class="form__label">Last name</label>
+      <label class="form__label">Last name</label>
       <input
-        v-model="$v.user.lastName.$model"
+        v-model="lastName.$model"
         class="form__input"
         type="text">
     </div>
     <div
-      v-if="!$v.user.lastName.required"
-      :class="{ form__error: $v.user.lastName.$error }"
+      v-if="lastName.$error && !lastName.required"
       class="error">Field is required.
     </div>
     <div
-      v-if="!$v.user.lastName.minLength"
-      :class="{ form__error: $v.user.lastName.$error }"
+      v-if="lastName.$error && !lastName.minLength"
       class="error">Name must have at least
-      {{ $v.user.lastName.$params.minLength.min }} letters.
+      {{ lastName.$params.minLength.min }} letters.
     </div>
+
     <div
-      :class="{ form__error: $v.user.email.$error }"
+      :class="{ form__error: email.$error }"
       class="form__group">
-      <label
-        :class="{ form__error: $v.user.email.$error }"
-        class="form__label">Email</label>
+      <label class="form__label">Email</label>
       <input
-        v-model="$v.user.email.$model"
+        v-model="email.$model"
         class="form__input"
         type="email">
     </div>
     <div
-      v-if="!$v.user.email.required"
-      :class="{ form__error: $v.user.email.$error }"
+      v-if="email.$error && !email.required"
       class="error">Field is required.
     </div>
     <div
-      v-if="!$v.user.email.email"
-      :class="{ form__error: $v.user.email.$error }"
+      v-if="email.$error && !email.email"
       class="error">Email format not correct
     </div>
+
     <div v-if="!updatedUser">
       <div
-        :class="{ form__error: $v.user.password.$error }"
+        :class="{ form__error: password.$error }"
         class="form__group">
-        <label
-          :class="{ form__error: $v.user.password.$error }"
-          class="form__label">Password</label>
+        <label class="form__label">Password</label>
         <input
-          v-model="$v.user.password.$model"
+          v-model="password.$model"
           class="form__input"
           type="password">
       </div>
       <div
-        v-if="!$v.user.password.required"
-        :class="{ form__error: $v.user.password.$error }"
+        v-if="password.$error && !password.required"
         class="error">Field is required.
       </div>
       <div
-        v-if="!$v.user.password.minLength"
-        :class="{ form__error: $v.user.password.$error }"
+        v-if="password.$error && !password.minLength"
         class="error">Name must have at least
-        {{ $v.user.password.$params.minLength.min }} letters.
+        {{ password.$params.minLength.min }} letters.
       </div>
     </div>
+
     <div
       class="form__group">
       <label
         class="form__label">Role</label>
-      <select v-model="$v.user.role.$model">
+      <select v-model="role.$model">
         <option
           value=""
           selected
@@ -106,27 +96,24 @@
       </select>
     </div>
     <div
-      :class="{ form__error: $v.user.office.$error }"
+      :class="{ form__error: office.$error }"
       class="form__group">
-      <label
-        :class="{ form__error: $v.user.office.$error }"
-        class="form__label">Office</label>
+      <label class="form__label">Office</label>
       <input
-        v-model="$v.user.office.$model"
+        v-model="office.$model"
         class="form__input"
         type="text">
     </div>
     <div
-      v-if="!$v.user.office.required"
-      :class="{ form__error: $v.user.office.$error }"
+      v-if="office.$error && !office.required"
       class="error">Field is required.
     </div>
     <div
-      v-if="!$v.user.office.minLength"
-      :class="{ form__error: $v.user.office.$error }"
+      v-if="office.$error && !office.minLength"
       class="error">Name must have at least
-      {{ $v.user.office.$params.minLength.min }} letters.
+      {{ office.$params.minLength.min }} letters.
     </div>
+
     <div class="form__buttons">
       <button
         :disabled="$v.$invalid"
@@ -186,6 +173,26 @@ export default {
       }
     };
   },
+  computed: {
+    firstName() {
+      return this.$v.user.firstName;
+    },
+    lastName() {
+      return this.$v.user.lastName;
+    },
+    email() {
+      return this.$v.user.email;
+    },
+    password() {
+      return this.$v.user.password;
+    },
+    role() {
+      return this.$v.user.role;
+    },
+    office() {
+      return this.$v.user.office;
+    }
+  },
   created() {
     if (this.updatedUser) this.user = { ...this.updatedUser };
   },
@@ -224,14 +231,9 @@ input:focus {
 .error {
   color:#f57f6c;
   font-size: 0.75rem;
-  display: none;
   margin-left: 14px;
   margin-top: -1.6rem;
   margin-bottom: 0.475rem;
-
-  &.form__error {
-    display: block;
-  }
 }
 
 .form__buttons {

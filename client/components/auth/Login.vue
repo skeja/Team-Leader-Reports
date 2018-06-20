@@ -60,8 +60,7 @@ export default {
   },
   computed: {
     isEmpty() {
-      if (this.user.email && this.user.password) return false;
-      return true;
+      return !this.user.email || !this.user.password;
     }
   },
   mounted() {

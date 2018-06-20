@@ -47,9 +47,7 @@ export default {
   methods: {
     submit(user) {
       axios.put(`/users/${this.selected.id}`, user)
-        .then(
-          this.$router.push('/users')
-        );
+        .then(response => this.$router.push('/users'));
     }
   }
 };

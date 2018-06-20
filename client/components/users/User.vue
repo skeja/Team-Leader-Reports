@@ -55,12 +55,10 @@ export default {
     deleteUser() {
       if (!confirm('Deleting user')) return;
       axios.delete(`/users/${this.id}`)
-        .then(
-          this.$router.push('/users/findUser')
-        );
+        .then(response => this.$router.push('/users/findUser'));
     },
     goBack() {
-      window.history.back();
+      this.$router.push('/users');
     }
   }
 };

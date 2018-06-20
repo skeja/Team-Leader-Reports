@@ -1,52 +1,43 @@
-const omit = require('lodash/omit');
 const db = require('../models');
+const omit = require('lodash/omit');
 
-async function create({ body }, res) {
-  const user = await db.user.create(body);
-  res.send(user);
+function create({ body }, res) {
+  return db.user.create(body).then(user => res.send(user));
 }
 
-async function findAll(req, res) {
-  const users = await db.user.findAll({});
-  let omitedUsers = [];
-  users.map(it => {
-    omitedUsers.push(omit(it.dataValues, 'password'));
-  });
-  res.send(omitedUsers);
+function findAll(req, res) {
+  return db.user.findAll()
+    .then(users => users.map(it => omit(it.dataValues, 'password')))
+    .then(users => res.send(users));
 }
 
-async function findOne({ body }, res) {
-  db.user.findAll({
-    where: {
-      $and: [ { firstName: { $ilike: `${body.firstName}%` } }, { lastName: { $ilike: `${body.lastName}%` } } ]
-    }
-  }).then(it => res.send(it))
-    .catch(err => console.log(err));
+function findOne({ body: { firstName, lastName } }, res) {
+  const where = {
+    $and: [{ firstName: { $ilike: `${firstName}%` } }, { lastName: { $ilike: `${lastName}%` } }]
+  };
+  return db.user.findAll({ where }).then(user => res.send(user));
 }
 
-async function findById({ body }, res) {
-  db.user.findOne({
-    where: { id: body.id }
-  }).then(it => res.send(it));
+function findById({ body: { id } }, res) {
+  return db.user.findOne({ where: { id } })
+    .then(it => res.send(it));
 }
 
-async function update({ body }, res) {
-  db.user.update(
-    {
-      firstName: body.firstName,
-      lastName: body.lastName,
-      email: body.email,
-      role: body.role,
-      office: body.office
-    },
-    { where: { id: body.id } }
-  );
+function update({ body }, res) {
+  return db.user.update({
+    firstName: body.firstName,
+    lastName: body.lastName,
+    email: body.email,
+    role: body.role,
+    office: body.office
+  }, { where: { id: body.id } })
+    .then(user => res.send(user));
 }
 
-async function remove({ params }, res) {
-  db.user.destroy(
+function remove({ params }, res) {
+  return db.user.destroy(
     { where: { id: params.id } }
-  );
+  ).then(it => res.send(it));
 }
 
 module.exports = {
