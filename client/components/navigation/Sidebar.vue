@@ -15,19 +15,8 @@
 
 <script>
 export default {
-  computed: {
-    routes() {
-      return [{
-        to: '/users',
-        label: 'Find User'
-      }, {
-        to: '/users/newUser',
-        label: 'Create User'
-      }, {
-        to: '/users/updateUser',
-        label: 'Update User'
-      }];
-    }
+  props: {
+    routes: { type: Array, default: null }
   }
 };
 </script>
