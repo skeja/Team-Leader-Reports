@@ -20,6 +20,12 @@
           active-class="highlighted">
           Users
         </router-link>
+        <router-link
+          to="/reports"
+          tag="li"
+          active-class="highlighted">
+          Reports
+        </router-link>
         <li v-if="isAuthenticated" class="auth" >
           <a @click="logout">Logout</a>
         </li>
