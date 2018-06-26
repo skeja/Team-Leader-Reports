@@ -24,7 +24,7 @@
         </tr>
       </table>
       <div class="buttons">
-        <button class="button" @click="goBack">Back</button>
+        <button class="button" @click="goToList">Go to list</button>
         <button
           class="button"
           type="button"
@@ -57,7 +57,7 @@ export default {
       axios.delete(`/users/${this.id}`)
         .then(response => this.$router.push('/users/findUser'));
     },
-    goBack() {
+    goToList() {
       this.$router.push('/users');
     }
   }
