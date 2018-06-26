@@ -1,3 +1,9 @@
+const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const saltRounds = parseInt(process.env.SALT_ROUNDS);
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
     firstName: {
@@ -27,7 +33,19 @@ module.exports = (sequelize, DataTypes) => {
     office: DataTypes.STRING
   }, {
     timestamps: true
+  }
+  );
+
+  User.beforeCreate((user, options) => {
+    return bcrypt.hash(user.password, saltRounds)
+      .then(hash => {
+        user.password = hash;
+      });
   });
+
+  User.prototype.validatePassword = function (password) {
+    return bcrypt.compare(password, this.password);
+  };
 
   User.associate = function ({ projectHistory, team, teamHistory, report }) {
     this.hasMany(projectHistory, {

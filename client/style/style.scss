@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+@import url('https://use.fontawesome.com/releases/v5.0.13/css/all.css');
+@import './constants';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  background-color: $background-color;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  position: relative;
+}
+
+.center {
+  border: solid 1px #eff3f9;
+  display: flex;
+  flex-direction: column;
+  padding: 3em;
+  border-radius: 20px;
+  background-color: #f7faff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+  }
+
+.item-output {
+  border: 1px solid #c8ccd1;
+  border-radius: 0.5vh;
+}
+
+.table {
+  border-collapse: collapse;
+
+  & tr {
+
+    &:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+
+  & th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: white;
+    border: 1px solid #ddd;
+    padding: 8px;
+    background-color: $table-color;
+  }
+
+  & td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+}
+
+.form {
+  width: 20vw;
+}
+
+.form__group {
+  margin-bottom: 2rem;
+}
+
+.form__label {
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+  margin-left: 0.8rem;
+  display: block;
+}
+
+.form__input {
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 2rem;
+  min-height: 2rem;
+  position: relative;
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 0.8rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form__error {
+  display: block;
+  color: #f57f6c;
+  border-color: #f79483;
+}
+
+.button {
+  height: 2rem;
+  width: 100%;
+  color: #fff;
+  background: $main-color;
+  font-size: 0.8rem;
+  border-radius: 2rem;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: rgba($main-color, 0.5)
+  }
+}
+
+.navigation {
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 10px;
+    background: $main-color;
+    margin: 0;
+    color: #fff;
+
+    &.horizontal {
+      flex-direction: row;
+    }
+
+    li {
+      padding: 10px 20px;
+      border-radius: 2rem;
+
+      &:hover {
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.336);
+      }
+
+      &.highlighted {
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.636);
+      }
+    }
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  height: 90vh;
+  width: 15%;
+  background: $main-color;
+  margin-top: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+}
