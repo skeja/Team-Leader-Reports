@@ -18,10 +18,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Report.associate = function ({ user }) {
     this.belongsTo(user, {
-      foreignKey: { as: 'reporter', name: 'reporterId', field: 'reporter_id' }
+      foreignKey: { name: 'reporterId', field: 'reporter_id' },
+      as: 'reporter'
     });
     this.belongsTo(user, {
-      foreignKey: { as: 'subject', name: 'subjectId', field: 'subject_id' }
+      foreignKey: { name: 'subjectId', field: 'subject_id' },
+      as: 'subject'
     });
   };
 
