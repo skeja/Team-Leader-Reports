@@ -55,10 +55,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: { name: 'userId', field: 'user_id' }
     });
     this.hasMany(report, {
-      foreignKey: { name: 'reporterId', field: 'reporter_id' }
+      foreignKey: { name: 'reporterId', field: 'reporter_id' },
+      as: 'reporter'
     });
     this.hasMany(report, {
-      foreignKey: { name: 'subjectId', field: 'subject_id' }
+      foreignKey: { name: 'subjectId', field: 'subject_id' },
+      as: 'subject'
     });
   };
 
