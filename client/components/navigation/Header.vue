@@ -1,12 +1,7 @@
 <template>
   <nav class="navigation">
     <ul class="nav horizontal">
-      <router-link
-        v-if="!isAuthenticated"
-        class="auth"
-        to="/login"
-        tag="li">Login</router-link>
-      <template v-else>
+      <template v-if="user.email">
         <router-link
           to="/"
           tag="li"
@@ -26,25 +21,45 @@
           active-class="highlighted">
           Reports
         </router-link>
-        <li v-if="isAuthenticated" class="auth" >
-          <a @click="logout">Logout</a>
-        </li>
+        <div class="auth">
+          <li>
+            {{ user.email }}
+          </li>
+          <li>
+            <a @click="logout">Logout</a>
+          </li>
+        </div>
       </template>
+      <router-link
+        v-else
+        class="auth"
+        to="/login"
+        tag="li">
+        Login
+      </router-link>
     </ul>
   </nav>
 </template>
 
 <script>
+import UserStore from '../../store/store';
+
 export default {
+  data() {
+    return {
+      state: UserStore.state
+    };
+  },
   computed: {
-    isAuthenticated() {
-      return JSON.parse(localStorage.getItem('user')) !== null;
+    user() {
+      return this.state.currentUser;
     }
   },
   methods: {
     logout() {
+      UserStore.removeUser();
       localStorage.removeItem('user');
-      location.reload();
+      this.$router.push('/login');
     }
   }
 };

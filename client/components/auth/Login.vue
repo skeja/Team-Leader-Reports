@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import axios from '../../axios-auth';
+import UserStore from '../../store/store';
 
 export default {
   data() {
@@ -68,16 +68,11 @@ export default {
   },
   methods: {
     submit() {
-      axios.post('/login', this.user)
-        .then(response => {
-          if (typeof response.data === 'string') {
-            this.message = response.data;
-            this.toggle = true;
-            return;
-          }
-          localStorage.setItem('user', JSON.stringify(response.data));
-          this.$router.push('/');
-          location.reload();
+      UserStore.login(this.user)
+        .then(() => this.$router.push('/'))
+        .catch(({ message }) => {
+          this.message = message;
+          this.toggle = true;
         });
     },
     showMessage() {
