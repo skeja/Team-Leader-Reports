@@ -29,6 +29,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: { notEmpty: true }
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at'
+    },
     role: DataTypes.ENUM('ADMIN', 'TEAM_LEAD', 'DEVELOPER'),
     office: DataTypes.STRING
   }, {
@@ -56,11 +64,11 @@ module.exports = (sequelize, DataTypes) => {
     });
     this.hasMany(report, {
       foreignKey: { name: 'reporterId', field: 'reporter_id' },
-      as: 'reporter'
+      as: 'writtenReports'
     });
     this.hasMany(report, {
       foreignKey: { name: 'subjectId', field: 'subject_id' },
-      as: 'subject'
+      as: 'reports'
     });
   };
 
