@@ -18,7 +18,7 @@ function findOne({ body: { firstName, lastName } }, res) {
   return db.user.findAll({ where }).then(user => res.send(user));
 }
 
-function findById({ body: { id } }, res) {
+function findById({ params: { id } }, res) {
   return db.user.findOne({ where: { id } })
     .then(it => res.send(it));
 }
