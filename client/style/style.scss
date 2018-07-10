@@ -124,6 +124,10 @@ body {
   }
 }
 
+.button-cancel {
+  background: #8b0000;
+}
+
 .navigation {
 
   ul {
@@ -166,4 +170,107 @@ body {
   margin-top: 5px;
   margin-left: 5px;
   border-radius: 10px;
+}
+
+.name {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  margin: 0.5em;
+  background: $main-color;
+  border-radius: 2rem;
+  color: #fff;
+}
+
+.report {
+  border: 1px solid $report-color;
+  background-color: rgba(230, 230, 233, 0.24);
+  color: $main-color;
+  padding: 1rem;
+}
+
+.report-title {
+  font-weight: 500;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  border-radius: 2rem;
+  background: $main-color;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.report-item-label {
+  margin: 1em 0;
+  padding-left: 1em;
+  border-radius: 10px;;
+  background-color: $main-color;
+  color: #fff;
+  width: 50%;
+}
+
+.report-item {
+  font-weight: 300;
+  padding-left: 2em;
+  padding-right: 1em;
+  border: 1px solid $report-color;
+}
+
+.report-content {
+  padding: 1em;
+  padding-right: 2em;
+  position: relative;
+  font-weight: 300;
+  border: 1px solid $report-color;
+  width: 100%;
+  height: 30vh;
+}
+
+.report-dates {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.report-date {
+  display: flex;
+  border: 1px solid $main-color;
+  border-radius: 1em;
+  overflow: hidden;
+  font-weight: 300;
+
+  & span {
+  padding: 0.5em;
+  }
+
+  :first-child {
+    background-color: $main-color;
+    color: #fff;
+    height: 100%;
+    font-weight: 400;
+  }
+}
+
+.inner-shadow {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1), inset 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.buttons {
+  padding: 1%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.textarea {
+  padding: 1em;
+  resize: none;
+  width: 100%;
+  height: 30vh;
+  font-size: 0.8rem;
+  border-radius: 10px;
+
+  &:focus {
+    outline: none;
+  }
 }
