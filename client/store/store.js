@@ -3,14 +3,15 @@ import axios from '../axios-auth';
 const UserStore = {
   state: {
     currentUser: {
+      id: '',
       email: ''
     }
   },
   removeUser() {
     this.state.currentUser = {};
   },
-  addUser({ email }) {
-    this.state.currentUser = { email };
+  addUser({ id, email }) {
+    this.state.currentUser = { id, email };
   },
   login(user) {
     return axios.post('/login', user)

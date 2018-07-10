@@ -136,7 +136,7 @@
 import { required, minLength, email } from 'vuelidate/lib/validators';
 export default {
   props: {
-    updatedUser: { type: Object, default: null }
+    updatedUser: { type: Object, default: () => {} }
   },
   data() {
     return {

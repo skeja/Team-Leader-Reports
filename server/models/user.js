@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
       field: 'updated_at'
     },
     role: DataTypes.ENUM('ADMIN', 'TEAM_LEAD', 'DEVELOPER'),
-    office: DataTypes.STRING
+    office: DataTypes.STRING,
+    team: DataTypes.STRING
   }, {
     timestamps: true
   }

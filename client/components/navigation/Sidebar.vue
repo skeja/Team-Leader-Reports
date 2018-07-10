@@ -16,7 +16,7 @@
 <script>
 export default {
   props: {
-    routes: { type: Array, default: null }
+    routes: { type: Array, default: () => [] }
   }
 };
 </script>

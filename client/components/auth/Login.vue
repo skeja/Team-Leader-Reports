@@ -115,10 +115,6 @@ export default {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.login-msg {
-  width: 100;
-}
-
 .login-form {
   position: relative;
   left: 0;
@@ -149,17 +145,6 @@ export default {
   font-size: 1rem;
   border: none;
   background-color: transparent;
-}
-
-.login-submit {
-  width: 100%;
-  height: 2rem;
-  margin: 2rem 0 1rem;
-  color: white;
-  background: $main-color;
-  font-size: 1rem;
-  border-radius: 2rem;
-  cursor: pointer;
 }
 
 .button {
