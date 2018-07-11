@@ -105,7 +105,7 @@ async function findTeamUsersReports({ user: { role, team } }, res) {
   const query = {
     attributes: ['id', 'firstName', 'lastName', 'office'],
     raw: true
-  }
+  };
   if (role !== 'ADMIN') query.where = { team };
 
   let users = await db.user.findAll(query);
