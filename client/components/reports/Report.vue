@@ -52,8 +52,8 @@
         </div>
       </div>
       <div v-if="!updating" class="buttons">
-        <button class="button" @click="remove">Delete</button>
         <button class="button" @click="goBack">Back</button>
+        <button class="button" @click="remove">Delete</button>
       </div>
       <div v-if="updating" class="buttons">
         <button class="button button-cancel" @click="reset">Cancel</button>

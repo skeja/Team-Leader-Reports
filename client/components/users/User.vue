@@ -25,10 +25,8 @@
       </table>
       <div class="buttons">
         <button class="button" @click="goBack">Back</button>
-        <button
-          class="button"
-          type="button"
-          @click="deleteUser">
+        <button class="button" @click="viewReports">View reports</button>
+        <button class="button" @click="deleteUser">
           Delete user
         </button>
       </div>
@@ -60,6 +58,9 @@ export default {
     },
     goBack() {
       this.$router.push('/users');
+    },
+    viewReports() {
+      this.$router.push(`/reports/${this.$route.params.userId}`);
     }
   }
 };
