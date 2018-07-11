@@ -102,12 +102,16 @@ function remove({ params: { reportId } }, res) {
 }
 
 async function findTeamUsersReports({ user: { role, team } }, res) {
-  let users = await db.user.findAll({
+  const query = {
     attributes: ['id', 'firstName', 'lastName', 'office'],
-    where: { team },
     raw: true
-  });
+  }
+  if (role !== 'ADMIN') query.where = { team };
+
+  let users = await db.user.findAll(query);
+
   const userIds = users.map(({ id }) => id);
+
   let reports = await db.report.findAll({
     attributes: [
       db.sequelize.literal('DISTINCT ON("report"."subject_id") 1'),
