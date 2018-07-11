@@ -46,8 +46,7 @@ export default {
       .then(({ data }) => (this.user = data))
       .then(() => axios.get(`/reports/${this.userId}`))
       .then(({ data }) => {
-        this.reports = data;
-        this.reports = sortBy(this.reports, ['reporter.lastName']);
+        this.reports = sortBy(data, ['reporter.lastname']);
       });
   },
   methods: {

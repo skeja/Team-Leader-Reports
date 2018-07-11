@@ -9,6 +9,8 @@
 <script>
 import UserList from './UserList.vue';
 import axios from '../../axios-auth';
+import { sortBy } from 'lodash';
+
 export default {
   components: {
     UserList
@@ -21,7 +23,7 @@ export default {
   created() {
     axios.get('/reports/users')
       .then(({ data }) => {
-        this.users = data;
+        this.users = sortBy(data, [user => user.lastName.toLowerCase()]);
       });
   },
   methods: {
