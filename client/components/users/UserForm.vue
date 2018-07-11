@@ -134,6 +134,7 @@
 
 <script>
 import { required, minLength, email } from 'vuelidate/lib/validators';
+
 export default {
   props: {
     updatedUser: { type: Object, default: () => {} }
@@ -161,6 +162,10 @@ export default {
           email: {
             required,
             email
+          },
+          password: {
+            required,
+            minLength: minLength(4)
           },
           role: {
             required
@@ -205,15 +210,8 @@ export default {
     }
   },
   validations() {
-    if (this.updatedUser) {
-      return this.validator;
-    } else {
-      this.validator.user.password = {
-        required,
-        minLength: minLength(4)
-      };
-      return this.validator;
-    }
+    if (this.updatedUser) delete this.validator.user.password;
+    return this.validator;
   }
 };
 </script>

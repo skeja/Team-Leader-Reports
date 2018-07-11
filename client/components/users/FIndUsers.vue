@@ -2,15 +2,15 @@
   <div class="container">
     <div class="center">
       <div id="findUser">
-        <div class="firstName">
-          <label for="firstName">Name</label>
+        <div>
+          <label>Name:</label>
           <input
             v-model="user.firstName"
             type="text"
             @input="submit">
         </div>
-        <div class="lastName">
-          <label for="lastName">Last name</label>
+        <div>
+          <label>Last name:</label>
           <input
             v-model="user.lastName"
             type="text"
@@ -38,6 +38,7 @@
 <script>
 import axios from '../../axios-auth';
 import debounce from 'lodash/debounce';
+
 export default {
   data() {
     return {
