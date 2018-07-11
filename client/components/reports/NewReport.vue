@@ -13,6 +13,7 @@
 import axios from '../../axios-auth';
 import ReportForm from './ReportForm.vue';
 import fullName from '../../filters/fullName';
+
 export default {
   filters: {
     fullName

@@ -26,6 +26,7 @@
 <script>
 import { required } from 'vuelidate/lib/validators';
 import UserStore from '../../store/store';
+
 export default {
   props: {
     updatedReport: { type: Object, default: () => {} }
@@ -69,18 +70,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-// textarea {
-//   padding: 1em;
-//   resize: none;
-//   width: 100%;
-//   height: 30vh;
-//   font-size: 0.8rem;
-//   border-radius: 10px;
-
-//   &:focus {
-//     outline: none;
-//   }
-// }
-</style>

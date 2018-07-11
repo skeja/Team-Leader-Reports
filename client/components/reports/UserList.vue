@@ -14,6 +14,7 @@
       <td>{{ lastName }}</td>
       <td>{{ office }}</td>
       <td v-if="report">{{ report.createdAt | dateFormatter }}</td>
+      <td v-else>No report</td>
     </tr>
   </table>
 </template>
@@ -21,6 +22,7 @@
 <script>
 import axios from '../../axios-auth.js';
 import dateFormatter from '../../filters/dateFormatter';
+
 export default {
   filters: {
     dateFormatter

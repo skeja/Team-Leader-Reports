@@ -7,6 +7,7 @@
 
 <script>
 import Sidebar from '../navigation/Sidebar.vue';
+
 export default {
   components: { Sidebar },
   data() {
