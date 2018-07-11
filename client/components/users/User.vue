@@ -38,6 +38,7 @@
 
 <script>
 import axios from '../../axios-auth';
+
 export default {
   data() {
     return {
@@ -46,7 +47,7 @@ export default {
     };
   },
   created() {
-    axios.post(`/users/${this.id}`, { id: this.id })
+    axios.get(`/users/${this.id}`)
       .then(response => {
         this.user = response.data;
       });

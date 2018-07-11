@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="center">
-      <user-form @submitUser="submit($event)" ></user-form>
+      <user-form @submitUser="submit($event)"></user-form>
     </div>
   </div>
 </template>
@@ -9,6 +9,7 @@
 <script>
 import axios from '../../axios-auth';
 import UserForm from './UserForm.vue';
+
 export default {
   components: {
     UserForm
@@ -40,6 +41,7 @@ input:focus {
   margin-left: 14px;
   margin-top: -1.6rem;
   margin-bottom: 0.475rem;
+
   &.form__error {
     display: block;
   }

@@ -17,7 +17,7 @@ app.use(cors({ origin: true }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-require('./server/seed')(app);
+// require('./server/seed')(app);
 
 require('./server/api')(app);
 

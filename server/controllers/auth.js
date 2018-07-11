@@ -15,6 +15,7 @@ async function login({ body }, res) {
     const payload = { id: it.id };
     const token = jwt.sign(payload, 'secret');
     const user = {
+      id: it.id,
       email: body.email,
       token: token
     };

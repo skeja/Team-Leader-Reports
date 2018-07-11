@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="center">
-      <select v-model="selected" >
+      <select v-model="selected">
         <option
           value=""
           selected
@@ -16,7 +16,7 @@
         </option>
       </select>
       <div v-if="selected">
-        <user-form :updated-user="selected" @submitUser="submit($event)" ></user-form>
+        <user-form :updated-user="selected" @submitUser="submit($event)"></user-form>
       </div>
     </div>
   </div>
