@@ -12,11 +12,13 @@ async function login({ body }, res) {
     if (it === null) return res.send('Email & password combination not found');
     const authenticated = await it.validatePassword(body.password);
     if (!authenticated) return res.send('Email & password combination not found');
+    if (it.role === 'DEVELOPER') return res.send('Access denied');
     const payload = { id: it.id };
     const token = jwt.sign(payload, 'secret');
     const user = {
       id: it.id,
       email: body.email,
+      role: it.role,
       token: token
     };
     res.send(user);
