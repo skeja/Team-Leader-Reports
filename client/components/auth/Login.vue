@@ -11,6 +11,8 @@
             ref="emailInput"
             v-model="user.email"
             type="email"
+            name="email"
+            autocomplete="email"
             placeholder="email"
             class="login-input"
             @focus="focus.email = true"
@@ -20,8 +22,10 @@
           <i class="fas fa-key"></i>
           <input
             v-model="user.password"
-            type="password"
+            name="password"
             placeholder="password"
+            autocomplete="password"
+            type="password"
             class="login-input"
             @focus="focus.password = true"
             @blur="focus.password = false">
