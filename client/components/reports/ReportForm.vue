@@ -25,7 +25,7 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators';
-import UserStore from '../../store/store';
+import UserStore from '../../store';
 
 export default {
   props: {

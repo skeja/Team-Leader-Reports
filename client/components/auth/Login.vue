@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import UserStore from '../../store/store';
+import UserStore from '../../store';
 
 export default {
   data() {

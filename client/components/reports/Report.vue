@@ -67,7 +67,7 @@
 import axios from '../../axios-auth';
 import fullName from '../../filters/fullName';
 import dateFormatter from '../../filters/dateFormatter';
-import UserStore from '../../store/store';
+import UserStore from '../../store';
 
 export default {
   filters: {
