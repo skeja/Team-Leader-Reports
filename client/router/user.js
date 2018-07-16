@@ -12,10 +12,12 @@ export default {
     component: FindUser
   }, {
     path: 'newUser',
-    component: NewUser
+    component: NewUser,
+    meta: { role: 'ADMIN' }
   }, {
     path: 'updateUser',
-    component: UpdateUser
+    component: UpdateUser,
+    meta: { role: 'ADMIN' }
   }, {
     path: ':userId',
     component: User

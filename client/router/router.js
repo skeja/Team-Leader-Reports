@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import UserStore from '../store';
 
-import Home from '.././components/Home.vue';
-import Login from '.././components/auth/Login.vue';
+import Home from '../components/Home.vue';
+import Login from '../components/auth/Login.vue';
 
 import User from './user';
 import Report from './report';
@@ -25,9 +26,12 @@ const routes = [
 
 const router = new VueRouter({ mode: 'history', routes });
 
-router.beforeEach((to, from, next) => {
-  if (localStorage.getItem('user') || to.meta.noAuth) return next();
-  return next('/login');
+router.beforeEach(({ meta }, from, next) => {
+  const { currentUser: { id, role } = {} } = UserStore.state;
+
+  if (!meta.noAuth && !id) return next('/login');
+  if (!meta.role || meta.role === role) return next();
+  return next('/');
 });
 
 export default router;
