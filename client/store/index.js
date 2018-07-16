@@ -16,12 +16,9 @@ const UserStore = {
   },
   login(user) {
     return axios.post('/login', user)
-      .then(response => {
-        if (typeof response.data === 'string') {
-          return Promise.reject({ message: response.data });
-        }
-        localStorage.setItem('user', JSON.stringify(response.data));
-        UserStore.addUser(response.data);
+      .then(({ data }) => {
+        localStorage.setItem('user', JSON.stringify(data));
+        UserStore.addUser(data);
       });
   }
 };
