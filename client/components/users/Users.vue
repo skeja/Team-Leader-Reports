@@ -7,21 +7,30 @@
 
 <script>
 import Sidebar from '../navigation/Sidebar.vue';
+import UserStore from '../../store';
+
+const generalRoutes = [{
+  to: '/users',
+  label: 'Find User'
+}];
+
+const adminRoutes = [{
+  to: '/users/newUser',
+  label: 'Create User'
+}, {
+  to: '/users/updateUser',
+  label: 'Update User'
+}];
+
 export default {
   components: { Sidebar },
-  data() {
-    return {
-      userRoutes: [{
-        to: '/users',
-        label: 'Find User'
-      }, {
-        to: '/users/newUser',
-        label: 'Create User'
-      }, {
-        to: '/users/updateUser',
-        label: 'Update User'
-      }]
-    };
+  computed: {
+    userRoutes() {
+      const { role } = UserStore.state.currentUser;
+      let routes = [...generalRoutes];
+      if (role !== 'TEAM_LEAD') routes.push(...adminRoutes);
+      return routes;
+    }
   }
 };
 </script>
