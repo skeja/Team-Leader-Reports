@@ -5,6 +5,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const passport = require('./server/auth/');
 const path = require('path');
+const jsend = require('jsend');
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(cors({ origin: true }));
+app.use(jsend.middleware);
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
