@@ -74,8 +74,8 @@ export default {
     submit() {
       UserStore.login(this.user)
         .then(() => this.$router.push('/'))
-        .catch(({ message }) => {
-          this.message = message;
+        .catch(({ response: { data } }) => {
+          this.message = data.message;
           this.toggle = true;
         });
     },
@@ -91,7 +91,7 @@ export default {
 
 .warning {
   position: absolute;
-  top: 10%;
+  top: 20%;
   right: 1%;
   cursor: pointer;
   color: rgb(226, 2, 13);
@@ -178,5 +178,11 @@ i {
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateX(10px);
   opacity: 0;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
 }
 </style>
