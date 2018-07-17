@@ -21,11 +21,11 @@
           active-class="highlighted">
           Reports
         </router-link>
-        <div @click="logout" class="auth">
+        <div class="auth">
           <li>
             {{ user.email }}
           </li>
-          <li>
+          <li @click="logout">
             <a>Logout</a>
           </li>
         </div>
