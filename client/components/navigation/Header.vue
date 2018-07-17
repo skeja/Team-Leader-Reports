@@ -21,6 +21,12 @@
           active-class="highlighted">
           Reports
         </router-link>
+        <router-link
+          to="/teams"
+          tag="li"
+          active-class="highlighted">
+          Teams
+        </router-link>
         <div class="auth">
           <li>
             {{ user.email }}
