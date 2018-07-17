@@ -7,6 +7,7 @@ import Login from '../components/auth/Login.vue';
 
 import User from './user';
 import Report from './report';
+import Team from './team';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,7 @@ const routes = [
   },
   User,
   Report,
+  Team,
   { path: '*', redirect: '/' }
 ];
 
