@@ -91,7 +91,7 @@ export default {
 
 .warning {
   position: absolute;
-  top: 20%;
+  top: 10%;
   right: 1%;
   cursor: pointer;
   color: rgb(226, 2, 13);
