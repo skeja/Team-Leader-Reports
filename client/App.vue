@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app">
     <Header></Header>
     <router-view></router-view>
   </div>
@@ -17,4 +17,10 @@ export default {
 
 <style lang="scss">
 @import './style/style.scss';
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 </style>
