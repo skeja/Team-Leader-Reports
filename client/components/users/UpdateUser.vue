@@ -1,20 +1,6 @@
 <template>
   <div class="container">
     <div class="center">
-      <select v-model="selected">
-        <option
-          value=""
-          selected
-          hidden>
-          Select user
-        </option>
-        <option
-          v-for="user in users"
-          :key="user.id"
-          :value="user">
-          {{ `${user.firstName} ${user.lastName}` }}
-        </option>
-      </select>
       <div v-if="selected">
         <user-form :updated-user="selected" @submitUser="submit($event)"></user-form>
       </div>
@@ -24,7 +10,6 @@
 
 <script>
 import axios from '../../axios-auth';
-import sortBy from 'lodash/sortBy';
 import UserForm from './UserForm.vue';
 
 export default {
@@ -33,16 +18,16 @@ export default {
   },
   data() {
     return {
-      users: [],
+      userId: this.$route.params.userId,
       selected: ''
     };
   },
   created() {
-    axios.get('/users')
-      .then(response => {
-        this.users = response.data;
-        this.users = sortBy(this.users, ['lastName']);
-      });
+    axios.get(`/users/${this.userId}`)
+      .then(({ data }) => {
+        this.selected = data;
+      })
+      .then();
   },
   methods: {
     submit(user) {

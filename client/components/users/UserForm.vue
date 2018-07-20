@@ -198,6 +198,11 @@ export default {
       return this.$v.user.office;
     }
   },
+  watch: {
+    updatedUser(val) {
+      this.user = { ...val };
+    }
+  },
   created() {
     if (this.updatedUser) this.user = { ...this.updatedUser };
   },
@@ -220,9 +225,11 @@ export default {
 input:focus {
   outline: none;
   border-color: #a7a5a5;
+  box-shadow: 0 0 0 0.1rem rgba(#a7a5a5,0.25);
 
   .form__error & {
     border-color: #f79483;
+    box-shadow: 0 0 0 0.1rem rgba(#f79483,0.25);
   }
 }
 

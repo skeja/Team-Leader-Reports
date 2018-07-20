@@ -23,7 +23,11 @@ function findOne({ body: { firstName, lastName } }, res) {
 }
 
 function findById({ params: { id } }, res) {
-  return db.user.findOne({ where: { id } })
+  return db.user.findOne({
+    where: { id },
+    attributes: { exclude: ['password']
+    }
+  })
     .then(it => res.send(it));
 }
 

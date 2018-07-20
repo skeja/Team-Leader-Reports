@@ -12,18 +12,18 @@ export default {
     component: FindUser,
     name: 'findUser'
   }, {
-    path: 'newUser',
+    path: 'new',
     component: NewUser,
     name: 'newUser',
-    meta: { role: 'ADMIN' }
-  }, {
-    path: 'updateUser',
-    component: UpdateUser,
-    name: 'updateUser',
     meta: { role: 'ADMIN' }
   }, {
     path: ':userId',
     component: User,
     name: 'user'
+  }, {
+    path: ':userId/update',
+    component: UpdateUser,
+    name: 'updateUser',
+    meta: { role: 'ADMIN' }
   }]
 };

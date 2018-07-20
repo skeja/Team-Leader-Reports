@@ -26,9 +26,8 @@
       <div class="buttons">
         <button class="button" @click="goBack">Back</button>
         <button class="button" @click="viewReports">View reports</button>
-        <button class="button" @click="deleteUser">
-          Delete user
-        </button>
+        <button class="button" @click="updateUser">Update User</button>
+        <button class="button" @click="deleteUser">Delete user</button>
       </div>
     </div>
   </div>
@@ -54,13 +53,16 @@ export default {
     deleteUser() {
       if (!confirm('Deleting user')) return;
       axios.delete(`/users/${this.id}`)
-        .then(response => this.$router.push('/users/findUser'));
+        .then(response => this.$router.push('/users'));
     },
     goBack() {
       this.$router.push('/users');
     },
     viewReports() {
       this.$router.push(`/reports/${this.$route.params.userId}`);
+    },
+    updateUser() {
+      this.$router.push({ name: 'updateUser', params: { userId: this.id } });
     }
   }
 };

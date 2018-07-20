@@ -15,11 +15,8 @@ const generalRoutes = [{
 }];
 
 const adminRoutes = [{
-  to: '/users/newUser',
+  to: { name: 'newUser' },
   label: 'Create User'
-}, {
-  to: '/users/updateUser',
-  label: 'Update User'
 }];
 
 export default {
