@@ -41,7 +41,7 @@ function update({ body }, res) {
 function remove({ params }, res) {
   return db.user.destroy(
     { where: { id: params.id } }
-  ).then(it => res.send(it));
+  ).then(it => res.status(200).send());
 }
 
 module.exports = {
