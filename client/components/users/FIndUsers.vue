@@ -32,6 +32,7 @@
         </tr>
       </table>
     </div>
+    <i class="fas fa-plus-circle" @click="addUser"></i>
   </div>
 </template>
 
@@ -58,6 +59,9 @@ export default {
     }, 500),
     selected(it) {
       this.$router.push(`/users/${it.id}`);
+    },
+    addUser() {
+      this.$router.push({ name: 'newUser' });
     }
   }
 };
@@ -81,4 +85,15 @@ div.lastName {
 td {
   cursor: pointer;
 }
+.container {
+  position: relative;
+}
+// i.fa-plus-circle {
+//   position: absolute;
+//   bottom: 0;
+//   right: 0;
+//   padding: 2rem;
+//   font-size: 3rem;
+//   color: red;
+// }
 </style>

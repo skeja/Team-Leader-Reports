@@ -12,7 +12,7 @@ router.get('/reports/:userId', isAuthenticated(), ctrl.getUserReports);
 
 router.get('/reports/:userId/:reportId', isAuthenticated(), ctrl.getReport);
 
-router.post('/reports/:userId/newReport', isAuthenticated(), ctrl.create);
+router.post('/reports/new/:userId', isAuthenticated(), ctrl.create);
 
 router.put('/reports/:reportId', isAuthenticated(), ctrl.update);
 

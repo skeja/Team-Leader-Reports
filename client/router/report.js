@@ -26,7 +26,7 @@ export default {
     component: NewReport,
     name: 'newReport'
   }, {
-    path: ':userId/:reportId',
+    path: 'users/:userId/report/:reportId',
     component: Report,
     name: 'report'
   }]
