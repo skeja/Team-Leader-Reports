@@ -20,7 +20,9 @@
           <td>{{ report.updatedAt | dateFormatter }}</td>
         </tr>
       </table>
-      <button class="button buttons" @click="goBack">Back</button>
+      <div class="buttons">
+        <button class="button" @click="goBack">Back</button>
+      </div>
     </div>
   </div>
 </template>

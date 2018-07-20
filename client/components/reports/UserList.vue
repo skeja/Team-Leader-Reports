@@ -14,7 +14,7 @@
       <td>{{ lastName }}</td>
       <td>{{ office }}</td>
       <td v-if="report">{{ report.createdAt | dateFormatter }}</td>
-      <td v-else>No report</td>
+      <td v-else class="td-warning">No report</td>
     </tr>
   </table>
 </template>
@@ -52,5 +52,9 @@ export default {
 <style lang="scss" scoped>
 td {
   cursor: pointer;
+}
+
+.td-warning {
+  color: #E74C3C;
 }
 </style>

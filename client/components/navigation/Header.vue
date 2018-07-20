@@ -1,10 +1,11 @@
 <template>
   <nav class="navigation">
-    <ul class="nav horizontal">
+    <ul class="horizontal">
       <template v-if="user.email">
         <router-link
           to="/"
           tag="li"
+          class="nav-brand"
           exact
           exact-active-class="highlighted">
           <i class="fa fa-home"></i>
@@ -75,5 +76,11 @@ export default {
 .auth {
   display: flex;
   margin-left: auto;
+}
+.navigation {
+
+  & ul {
+    box-shadow: inset 0 -1px 0 0 #18bc9c;
+  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="center">
-      <div id="findUser">
+      <div class="find-user">
         <div>
           <label>Name:</label>
           <input
@@ -64,10 +64,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#findUser {
+.find-user {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+
+  & div {
+    padding: 0 1rem;
+  }
 }
 
 div.lastName {

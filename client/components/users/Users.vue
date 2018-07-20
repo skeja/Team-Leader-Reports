@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <sidebar :routes="userRoutes"></sidebar>
     <router-view></router-view>
   </div>
