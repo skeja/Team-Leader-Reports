@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     selected(it) {
-      this.$router.push(`/reports/${it}`);
+      this.$router.push({ name: 'userReports', params: { userId: it } });
     }
   }
 };

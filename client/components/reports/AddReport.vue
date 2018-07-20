@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     selected(id) {
-      this.$router.push(`/reports/${id}/newReport`);
+      this.$router.push(`/reports/new/${id}`);
     }
   }
 };
