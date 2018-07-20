@@ -5,7 +5,7 @@
         v-for="{ to, label } in routes"
         :key="label"
         :to="to"
-        exact-active-class="highlighted"
+        active-class="highlighted"
         tag="li">
         {{ label }}
       </router-link>
