@@ -8,21 +8,26 @@ import AddReport from '../components/reports/AddReport.vue';
 export default {
   path: '/reports',
   component: Reports,
+  redirect: '/reports/users',
   children: [{
-    path: '',
-    component: FindReports
+    path: 'users',
+    component: FindReports,
+    name: 'findReports'
   }, {
     path: 'new',
-    component: AddReport
+    component: AddReport,
+    name: 'addReport'
   }, {
-    path: ':userId',
-    component: UserReports
+    path: 'users/:userId',
+    component: UserReports,
+    name: 'userReports'
   }, {
-    path: ':userId/newReport',
-    component: NewReport
+    path: 'new/:userId',
+    component: NewReport,
+    name: 'newReport'
   }, {
     path: ':userId/:reportId',
-    name: NewReport,
-    component: Report
+    component: Report,
+    name: 'report'
   }]
 };

@@ -9,17 +9,21 @@ export default {
   component: Users,
   children: [{
     path: '',
-    component: FindUser
+    component: FindUser,
+    name: 'findUser'
   }, {
     path: 'newUser',
     component: NewUser,
+    name: 'newUser',
     meta: { role: 'ADMIN' }
   }, {
     path: 'updateUser',
     component: UpdateUser,
+    name: 'updateUser',
     meta: { role: 'ADMIN' }
   }, {
     path: ':userId',
-    component: User
+    component: User,
+    name: 'user'
   }]
 };
