@@ -56,7 +56,7 @@ export default {
       this.$router.back();
     },
     selected(it) {
-      this.$router.push(`/reports/${this.userId}/${it}`);
+      this.$router.push({ name: 'report', params: { userId: this.userId, reportId: it } });
     },
     sort(it) {
       this.reports = sortBy(this.reports, it);

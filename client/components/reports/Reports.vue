@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <sidebar :routes="reportsRoutes"></sidebar>
     <router-view></router-view>
   </div>
@@ -14,10 +14,10 @@ export default {
     return {
       reportsRoutes: [
         {
-          to: '/reports',
+          to: { name: 'findReports' },
           label: 'Find Reports'
         }, {
-          to: '/reports/new',
+          to: { name: 'addReport' },
           label: 'New Report'
         }]
     };
