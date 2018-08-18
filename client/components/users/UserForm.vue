@@ -113,13 +113,31 @@
       class="error">Name must have at least
       {{ office.$params.minLength.min }} letters.
     </div>
+    <div
+      :class="{ form__error: team.$error }"
+      class="form__group">
+      <label class="form__label">Team</label>
+      <input
+        v-model="team.$model"
+        class="form__input"
+        type="text">
+    </div>
+    <div
+      v-if="team.$error && !team.required"
+      class="error">Field is required.
+    </div>
 
     <div class="form__buttons">
       <button
         :disabled="$v.$invalid"
         class="button"
         type="submit">
-        Submit
+        <span v-if="updatedUser">
+          Update
+        </span>
+        <span v-else>
+          Create
+        </span>
       </button>
       <button
         v-if="updatedUser"
@@ -147,7 +165,8 @@ export default {
         email: '',
         password: '',
         role: '',
-        office: ''
+        office: '',
+        team: ''
       },
       validator: {
         user: {
@@ -173,6 +192,9 @@ export default {
           office: {
             required,
             minLength: minLength(2)
+          },
+          team: {
+            required
           }
         }
       }
@@ -196,6 +218,9 @@ export default {
     },
     office() {
       return this.$v.user.office;
+    },
+    team() {
+      return this.$v.user.team
     }
   },
   watch: {
@@ -222,17 +247,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-input:focus {
-  outline: none;
-  border-color: #a7a5a5;
-  box-shadow: 0 0 0 0.1rem rgba(#a7a5a5,0.25);
-
-  .form__error & {
-    border-color: #f79483;
-    box-shadow: 0 0 0 0.1rem rgba(#f79483,0.25);
-  }
-}
-
 .error {
   color:#f57f6c;
   font-size: 0.75rem;

@@ -1,65 +1,119 @@
 <template>
-  <div class="container">
+  <div class="container container-top">
     <div class="center">
-      <table class="table">
-        <tr>
-          <td>First Name</td>
-          <td>{{ user.firstName }}</td>
-        </tr>
-        <tr>
-          <td>Last name</td>
-          <td>{{ user.lastName }}</td>
-        </tr>
-        <tr>
-          <td>Email</td>
-          <td>{{ user.email }}</td>
-        </tr>
-        <tr>
-          <td>Role</td>
-          <td>{{ user.role }}</td>
-        </tr>
-        <tr>
-          <td>Office</td>
-          <td>{{ user.office }}</td>
-        </tr>
-      </table>
-      <div class="buttons">
-        <button class="button" @click="goBack">Back</button>
-        <button class="button" @click="viewReports">View reports</button>
-        <button class="button" @click="updateUser">Update User</button>
-        <button class="button" @click="deleteUser">Delete user</button>
+      <div class="back-icon" @click="$router.back()">
+        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        Back
       </div>
+      <div class="card">
+        <div class="card-row">
+          <i class="material-icons md-24 main-color icon-align">
+            person
+          </i>
+          <div class="card-item">
+            {{ user | fullName }}
+          </div>
+        </div>
+        <div class="card-row">
+          <i class="material-icons md-24 main-color icon-align">
+            email
+          </i>
+          <div class="card-item">
+            {{ user.email }}
+          </div>
+        </div>
+        <div class="card-row">
+          <i class="material-icons md-24 main-color icon-align">
+            laptop_mac
+          </i>
+          <div class="card-item">
+            {{ role }}
+          </div>
+        </div>
+        <div class="card-row">
+          <i class="material-icons md-24 main-color icon-align">
+            home
+          </i>
+          <div class="card-item">
+            {{ user.office }}
+          </div>
+        </div>
+        <div class="card-row">
+          <i class="material-icons md-24 main-color icon-align">
+            people
+          </i>
+          <div class="card-item">
+            {{ user.team }}
+          </div>
+        </div>
+      </div>
+      <div class="icons">
+        <div class="tooltip">
+          <i class="material-icons md-36 alt-color hover" @click="updateUser">edit</i>
+          <span class="tooltiptext">Edit user</span>
+        </div>
+        <div class="tooltip">
+          <i class="material-icons md-36 alt-color hover" @click="viewReports">assignment</i>
+          <span class="tooltiptext">View reports</span>
+        </div>
+        <div class="tooltip">
+          <i class="material-icons md-36 alt-color hover" @click="showModal = true">delete</i>
+          <span class="tooltiptext">Delete user</span>
+        </div>
+      </div>
+      <confirm
+        v-if="showModal"
+        @confirm="deleteUser"
+        @close="showModal = false">
+        <div slot="header">Delete user</div>
+        <div slot="body">{{ user | fullName }}</div>
+      </confirm>
     </div>
   </div>
 </template>
 
 <script>
 import axios from '../../axios-auth';
+import fullName from '../../filters/fullName';
+import { capitalize, replace } from 'lodash';
+import Confirm from '../common/Confirm.vue';
 
 export default {
+  components: {
+    Confirm
+  },
+  filters: {
+    fullName
+  },
   data() {
     return {
       id: this.$route.params.userId,
-      user: {}
+      user: {},
+      showModal: false
     };
+  },
+  computed: {
+    role() {
+      return capitalize(replace(this.user.role, '_', ' '));
+    }
   },
   created() {
     axios.get(`/users/${this.id}`)
-      .then(response => {
-        this.user = response.data;
+      .then(({ data }) => {
+        this.user = data;
+      })
+      .then(() => axios.get(`/teams/${this.user.team}`))
+      .then(({ data }) => {
+        this.user.team = data.name;
       });
   },
   methods: {
     deleteUser() {
-      if (!confirm('Deleting user')) return;
-      axios.delete(`/users/${this.id}`)
+      return axios.delete(`/users/${this.id}`)
         .then(response => this.$router.push('/users'));
     },
-    goBack() {
-      this.$router.push('/users');
-    },
     viewReports() {
-      this.$router.push(`/reports/${this.$route.params.userId}`);
+      this.$router.push(`/reports/users/${this.$route.params.userId}`);
     },
     updateUser() {
       this.$router.push({ name: 'updateUser', params: { userId: this.id } });
@@ -69,21 +123,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-td {
-  &:nth-child(even) {
-    color: #4971b2;
-    text-align: center;
-  }
-  width: 50vw;
-}
 
 .buttons {
-  padding: 1%;
-  display: flex;
-  justify-content: space-around;
+  flex-direction: column;
 }
 
 .button {
-  max-width: 10rem;
+  margin: 1rem;
 }
 </style>
