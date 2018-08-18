@@ -1,0 +1,113 @@
+@import url('https://use.fontawesome.com/releases/v5.0.13/css/all.css');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import './constants';
+
+i.fa-plus {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 2rem;
+  font-size: 3rem;
+  color: $alt-color;
+  cursor: pointer;
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-60 { font-size: 60px; }
+.md-rem { font-size: 1rem; }
+
+.add {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 2rem;
+  cursor: pointer;
+}
+
+.icon-align {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  position: relative;
+}
+
+.alt-color {
+  color: $alt-color;
+
+  &.hover {
+    &:hover {
+      color: $main-color;
+      cursor: pointer;
+      visibility: visible;
+    }
+  }
+}
+
+.main-color {
+  color: $main-color;
+
+  &.hover {
+    &:hover {
+      color: $alt-color;
+      cursor: pointer;
+    }
+  }
+}
+
+.back-icon {
+  display: flex;
+  color: $alt-color;
+  cursor: pointer;
+  font-weight: 400;
+  margin-bottom: 1rem;
+
+  & span {
+    height: 1rem;
+  }
+}
+
+.tooltip {
+  position: relative;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: $main-color;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: $main-color transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

@@ -1,28 +1,45 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
-@import url('https://use.fontawesome.com/releases/v5.0.13/css/all.css');
+
 @import './constants';
+@import './button';
+@import './form';
+@import './icons';
+@import './table';
+@import './card';
+@import './modal';
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
 body {
-  font-size: 1rem;
+  height: 100%;
+  font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.5;
   font-family: 'Roboto', sans-serif;
   margin: 0;
-  background-color: $background-color;
+  background-color: #fff;
+
 }
 
 .container {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  min-height: 90vh;
   position: relative;
+}
+
+.container-top{
+  justify-content: normal;
+  padding: 3rem;
 }
 
 .center {
@@ -30,102 +47,19 @@ body {
   display: flex;
   flex-direction: column;
   padding: 3em;
-  border-radius: 20px;
-  background-color: #f7faff;
+  border-radius: 0.25rem;
+  overflow: auto;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
   }
+
+.main {
+  display: flex;
+  flex-grow: 1;
+}
 
 .item-output {
   border: 1px solid #c8ccd1;
   border-radius: 0.5vh;
-}
-
-.table {
-  border-collapse: collapse;
-
-  & tr {
-
-    &:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    &:hover {
-      background-color: #ddd;
-    }
-  }
-
-  & th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    color: white;
-    border: 1px solid #ddd;
-    padding: 8px;
-    background-color: $table-color;
-  }
-
-  & td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-}
-
-.form {
-  width: 20vw;
-}
-
-.form__group {
-  margin-bottom: 2rem;
-}
-
-.form__label {
-  font-size: 0.8rem;
-  margin-bottom: 0.3rem;
-  margin-left: 0.8rem;
-  display: block;
-}
-
-.form__input {
-  font-size: 0.875rem;
-  font-weight: 300;
-  line-height: 2rem;
-  min-height: 2rem;
-  position: relative;
-  border: 1px solid #e8e8e8;
-  border-radius: 5px;
-  background: #fff;
-  padding: 0 0.8rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.form__error {
-  display: block;
-  color: #f57f6c;
-  border-color: #f79483;
-}
-
-.button {
-  height: 2rem;
-  width: 100%;
-  color: #fff;
-  background: $main-color;
-  font-size: 0.8rem;
-  border-radius: 2rem;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    background-color: rgba($main-color, 0.5)
-  }
-}
-
-.button-cancel {
-  background: #8b0000;
 }
 
 .navigation {
@@ -134,10 +68,10 @@ body {
     display: flex;
     flex-direction: column;
     list-style-type: none;
-    padding: 10px;
     background: $main-color;
     margin: 0;
     color: #fff;
+    padding: 0.9rem;
 
     &.horizontal {
       flex-direction: row;
@@ -145,75 +79,78 @@ body {
 
     li {
       padding: 10px 20px;
-      border-radius: 2rem;
+      font-weight: 300;
 
       &:hover {
         cursor: pointer;
-        background: rgba(0, 0, 0, 0.336);
+        color: $alt-color;
       }
 
       &.highlighted {
         cursor: pointer;
-        background: rgba(0, 0, 0, 0.636);
+        color: $alt-color;
+        font-weight: 500;
       }
     }
   }
+}
+
+.nav-brand {
+  font-size: 1.15rem;
 }
 
 .sidebar {
   display: flex;
   flex-direction: column;
   float: left;
-  height: 90vh;
   width: 15%;
+  min-width: 10rem;
   background: $main-color;
-  margin-top: 5px;
-  margin-left: 5px;
-  border-radius: 10px;
 }
 
 .name {
-  font-size: 1.5rem;
+  font-size: 2rem;
   display: flex;
   justify-content: center;
-  margin: 0.5em;
-  background: $main-color;
-  border-radius: 2rem;
-  color: #fff;
+  margin: 0.6rem 0;
+  padding: 0.2rem;
+  font-weight: 500;
+  min-height: 2rem;
+  color: $alt-color;
 }
 
 .report {
-  border: 1px solid $report-color;
-  background-color: rgba(230, 230, 233, 0.24);
   color: $main-color;
   padding: 1rem;
+  width: 40rem;
 }
 
 .report-title {
-  font-weight: 500;
   font-size: 1.5rem;
   display: flex;
-  justify-content: center;
-  border-radius: 2rem;
-  background: $main-color;
-  color: #fff;
-  border-radius: 10px;
+  justify-content: left;
+  border-bottom: 1px solid;
+  padding: 1rem 0;
+
+  & span {
+    padding-left: 1rem;
+  }
 }
 
 .report-item-label {
   margin: 1em 0;
-  padding-left: 1em;
-  border-radius: 10px;;
-  background-color: $main-color;
-  color: #fff;
   width: 50%;
+  padding: 1rem 0;
+
+  & span {
+    font-weight: 300;
+  }
 }
 
 .report-item {
   font-weight: 300;
   padding-left: 2em;
   padding-right: 1em;
-  border: 1px solid $report-color;
 }
 
 .report-content {
@@ -229,26 +166,25 @@ body {
 .report-dates {
   margin-top: 1rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
 }
 
 .report-date {
   display: flex;
-  border: 1px solid $main-color;
-  border-radius: 1em;
   overflow: hidden;
-  font-weight: 300;
+  font-weight: 400;
+  margin: 1rem 0;
 
   & span {
   padding: 0.5em;
   }
 
   :first-child {
-    background-color: $main-color;
+    background-color: $alt-color;
     color: #fff;
     height: 100%;
-    font-weight: 400;
+    font-weight: 300;
   }
 }
 
@@ -256,11 +192,6 @@ body {
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1), inset 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
-.buttons {
-  padding: 1%;
-  display: flex;
-  justify-content: space-around;
-}
 
 .textarea {
   padding: 1em;
@@ -268,9 +199,41 @@ body {
   width: 100%;
   height: 30vh;
   font-size: 0.8rem;
-  border-radius: 10px;
+  border-radius: 0.2rem;
 
   &:focus {
     outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(#a7a5a5,0.25);
   }
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  height: 1.5rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #a7a5a5;
+  box-shadow: 0 0 0 0.1rem rgba(#a7a5a5,0.25);
+
+  .form__error & {
+    border-color: #f79483;
+    box-shadow: 0 0 0 0.2rem rgba(#f79483,0.25);
+  }
+}
+
+.filter-input {
+  margin-bottom: 2rem;
+}
+
+.warning {
+  color: #b30909;
 }
