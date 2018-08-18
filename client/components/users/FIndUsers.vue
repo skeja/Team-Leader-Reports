@@ -1,73 +1,86 @@
 <template>
-  <div class="container">
+  <div class="container container-top">
     <div class="center">
-      <div class="find-user">
-        <div>
-          <label>Name:</label>
-          <input
-            v-model="user.firstName"
-            type="text"
-            @input="submit">
-        </div>
-        <div>
-          <label>Last name:</label>
-          <input
-            v-model="user.lastName"
-            type="text"
-            @input="submit">
-        </div>
+      <div class="filter-input">
+        <input
+          v-model="input"
+          type="text"
+          class="form__input"
+          placeholder="search..."
+          @input="submit(input)">
       </div>
-      <br>
       <table class="table">
         <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
+          <th @click="sort('lastName')">Name</th>
+          <th @click="sort('email')">Email</th>
+          <th @click="sort('office')">Office</th>
         </tr>
         <tr
-          v-for="item in foundUsers"
-          :key="item.id"
-          @click="selected(item)">
-          <td>{{ item.firstName }}</td>
-          <td>{{ item.lastName }}</td>
+          v-for="user in filteredUsers"
+          :key="user.id"
+          @click="selected(user)">
+          <td>{{ user | fullName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.office }}</td>
         </tr>
       </table>
     </div>
-    <i class="fas fa-plus-circle" @click="addUser"></i>
+    <i class="material-icons md-60 alt-color add" @click="addUser">add</i>
   </div>
 </template>
 
 <script>
 import axios from '../../axios-auth';
-import debounce from 'lodash/debounce';
+import fullName from '../../filters/fullName';
+import { debounce, filter, sortBy } from 'lodash';
 
 export default {
+  filters: {
+    fullName
+  },
   data() {
     return {
       user: { firstName: '', lastName: '' },
-      foundUsers: []
+      users: [],
+      filteredUsers: [],
+      input: ''
     };
   },
+  created() {
+    axios.get('/users')
+      .then(({ data }) => {
+        this.users = sortBy(data, [user => user.lastName.toLowerCase()]);
+        this.filteredUsers = this.users;
+      });
+  },
   methods: {
-    submit: debounce(function () {
-      axios.post('/users', this.user)
-        .then(response => {
-          if (typeof response.data === 'string') {
-          } else {
-            this.foundUsers = response.data;
-          }
-        });
+    submit: debounce(function (input) {
+      const query = input.toLowerCase();
+      this.filteredUsers = filter(this.users, ({ firstName = '', lastName = '' }) => {
+        return firstName.toLowerCase().includes(query) ||
+        lastName.toLowerCase().includes(query);
+      });
     }, 500),
     selected(it) {
       this.$router.push(`/users/${it.id}`);
     },
     addUser() {
       this.$router.push({ name: 'newUser' });
+    },
+    sort(it) {
+      this.filteredUsers = sortBy(this.filteredUsers, [
+        user => user[it].toLowerCase()
+      ]);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.filter-input {
+  margin-bottom: 2rem;
+}
+
 .find-user {
   display: flex;
   flex-direction: row;
@@ -85,15 +98,10 @@ div.lastName {
 td {
   cursor: pointer;
 }
+th {
+  cursor: pointer;
+}
 .container {
   position: relative;
 }
-// i.fa-plus-circle {
-//   position: absolute;
-//   bottom: 0;
-//   right: 0;
-//   padding: 2rem;
-//   font-size: 3rem;
-//   color: red;
-// }
 </style>
