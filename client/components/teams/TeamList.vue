@@ -3,18 +3,17 @@
     <div class="center">
       <table class="table">
         <tr>
-          <th></th>
           <th>Team name</th>
         </tr>
         <tr
           v-for="team in teams"
           :key="team.id"
           @click="selected(team.id)">
-          <td>{{ team.id }}</td>
           <td>{{ team.name }}</td>
         </tr>
       </table>
     </div>
+    <i class="material-icons md-60 alt-color add" @click="addTeam">add</i>
   </div>
 </template>
 
@@ -35,7 +34,10 @@ export default {
   },
   methods: {
     selected(it) {
-      console.log(it);
+      this.$router.push(`/teams/${it}`);
+    },
+    addTeam() {
+      this.$router.push({ name: 'newTeam' });
     }
   }
 
@@ -43,7 +45,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  td{
+td{
+  cursor: pointer;
+  text-align: center;
+}
+
+.center {
+  position: relative;
+
+  & i {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.4em;
     cursor: pointer;
   }
+}
 </style>
