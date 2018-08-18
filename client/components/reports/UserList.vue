@@ -1,19 +1,17 @@
 <template>
   <table class="table">
     <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
+      <th>Name</th>
       <th>Office</th>
       <th>Last report</th>
     </tr>
     <tr
-      v-for="{ id, firstName, lastName, office, report } in users"
-      :key="id"
-      @click="$emit('selected', id)">
-      <td>{{ firstName }}</td>
-      <td>{{ lastName }}</td>
-      <td>{{ office }}</td>
-      <td v-if="report">{{ report.createdAt | dateFormatter }}</td>
+      v-for="user in users"
+      :key="user.id"
+      @click="$emit('selected', user.id)">
+      <td>{{ user | fullName }}</td>
+      <td>{{ user.office }}</td>
+      <td v-if="user.report">{{ user.report.createdAt | dateFormatter }}</td>
       <td v-else class="td-warning">No report</td>
     </tr>
   </table>
@@ -22,10 +20,12 @@
 <script>
 import axios from '../../axios-auth.js';
 import dateFormatter from '../../filters/dateFormatter';
+import fullName from '../../filters/fullName';
 
 export default {
   filters: {
-    dateFormatter
+    dateFormatter,
+    fullName
   },
   props: {
     users: { type: Array, default: () => [] }
