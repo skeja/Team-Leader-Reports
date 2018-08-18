@@ -4,7 +4,13 @@
       <div class="name">
         {{ user | fullName }}
       </div>
-      <report-form @submitForm="submit($event)"></report-form>
+      <report-form v-model="report.content" @submitForm="showModal = true"></report-form>
+      <confirm
+        v-if="showModal"
+        @close="showModal = false"
+        @confirm="submit($event)">
+        <div slot="header">Submit report?</div>
+      </confirm>
     </div>
   </div>
 </template>
@@ -13,18 +19,27 @@
 import axios from '../../axios-auth';
 import ReportForm from './ReportForm.vue';
 import fullName from '../../filters/fullName';
+import Confirm from '../common/Confirm.vue';
+import UserStore from '../../store';
 
 export default {
   filters: {
     fullName
   },
   components: {
-    ReportForm
+    ReportForm,
+    Confirm
   },
   data() {
     return {
       id: this.$route.params.userId,
-      user: {}
+      user: {},
+      showModal: false,
+      report: {
+        content: '',
+        subjectId: this.$route.params.userId,
+        reporterId: UserStore.state.currentUser.id
+      }
     };
   },
   created() {
@@ -32,9 +47,9 @@ export default {
       .then(({ data }) => (this.user = data));
   },
   methods: {
-    submit(report) {
+    submit() {
       if (confirm('Submit report?')) {
-        axios.post(`/reports/${this.id}/newReport`, report)
+        axios.post(`/reports/new/${this.id}`, this.report)
           .then(response => this.$router.push('/reports'));
       }
     }

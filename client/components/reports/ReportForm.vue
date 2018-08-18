@@ -1,7 +1,9 @@
 <template>
   <form
+    :value="newReport"
     class="form"
-    @submit.prevent="$emit('submitForm', report)">
+    @input="$emit('input', $event.target.value)"
+    @submit.prevent="$emit('submitForm')">
     <div
       :class="{ form__error: content.$error }"
       class="form__group">
@@ -25,45 +27,31 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators';
-import UserStore from '../../store';
 
 export default {
   props: {
-    updatedReport: { type: Object, default: () => {} }
+    report: { type: Object, default: () => {} }
   },
   data() {
     return {
-      report: {
-        content: '',
-        subjectId: this.$route.params.userId,
-        reporterId: UserStore.state.currentUser.id
+      newReport: {
+        content: ''
       }
     };
   },
   computed: {
     content() {
-      return this.$v.report.content;
+      return this.$v.newReport.content;
     }
   },
   watch: {
-    updatedReport(val) {
-      if (val) this.report = { ...val };
-      this.report.subjectId = this.$route.params.userId;
-      this.report.reporterId = UserStore.state.currentUser.id;
+    newReport() {
+      this.report.content = this.newReport.content;
     }
   },
-  created() {
-    if (this.updatedReport) this.report = { ...this.updatedReport };
-  },
   validations: {
-    report: {
+    newReport: {
       content: {
-        required
-      },
-      subjectId: {
-        required
-      },
-      reporterId: {
         required
       }
     }
