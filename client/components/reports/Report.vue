@@ -2,22 +2,24 @@
   <div class="container">
     <i class="fas fa-pen"></i>
     <div class="center">
-      <div class="name">
-        {{ user | fullName }}
-
+      <div class="back-icon" @click="$router.back()">
+        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        <span>
+          Back
+        </span>
       </div>
       <div class="report">
         <div class="report-title">
-          Report
+          Report:
+          <span>
+            {{ user | fullName }}
+          </span>
         </div>
         <div class="report-item-label">
-          Reporter
-        </div>
-        <div class="report-item inner-shadow">
-          {{ report.reporter | fullName }}
-        </div>
-        <div class="report-item-label">
-          Content
+          Reporter:
+          <span>
+            {{ report.reporter | fullName }}
+          </span>
         </div>
         <div>
           <textarea
@@ -27,9 +29,9 @@
           </textarea>
         </div>
         <div v-if="!updating" class="report-content inner-shadow">
-          <i
-            class="fas fa-pencil-alt icon-right"
-            @click="updating = !updating"></i>
+          <i class="material-icons icon-right" @click="updating = !updating">
+            edit
+          </i>
           {{ report.content }}
         </div>
         <div class="report-dates">
@@ -37,7 +39,7 @@
             <span>
               Created:
             </span>
-            <span class="inner-shadow">
+            <span>
               {{ report.createdAt | dateFormatter }}
             </span>
           </div>
@@ -45,20 +47,25 @@
             <span>
               Last modified:
             </span>
-            <span class="inner-shadow">
+            <span>
               {{ report.updatedAt | dateFormatter }}
             </span>
           </div>
         </div>
       </div>
       <div v-if="!updating" class="buttons">
-        <button class="button" @click="goBack">Back</button>
-        <button class="button" @click="remove">Delete</button>
+        <button class="button" @click="showModal = true">Delete</button>
       </div>
       <div v-if="updating" class="buttons">
         <button class="button button-cancel" @click="reset">Cancel</button>
         <button class="button" @click="update">Update</button>
       </div>
+      <confirm
+        v-if="showModal"
+        @confirm="remove"
+        @close="showModal = false">
+        <div slot="header">Delete Report?</div>
+      </confirm>
     </div>
   </div>
 </template>
@@ -68,8 +75,12 @@ import axios from '../../axios-auth';
 import fullName from '../../filters/fullName';
 import dateFormatter from '../../filters/dateFormatter';
 import UserStore from '../../store';
+import Confirm from '../common/Confirm.vue';
 
 export default {
+  components: {
+    Confirm
+  },
   filters: {
     fullName,
     dateFormatter
@@ -82,7 +93,8 @@ export default {
       report: {},
       originalReport: {},
       user: {},
-      updating: false
+      updating: false,
+      showModal: false
     };
   },
   created() {
@@ -95,9 +107,6 @@ export default {
       });
   },
   methods: {
-    goBack() {
-      this.$router.back();
-    },
     update() {
       const data = {
         id: this.report.id,
@@ -113,8 +122,7 @@ export default {
       this.updating = false;
     },
     remove() {
-      if (!confirm('Deleting report')) return;
-      axios.delete(`/reports/${this.report.id}`)
+      return axios.delete(`/reports/${this.report.id}`)
         .then(response => this.$router.push('/reports'));
     }
   }
@@ -122,6 +130,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.center{
+  position: relative;
+}
+
 .button {
   margin-left: auto;
   margin-top: 0.5em;
@@ -138,4 +150,9 @@ a  i{
   cursor: pointer;
 }
 
+.back-icon{
+  top: 0;
+  left: 0;
+  padding: 1rem;
+}
 </style>
