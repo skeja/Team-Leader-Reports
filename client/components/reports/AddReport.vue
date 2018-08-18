@@ -1,6 +1,10 @@
 <template>
-  <div class="container">
+  <div class="container container-top">
     <div class="center">
+      <div class="back-icon" @click="$router.back()">
+        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        Back
+      </div>
       <div class="name">
         Add Reports
       </div>

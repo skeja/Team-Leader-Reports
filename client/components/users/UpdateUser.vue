@@ -1,6 +1,10 @@
 <template>
   <div class="container">
     <div class="center">
+      <div class="back-icon" @click="$router.back()">
+        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        Back
+      </div>
       <div v-if="selected">
         <user-form :updated-user="selected" @submitUser="submit($event)"></user-form>
       </div>
