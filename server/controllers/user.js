@@ -5,21 +5,18 @@ function create({ body }, res) {
   return db.user.create(body).then(user => res.send(user));
 }
 
-function findAll({ user: { role, team } }, res) {
-  const query = {};
+function findAll({ user: { role, team }, query: { search } }, res) {
+  const query = {
+    where: {}
+  };
+  if (search) query.where = { $or: [{ firstName: { $ilike: `${search}%` } }, { lastName: { $ilike: `${search}%` } }] };
+
   if (role !== 'ADMIN') {
-    query.where = { team };
+    Object.assign(query.where, { team });
   }
   return db.user.findAll(query)
     .then(users => users.map(it => omit(it.dataValues, 'password')))
     .then(users => res.send(users));
-}
-
-function findOne({ body: { firstName, lastName } }, res) {
-  const where = {
-    $and: [{ firstName: { $ilike: `${firstName}%` } }, { lastName: { $ilike: `${lastName}%` } }]
-  };
-  return db.user.findAll({ where }).then(user => res.send(user));
 }
 
 function findById({ params: { id } }, res) {
@@ -51,7 +48,6 @@ function remove({ params }, res) {
 module.exports = {
   create,
   findAll,
-  findOne,
   findById,
   update,
   remove

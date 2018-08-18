@@ -8,8 +8,6 @@ router.put('/users/:id', isAuthenticated(), ctrl.update);
 
 router.get('/users', isAuthenticated(), ctrl.findAll);
 
-router.post('/users', isAuthenticated(), ctrl.findOne);
-
 router.get('/users/:id', isAuthenticated(), ctrl.findById);
 
 router.delete('/users/:id', isAuthenticated(), ctrl.remove);
