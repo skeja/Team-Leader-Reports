@@ -129,6 +129,7 @@ export default {
 
 .login-item {
   display: inline-flex;
+  position: relative;
   height: 4rem;
   width: 100%;
   padding: 1rem 0;
@@ -162,7 +163,7 @@ input:focus {
 
 i {
   position: absolute;
-  padding-top: 5%;
+  top: 50%;
   color: gray;
 }
 
