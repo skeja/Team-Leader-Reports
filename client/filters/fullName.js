@@ -1,7 +1,6 @@
-import { compact } from 'lodash';
+import { capitalize, compact, map } from 'lodash';
 
-export default (user) => {
-  if (!user) return '';
-  const fullName = compact([user.firstName, user.lastName]).join(' ');
-  return fullName;
+export default ({ firstName, lastName } = {}) => {
+  if (!firstName && lastName) return '';
+  return compact(map([firstName, lastName], capitalize)).join(' ');
 };
