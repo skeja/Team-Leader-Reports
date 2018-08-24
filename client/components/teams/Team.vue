@@ -2,13 +2,13 @@
   <div class="container">
     <div class="center">
       <div class="back-icon" @click="$router.back()">
-        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
       </div>
       <div class="name">
         Team: {{ team.name }}
       </div>
-      <table v-if="isEmpty" class="table">
+      <table v-if="users.length" class="table">
         <tr>
           <th>User</th>
           <th>Office</th>
@@ -25,8 +25,8 @@
       </div>
       <div class="icons">
         <div class="tooltip">
-          <i class="material-icons md-36 alt-color hover" @click="showModal = true">delete</i>
-          <span class="tooltiptext">Delete team</span>
+          <span class="material-icons md-36 alt-color hover" @click="showModal = true">delete</span>
+          <span class="tooltip-text">Delete team</span>
         </div>
       </div>
       <confirm
@@ -43,7 +43,7 @@
         <div slot="body">Add member</div>
       </user-input>
     </div>
-    <i class="material-icons md-60 alt-color add" @click="addUser = true">add</i>
+    <span class="material-icons md-60 alt-color add" @click="addUser = true">add</span>
   </div>
 </template>
 
@@ -72,12 +72,6 @@ export default {
       addUser: false
     };
   },
-  computed: {
-    isEmpty() {
-      if (this.users.length > 0) return true;
-      return false;
-    }
-  },
   created() {
     return axios.get(`/teams/${this.id}`)
       .then(({ data }) => (this.team = data))
@@ -87,10 +81,10 @@ export default {
   methods: {
     remove() {
       axios.delete(`/teams/${this.id}`)
-        .then(this.$router.push('/teams'));
+        .then(this.$router.push({ name: 'teamList' }));
     },
     addMember(user) {
-      return axios.put(`/teams/${this.id}/${user.id}`)
+      return axios.put(`/teams/${this.id}`, user)
         .then(this.users.push(user))
         .catch(() => this.users.pop());
     }

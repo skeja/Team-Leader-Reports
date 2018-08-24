@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <i class="fas fa-pen"></i>
+    <span class="fas fa-pen"></span>
     <div class="center">
       <div class="back-icon" @click="$router.back()">
-        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         <span>
           Back
         </span>
@@ -29,9 +29,9 @@
           </textarea>
         </div>
         <div v-if="!updating" class="report-content inner-shadow">
-          <i class="material-icons icon-right" @click="updating = !updating">
+          <span class="material-icons icon-right" @click="updating = !updating">
             edit
-          </i>
+          </span>
           {{ report.content }}
         </div>
         <div class="report-dates">
@@ -53,18 +53,31 @@
           </div>
         </div>
       </div>
-      <div v-if="!updating" class="buttons">
-        <button class="button" @click="showModal = true">Delete</button>
-      </div>
-      <div v-if="updating" class="buttons">
-        <button class="button button-cancel" @click="reset">Cancel</button>
-        <button class="button" @click="update">Update</button>
+      <div class="buttons">
+        <div v-if="!updating" class="tooltip">
+          <span
+            class="material-icons md-36 main-color hover"
+            @click="showDeleteModal = true">
+            delete
+          </span>
+          <span class="tooltip-text">Delete user</span>
+        </div>
+        <template v-else>
+          <button class="button button-cancel" @click="reset">Cancel</button>
+          <button class="button" @click="showUpdateModal = true">Update</button>
+        </template>
       </div>
       <confirm
-        v-if="showModal"
+        v-if="showUpdateModal"
+        @confirm="update"
+        @close="showUpdateModal = false">
+        <div slot="header">Update report?</div>
+      </confirm>
+      <confirm
+        v-if="showDeleteModal"
         @confirm="remove"
-        @close="showModal = false">
-        <div slot="header">Delete Report?</div>
+        @close="showDeleteModal = false">
+        <div slot="header">Delete report?</div>
       </confirm>
     </div>
   </div>
@@ -89,12 +102,12 @@ export default {
     return {
       userId: this.$route.params.userId,
       reportId: this.$route.params.reportId,
-      subjectId: this.$route.params.userId,
       report: {},
       originalReport: {},
       user: {},
       updating: false,
-      showModal: false
+      showDeleteModal: false,
+      showUpdateModal: false
     };
   },
   created() {
@@ -112,10 +125,12 @@ export default {
         id: this.report.id,
         content: this.report.content,
         reporterId: UserStore.state.currentUser.id,
-        subjectId: this.subjectId
+        subjectId: this.userId
       };
       axios.put(`reports/${this.report.id}`, data)
-        .then(response => this.$router.push(`/reports/${data.subjectId}`));
+        .then(response => this.$router.push({
+          name: 'userReports', params: { userId: this.userId }
+        }));
     },
     reset() {
       this.report = this.originalReport;
@@ -123,7 +138,7 @@ export default {
     },
     remove() {
       return axios.delete(`/reports/${this.report.id}`)
-        .then(response => this.$router.push('/reports'));
+        .then(response => this.$router.push({ name: 'userReports' }));
     }
   }
 };
@@ -134,25 +149,14 @@ export default {
   position: relative;
 }
 
-.button {
+.tooltip {
   margin-left: auto;
-  margin-top: 0.5em;
-  max-width: 50%;
 }
-a  i{
-  margin-top: 0.5em;
-  cursor: pointer;
-}
+
 .icon-right {
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
-}
-
-.back-icon{
-  top: 0;
-  left: 0;
-  padding: 1rem;
 }
 </style>

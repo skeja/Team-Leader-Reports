@@ -6,7 +6,7 @@
       </div>
       <form class="login-form" @submit.prevent="submit">
         <div :class="{ focus: focus.email }" class="login-item">
-          <i class="far fa-envelope"></i>
+          <span class="material-icons md-24 icon-align icon-login">alternate_email</span>
           <input
             ref="emailInput"
             v-model="user.email"
@@ -19,7 +19,7 @@
             @blur="focus.email = false">
         </div>
         <div :class="{ focus: focus.password }" class="login-item">
-          <i class="fas fa-key"></i>
+          <span class="material-icons md-24 icon-align icon-login">lock</span>
           <input
             v-model="user.password"
             name="password"
@@ -73,7 +73,7 @@ export default {
   methods: {
     submit() {
       UserStore.login(this.user)
-        .then(() => this.$router.push('/'))
+        .then(() => this.$router.push({ name: 'home' }))
         .catch(({ response: { data } }) => {
           this.message = data.message;
           this.toggle = true;
@@ -138,18 +138,27 @@ export default {
 
   &.focus {
     border-color: $alt-color;
+    color: $alt-color;
 
-    i { color: $alt-color }
+    .icon-login {
+      color: $alt-color;
+    }
   }
 }
 
 .login-input {
   width: 100%;
   height: 100%;
-  padding-left: 1.5rem;
+  padding-left: 0.5rem;
   font-size: 1rem;
   border: none;
   background-color: transparent;
+  box-shadow: none;
+
+  &:focus {
+    box-shadow: none;
+    color: $alt-color !important;
+  }
 }
 
 .button {
@@ -159,12 +168,6 @@ export default {
 
 input:focus {
   outline: none;
-}
-
-i {
-  position: absolute;
-  top: 50%;
-  color: gray;
 }
 
 .slide-fade-enter-active {
@@ -184,6 +187,6 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 5000s ease-in-out 0s;
 }
 </style>

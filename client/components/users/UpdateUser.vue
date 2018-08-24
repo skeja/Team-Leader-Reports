@@ -2,7 +2,7 @@
   <div class="container">
     <div class="center">
       <div class="back-icon" @click="$router.back()">
-        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
       </div>
       <div v-if="selected">
@@ -36,7 +36,7 @@ export default {
   methods: {
     submit(user) {
       axios.put(`/users/${this.selected.id}`, user)
-        .then(response => this.$router.push('/users'));
+        .then(response => this.$router.push({ name: 'findUser' }));
     }
   }
 };
