@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container container-top">
     <div class="center">
       <table class="table">
         <tr>
@@ -8,12 +8,12 @@
         <tr
           v-for="team in teams"
           :key="team.id"
-          @click="selected(team.id)">
+          @click="viewTeam(team.id)">
           <td>{{ team.name }}</td>
         </tr>
       </table>
     </div>
-    <i class="material-icons md-60 alt-color add" @click="addTeam">add</i>
+    <span class="material-icons md-60 alt-color add" @click="addTeam">add</span>
   </div>
 </template>
 
@@ -33,8 +33,8 @@ export default {
       });
   },
   methods: {
-    selected(it) {
-      this.$router.push(`/teams/${it}`);
+    viewTeam(id) {
+      this.$router.push({ name: 'team', params: { id } });
     },
     addTeam() {
       this.$router.push({ name: 'newTeam' });
@@ -48,17 +48,5 @@ export default {
 td{
   cursor: pointer;
   text-align: center;
-}
-
-.center {
-  position: relative;
-
-  & i {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 1.4em;
-    cursor: pointer;
-  }
 }
 </style>

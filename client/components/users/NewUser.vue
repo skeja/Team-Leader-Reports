@@ -2,7 +2,7 @@
   <div class="container">
     <div class="center">
       <div class="back-icon" @click="$router.back()">
-        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
       </div>
       <user-form @submitUser="submit($event)"></user-form>
@@ -20,9 +20,9 @@ export default {
   },
   methods: {
     submit(user) {
-      axios.post('/newUser', user)
+      axios.post('/users', user)
         .then(response => {
-          this.$router.push('/users');
+          this.$router.push({ name: 'findUser' });
         });
     }
   }

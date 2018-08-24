@@ -9,6 +9,7 @@ export default {
   path: '/reports',
   component: Reports,
   redirect: '/reports/users',
+  name: 'reports',
   children: [{
     path: 'users',
     component: FindReports,

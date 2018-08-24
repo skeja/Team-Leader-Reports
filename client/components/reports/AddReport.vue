@@ -2,13 +2,13 @@
   <div class="container container-top">
     <div class="center">
       <div class="back-icon" @click="$router.back()">
-        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
       </div>
       <div class="name">
         Add Reports
       </div>
-      <user-list :users="users" @selected="selected($event)"></user-list>
+      <user-list :users="users" @selected="addUserReport($event)"></user-list>
     </div>
   </div>
 </template>
@@ -34,8 +34,8 @@ export default {
       });
   },
   methods: {
-    selected(id) {
-      this.$router.push(`/reports/new/${id}`);
+    addUserReport(userId) {
+      this.$router.push({ name: 'newReport', params: { userId } });
     }
   }
 };

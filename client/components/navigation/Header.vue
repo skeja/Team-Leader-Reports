@@ -3,27 +3,27 @@
     <ul class="horizontal">
       <template v-if="user.email">
         <router-link
-          to="/"
+          :to="{ name: 'home' }"
           tag="li"
           class="nav-brand"
           exact
           exact-active-class="highlighted">
-          <i class="fa fa-home"></i>
+          <span class="material-icons md-24">home</span>
         </router-link>
         <router-link
-          to="/users"
+          :to="{ name: 'findUser' }"
           tag="li"
           active-class="highlighted">
           Users
         </router-link>
         <router-link
-          to="/reports"
+          :to="{ name: 'findReports' }"
           tag="li"
           active-class="highlighted">
           Reports
         </router-link>
         <router-link
-          to="/teams"
+          :to="{ name: 'teamList' }"
           tag="li"
           active-class="highlighted">
           Teams
@@ -40,7 +40,7 @@
       <router-link
         v-else
         class="auth"
-        to="/login"
+        to="{ name: 'login' }"
         tag="li">
         Login
       </router-link>
@@ -66,7 +66,7 @@ export default {
     logout() {
       UserStore.removeUser();
       localStorage.removeItem('user');
-      this.$router.push('/login');
+      this.$router.push({ name: 'login' });
     }
   }
 };
@@ -77,6 +77,7 @@ export default {
   display: flex;
   margin-left: auto;
 }
+
 .navigation {
 
   & ul {

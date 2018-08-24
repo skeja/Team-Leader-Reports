@@ -8,7 +8,8 @@ export default {
   component: Teams,
   children: [{
     path: '',
-    component: TeamList
+    component: TeamList,
+    name: 'teamList'
   }, {
     path: 'new',
     component: NewTeam,

@@ -14,10 +14,12 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    component: Home
+    component: Home,
+    name: 'home'
   }, {
     path: '/login',
     component: Login,
+    name: 'login',
     meta: { noAuth: true }
   },
   User,
