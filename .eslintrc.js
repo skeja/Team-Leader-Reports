@@ -34,7 +34,6 @@ module.exports = {
       named: 'never'
     }],
     'object-curly-spacing': ['error', 'always'],
-
     'vue/html-self-closing': 0,
     'vue/max-attributes-per-line': [2, {
       'singleline': 2,

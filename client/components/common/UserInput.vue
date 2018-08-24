@@ -3,7 +3,6 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-
           <div class="modal-input">
             <div class="modal-input-title">
               <slot name="body">
@@ -16,7 +15,6 @@
               class="form__input"
               @input="findUsers">
           </div>
-
           <div>
             <table class="table modal-table">
               <tr
@@ -24,11 +22,11 @@
                 :key="user.id"
                 @click="$emit('addUser', user)">
                 <td>{{ user | fullName }}</td>
-                <td>{{ user.team }}</td>
+                <td v-if="user.team">{{ user.team.name }}</td>
+                <td v-else class="warning">No team</td>
               </tr>
             </table>
           </div>
-
           <div class="modal-buttons">
             <button @click="$emit('close')">
               Finish
@@ -61,10 +59,7 @@ export default {
         .then(({ data }) => {
           this.users = sortBy(data, [user => user.lastName.toLowerCase()]);
         });
-    }, 500),
-    selected(userId) {
-      axios.put(`/teams/${this.$route.params.id}/${userId}`);
-    }
+    }, 500)
   }
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="container container-top">
     <div class="center">
       <div class="back-icon" @click="$router.back()">
-        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
       </div>
       <div class="name">
@@ -10,14 +10,14 @@
       </div>
       <table v-if="reports.length > 0" class="table">
         <tr>
-          <th >Reporter</th>
+          <th>Reporter</th>
           <th>Created</th>
           <th>Updated</th>
         </tr>
         <tr
           v-for="report in reports"
           :key="report.id"
-          @click="selected(report.id)">
+          @click="viewReport(report.id)">
           <td>{{ report.reporter | fullName }}</td>
           <td>{{ report.createdAt | dateFormatter }}</td>
           <td>{{ report.updatedAt | dateFormatter }}</td>
@@ -27,9 +27,9 @@
         User have no reports
       </div>
     </div>
-    <i class="material-icons md-60 alt-color add" @click="addReport">
+    <span class="material-icons md-60 alt-color add" @click="addReport">
       add
-    </i>
+    </span>
   </div>
 </template>
 
@@ -60,12 +60,11 @@ export default {
       });
   },
   methods: {
-    selected(it) {
-      this.$router.push({ name: 'report', params: { userId: this.userId, reportId: it } });
+    viewReport(reportId) {
+      this.$router.push({ name: 'report', params: { userId: this.userId, reportId } });
     },
     sort(it) {
       this.reports = sortBy(this.reports, it);
-      console.log(this.reports);
     },
     addReport() {
       this.$router.push({ name: 'newReport', params: { userId: this.userId } });

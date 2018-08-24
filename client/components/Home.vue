@@ -5,9 +5,3 @@
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.center {
-  border-radius: 0;
-}
-</style>

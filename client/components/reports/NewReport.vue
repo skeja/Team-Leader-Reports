@@ -48,10 +48,8 @@ export default {
   },
   methods: {
     submit() {
-      if (confirm('Submit report?')) {
-        axios.post(`/reports/new/${this.id}`, this.report)
-          .then(response => this.$router.push('/reports'));
-      }
+      axios.post(`/reports/${this.id}`, this.report)
+        .then(response => this.$router.push({ name: 'userReports' }));
     }
   }
 };

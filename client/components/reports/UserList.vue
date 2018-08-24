@@ -40,11 +40,6 @@ export default {
       .then(response => {
         this.reports = response.data;
       });
-  },
-  methods: {
-    selected(it) {
-      this.$router.push(`/reports/${it}`);
-    }
   }
 };
 </script>

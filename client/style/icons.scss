@@ -1,4 +1,3 @@
-@import url('https://use.fontawesome.com/releases/v5.0.13/css/all.css');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import './constants';
 
@@ -13,10 +12,15 @@ i.fa-plus {
 }
 
 .material-icons.md-18 { font-size: 18px; }
+
 .material-icons.md-24 { font-size: 24px; }
+
 .material-icons.md-36 { font-size: 36px; }
+
 .material-icons.md-48 { font-size: 48px; }
+
 .material-icons.md-60 { font-size: 60px; }
+
 .md-rem { font-size: 1rem; }
 
 .add {
@@ -38,6 +42,14 @@ i.fa-plus {
   justify-content: space-between;
   padding: 0 1rem;
   position: relative;
+}
+
+.icon-login {
+  color: $main-color;
+
+  &:focus {
+    color: $alt-color;
+  }
 }
 
 .alt-color {
@@ -79,7 +91,7 @@ i.fa-plus {
   position: relative;
 }
 
-.tooltiptext {
+.tooltip-text {
   visibility: hidden;
   width: 120px;
   background-color: $main-color;
@@ -96,7 +108,7 @@ i.fa-plus {
   transition: opacity 0.3s;
 }
 
-.tooltiptext::after {
+.tooltip-text::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -107,7 +119,7 @@ i.fa-plus {
   border-color: $main-color transparent transparent transparent;
 }
 
-.tooltip:hover .tooltiptext {
+.tooltip:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
 }

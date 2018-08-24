@@ -14,7 +14,6 @@
         class="form_input textarea">
       </textarea>
     </div>
-
     <div class="form_buttons">
       <button
         :disabled="$v.$invalid"

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="center">
       <div class="back-icon" @click="$router.back()">
-        <i class="material-icons md-24 alt-color">keyboard_backspace</i>
+        <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
       </div>
       <form
@@ -18,7 +18,6 @@
             class="form__input"
             type="text">
         </div>
-
         <div class="form_buttons">
           <button
             :disabled="$v.$invalid"
@@ -65,9 +64,8 @@ export default {
   },
   methods: {
     submit() {
-      console.log(this.team);
       axios.post('/teams', this.team)
-        .then(response => this.$router.push('/teams'));
+        .then(response => this.$router.push({ name: 'teamList' }));
     }
   },
   validations: {

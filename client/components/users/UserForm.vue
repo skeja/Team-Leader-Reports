@@ -2,11 +2,12 @@
   <form
     class="form"
     @submit.prevent="$emit('submitUser', user);">
-
     <div
       :class="{ form__error: firstName.$error }"
       class="form__group">
-      <label class="form__label">First name</label>
+      <label class="form__label">
+        First name
+      </label>
       <input
         v-model="firstName.$model"
         class="form__input"
@@ -14,14 +15,15 @@
     </div>
     <div
       v-if="firstName.$error && !firstName.required"
-      class="error">Field is required.
+      class="error">
+      Field is required.
     </div>
     <div
       v-if="firstName.$error && !firstName.minLength"
-      class="error">Name must have at least
+      class="error">
+      Name must have at least
       {{ firstName.$params.minLength.min }} letters.
     </div>
-
     <div
       :class="{ form__error: lastName.$error }"
       class="form__group">
@@ -33,18 +35,21 @@
     </div>
     <div
       v-if="lastName.$error && !lastName.required"
-      class="error">Field is required.
+      class="error">
+      Field is required.
     </div>
     <div
       v-if="lastName.$error && !lastName.minLength"
-      class="error">Name must have at least
+      class="error">
+      Name must have at least
       {{ lastName.$params.minLength.min }} letters.
     </div>
-
     <div
       :class="{ form__error: email.$error }"
       class="form__group">
-      <label class="form__label">Email</label>
+      <label class="form__label">
+        Email
+      </label>
       <input
         v-model="email.$model"
         class="form__input"
@@ -52,18 +57,21 @@
     </div>
     <div
       v-if="email.$error && !email.required"
-      class="error">Field is required.
+      class="error">
+      Field is required.
     </div>
     <div
       v-if="email.$error && !email.email"
-      class="error">Email format not correct
+      class="error">
+      Email format not correct
     </div>
-
     <div v-if="!updatedUser">
       <div
         :class="{ form__error: password.$error }"
         class="form__group">
-        <label class="form__label">Password</label>
+        <label class="form__label">
+          Password
+        </label>
         <input
           v-model="password.$model"
           class="form__input"
@@ -71,25 +79,29 @@
       </div>
       <div
         v-if="password.$error && !password.required"
-        class="error">Field is required.
+        class="error">
+        Field is required.
       </div>
       <div
         v-if="password.$error && !password.minLength"
-        class="error">Name must have at least
+        class="error">
+        Name must have at least
         {{ password.$params.minLength.min }} letters.
       </div>
     </div>
-
-    <div
-      class="form__group">
+    <div class="form__group">
       <label
-        class="form__label">Role</label>
+        class="form__label">
+        Role
+      </label>
       <select v-model="role.$model">
         <option
           value=""
           selected
           disabled
-          hidden>Select role</option>
+          hidden>
+          Select role
+        </option>
         <option value="DEVELOPER" selected>Developer</option>
         <option value="TEAM_LEAD">Team Lead</option>
         <option value="ADMIN">Admin</option>
@@ -98,7 +110,9 @@
     <div
       :class="{ form__error: office.$error }"
       class="form__group">
-      <label class="form__label">Office</label>
+      <label class="form__label">
+        Office
+      </label>
       <input
         v-model="office.$model"
         class="form__input"
@@ -106,17 +120,21 @@
     </div>
     <div
       v-if="office.$error && !office.required"
-      class="error">Field is required.
+      class="error">
+      Field is required.
     </div>
     <div
       v-if="office.$error && !office.minLength"
-      class="error">Name must have at least
+      class="error">
+      Name must have at least
       {{ office.$params.minLength.min }} letters.
     </div>
     <div
       :class="{ form__error: team.$error }"
       class="form__group">
-      <label class="form__label">Team</label>
+      <label class="form__label">
+        Team
+      </label>
       <input
         v-model="team.$model"
         class="form__input"
@@ -124,9 +142,9 @@
     </div>
     <div
       v-if="team.$error && !team.required"
-      class="error">Field is required.
+      class="error">
+      Field is required.
     </div>
-
     <div class="form__buttons">
       <button
         :disabled="$v.$invalid"
@@ -220,7 +238,7 @@ export default {
       return this.$v.user.office;
     },
     team() {
-      return this.$v.user.team
+      return this.$v.user.team;
     }
   },
   watch: {
