@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     this.hasMany(teamHistory, {
       foreignKey: { name: 'teamId', field: 'team_id' }
     });
+    this.hasMany(user, {
+      foreignKey: { name: 'teamId', field: 'team_id' }
+    });
   };
   return Team;
 };

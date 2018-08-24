@@ -1,6 +1,4 @@
 const bcrypt = require('bcrypt');
-const dotenv = require('dotenv');
-dotenv.config();
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
@@ -38,8 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       field: 'updated_at'
     },
     role: DataTypes.ENUM('ADMIN', 'TEAM_LEAD', 'DEVELOPER'),
-    office: DataTypes.STRING,
-    team: DataTypes.STRING
+    office: DataTypes.STRING
   }, {
     timestamps: true
   }
@@ -70,6 +67,9 @@ module.exports = (sequelize, DataTypes) => {
     this.hasMany(report, {
       foreignKey: { name: 'subjectId', field: 'subject_id' },
       as: 'reports'
+    });
+    this.belongsTo(team, {
+      foreignKey: { name: 'teamId', field: 'team_id' }
     });
   };
 
