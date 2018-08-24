@@ -2,12 +2,9 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const passport = require('./server/auth/');
 const path = require('path');
 const jsend = require('jsend');
-
-dotenv.config();
 
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({
@@ -18,8 +15,6 @@ app.use(cors({ origin: true }));
 app.use(jsend.middleware);
 
 app.use(express.static(path.join(__dirname, 'dist')));
-
-// require('./server/seed')(app);
 
 require('./server/api')(app);
 

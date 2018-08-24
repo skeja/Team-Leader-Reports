@@ -6,7 +6,8 @@
   "scripts": {
     "build": "poi build",
     "dev:client": "poi",
-    "dev:server": "nodemon"
+    "dev:server": "nodemon -r dotenv/config",
+    "db:seed": "node -r ./server/seed/index.js"
   },
   "repository": {
     "type": "git",
