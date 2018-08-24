@@ -14,45 +14,34 @@ function findBySubject({ query: { id } }, res) {
     .then(reports => res.send(reports));
 }
 
-function getLastUsersReports({ user: { role, team } }, res) {
+function getLastUsersReports({ user: { role, teamId } }, res) {
+  const include = [{
+    as: 'subject',
+    model: db.user,
+    attributes: ['id', 'firstName', 'lastName', 'office'],
+    required: true
+  }];
+
+  if (role !== 'ADMIN') include[0].where = { teamId };
+
   const query = {
     attributes: [
       db.sequelize.literal('DISTINCT ON("report"."subject_id") 1'),
       'id', 'createdAt'
     ],
     order: [['subject_id', 'asc'], ['createdAt', 'desc']],
-    include: [{
-      as: 'subject',
-      model: db.user,
-      attributes: ['id', 'firstName', 'lastName', 'office'],
-      required: true
-    }]
+    include
   };
 
-  if (role !== 'ADMIN') {
-    const [userJoin] = query.include;
-    userJoin.where = { team };
-  }
+  // if (role !== 'ADMIN') {
+  //   const [userJoin] = query.include;
+  //   userJoin.where = { team };
+  // }
 
   return db.report.findAll(query)
-    .then(reports => {
-      const users = [];
-      reports.forEach(({ id, createdAt, subject }) => {
-        const report = {
-          id,
-          createdAt
-        };
-        const user = {
-          id: subject.id,
-          firstName: subject.firstName,
-          lastName: subject.lastName,
-          office: subject.office,
-          report
-        };
-        users.push(user);
-      });
-      res.send(users);
-    });
+    .map(report => report.toJSON())
+    .map(({ subject, ...report }) => ({ report, ...subject }))
+    .then(users => res.send(users));
 }
 
 function getUserReports({ params: { userId } }, res) {
@@ -101,12 +90,12 @@ function remove({ params: { reportId } }, res) {
     .then(() => res.status(204).send());
 }
 
-async function findTeamUsersReports({ user: { role, team } }, res) {
+async function findTeamUsersReports({ user: { role, teamId } }, res) {
   const query = {
     attributes: ['id', 'firstName', 'lastName', 'office'],
     raw: true
   };
-  if (role !== 'ADMIN') query.where = { team };
+  if (role !== 'ADMIN') query.where = { teamId };
 
   let users = await db.user.findAll(query);
 

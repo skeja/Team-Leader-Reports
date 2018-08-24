@@ -6,9 +6,9 @@ router.get('/teams', isAuthenticated(), ctrl.list);
 
 router.post('/teams', isAuthenticated(), ctrl.create);
 
-router.put('/teams/:id/:userId', isAuthenticated(), ctrl.addTeamMember);
+router.put('/teams/:teamId/', isAuthenticated(), ctrl.addTeamMember);
 
-router.get('/teams/:id/users', isAuthenticated(), ctrl.getTeamUsers);
+router.get('/teams/:teamId/users', isAuthenticated(), ctrl.getTeamUsers);
 
 router.get('/teams/:id', isAuthenticated(), ctrl.getTeam);
 

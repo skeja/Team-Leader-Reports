@@ -9,9 +9,9 @@ function create({ body }, res) {
   return db.team.create(body).then(user => res.send(user));
 }
 
-function getTeamUsers({ params: { id } }, res) {
+function getTeamUsers({ params: { teamId } }, res) {
   return db.user.findAll({
-    where: { team: id },
+    where: { teamId },
     attributes: ['id', 'firstName', 'lastName', 'office']
   })
     .then(users => res.send(users));
@@ -36,10 +36,10 @@ function remove({ params: { id } }, res) {
     .then(user => res.send(user));
 }
 
-function addTeamMember({ params: { id, userId } }, res) {
+function addTeamMember({ params: { teamId }, body: { id } }, res) {
   return db.user.update({
-    team: id
-  }, { where: { id: userId } })
+    teamId: teamId
+  }, { where: { id } })
     .then(user => res.send(user));
 }
 

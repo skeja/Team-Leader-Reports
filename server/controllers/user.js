@@ -5,14 +5,20 @@ function create({ body }, res) {
   return db.user.create(body).then(user => res.send(user));
 }
 
-function findAll({ user: { role, team }, query: { search } }, res) {
+function findAll({ user: { role, teamId }, query: { search } }, res) {
   const query = {
-    where: {}
+    where: {},
+    include: [
+      {
+        model: db.team,
+        attributes: ['name']
+      }
+    ]
   };
   if (search) query.where = { $or: [{ firstName: { $ilike: `${search}%` } }, { lastName: { $ilike: `${search}%` } }] };
 
   if (role !== 'ADMIN') {
-    Object.assign(query.where, { team });
+    Object.assign(query.where, { teamId });
   }
   return db.user.findAll(query)
     .then(users => users.map(it => omit(it.dataValues, 'password')))
@@ -22,10 +28,15 @@ function findAll({ user: { role, team }, query: { search } }, res) {
 function findById({ params: { id } }, res) {
   return db.user.findOne({
     where: { id },
-    attributes: { exclude: ['password']
-    }
+    attributes: { exclude: ['password', 'teamId'] },
+    include: [
+      {
+        model: db.team,
+        attributes: ['name']
+      }
+    ]
   })
-    .then(it => res.send(it));
+    .then(user => res.send(user));
 }
 
 function update({ body }, res) {
