@@ -2,35 +2,31 @@
   <div class="container container-top">
     <div class="center">
       <div class="filter-input">
-        <input
-          v-model="input"
-          type="text"
-          class="form__input"
-          placeholder="search..."
-          @input="submit(input)">
+        <search-input :users="users" @search="setUsers($event)"></search-input>
       </div>
-      <user-list :users="filteredUsers" @selected="selected($event)"></user-list>
+      <user-list :users="filteredUsers" @selected="viewUserReports($event)"></user-list>
     </div>
-    <i class="material-icons md-60 alt-color add" @click="addReport">
+    <span class="material-icons md-60 alt-color add" @click="addReport">
       add
-    </i>
+    </span>
   </div>
 </template>
 
 <script>
 import UserList from './UserList.vue';
+import SearchInput from '../common/SearchInput';
 import axios from '../../axios-auth';
-import { debounce, filter, sortBy } from 'lodash';
+import { sortBy } from 'lodash';
 
 export default {
   components: {
-    UserList
+    UserList,
+    SearchInput
   },
   data() {
     return {
       users: [],
-      filteredUsers: [],
-      input: ''
+      filteredUsers: []
     };
   },
   created() {
@@ -41,16 +37,12 @@ export default {
       });
   },
   methods: {
-    selected(it) {
-      this.$router.push({ name: 'userReports', params: { userId: it } });
+    setUsers(users) {
+      this.filteredUsers = users;
     },
-    submit: debounce(function (input) {
-      const query = input.toLowerCase();
-      this.filteredUsers = filter(this.users, ({ firstName = '', lastName = '' }) => {
-        return firstName.toLowerCase().includes(query) ||
-        lastName.toLowerCase().includes(query);
-      });
-    }, 500),
+    viewUserReports(userId) {
+      this.$router.push({ name: 'userReports', params: { userId } });
+    },
     addReport() {
       this.$router.push({ name: 'addReport' });
     }

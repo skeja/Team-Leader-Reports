@@ -2,12 +2,7 @@
   <div class="container container-top">
     <div class="center">
       <div class="filter-input">
-        <input
-          v-model="input"
-          type="text"
-          class="form__input"
-          placeholder="search..."
-          @input="submit(input)">
+        <search-input :users="users" @search="setUsers($event)"></search-input>
       </div>
       <table class="table">
         <tr>
@@ -18,32 +13,34 @@
         <tr
           v-for="user in filteredUsers"
           :key="user.id"
-          @click="selected(user)">
+          @click="viewUser(user)">
           <td>{{ user | fullName }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.office }}</td>
         </tr>
       </table>
     </div>
-    <i class="material-icons md-60 alt-color add" @click="addUser">add</i>
+    <span class="material-icons md-60 alt-color add" @click="addUser">add</span>
   </div>
 </template>
 
 <script>
 import axios from '../../axios-auth';
 import fullName from '../../filters/fullName';
-import { debounce, filter, sortBy } from 'lodash';
+import { sortBy } from 'lodash';
+import SearchInput from '../common/SearchInput';
 
 export default {
   filters: {
     fullName
   },
+  components: {
+    SearchInput
+  },
   data() {
     return {
-      user: { firstName: '', lastName: '' },
       users: [],
-      filteredUsers: [],
-      input: ''
+      filteredUsers: []
     };
   },
   created() {
@@ -54,15 +51,11 @@ export default {
       });
   },
   methods: {
-    submit: debounce(function (input) {
-      const query = input.toLowerCase();
-      this.filteredUsers = filter(this.users, ({ firstName = '', lastName = '' }) => {
-        return firstName.toLowerCase().includes(query) ||
-        lastName.toLowerCase().includes(query);
-      });
-    }, 500),
-    selected(it) {
-      this.$router.push(`/users/${it.id}`);
+    setUsers(users) {
+      this.filteredUsers = users;
+    },
+    viewUser(user) {
+      this.$router.push({ name: 'user', params: { userId: user.id } });
     },
     addUser() {
       this.$router.push({ name: 'newUser' });
