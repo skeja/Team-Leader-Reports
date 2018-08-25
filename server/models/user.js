@@ -35,8 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       field: 'updated_at'
     },
-    role: DataTypes.ENUM('ADMIN', 'TEAM_LEAD', 'DEVELOPER'),
-    office: DataTypes.STRING
+    role: DataTypes.ENUM('ADMIN', 'TEAM_LEAD', 'DEVELOPER')
   }, {
     timestamps: true
   }
@@ -53,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     return bcrypt.compare(password, this.password);
   };
 
-  User.associate = function ({ projectHistory, team, teamHistory, report }) {
+  User.associate = function ({ projectHistory, team, teamHistory, report, office }) {
     this.hasMany(projectHistory, {
       foreignKey: { name: 'userId', field: 'user_id' }
     });
@@ -70,6 +69,9 @@ module.exports = (sequelize, DataTypes) => {
     });
     this.belongsTo(team, {
       foreignKey: { name: 'teamId', field: 'team_id' }
+    });
+    this.belongsTo(office, {
+      foreignKey: { name: 'officeId', field: 'office_id' }
     });
   };
 

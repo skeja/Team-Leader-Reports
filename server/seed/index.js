@@ -6,6 +6,7 @@ const projectData = require('./projects.json').data;
 const projectHistoryData = require('./projectHistory.json').data;
 const reports = require('./reports.json').data;
 const teamHistoryData = require('./teamHistory.json').data;
+const officeData = require('./office.json').data;
 
 db.sequelize.sync({ force: true })
   .then(() => seed())
@@ -22,6 +23,7 @@ async function seed() {
   let models = {};
 
   models.team = await createObj(db.team, teamData);
+  models.office = await createObj(db.office, officeData);
   models.user = await createObj(db.user, userData);
   models.project = await createObj(db.project, projectData);
   models.projectHistory = await createObj(db.projectHistory, projectHistoryData);

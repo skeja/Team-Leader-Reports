@@ -6,7 +6,7 @@
       "email": "ivo@ivo.hr",
       "password": "sifra",
       "role": "DEVELOPER",
-      "office": "C7",
+      "officeId": "3",
       "teamId": "1"
     },
     {
@@ -15,7 +15,7 @@
       "email": "mate@mate.hr",
       "password": "sifra",
       "role": "DEVELOPER",
-      "office": "C5",
+      "officeId": "1",
       "teamId": "1"
     },
     {
@@ -24,7 +24,7 @@
       "email": "sime@sime.hr",
       "password": "sifra",
       "role": "DEVELOPER",
-      "office": "C2",
+      "officeId": "2",
       "teamId": "2"
     },
     {
@@ -33,7 +33,7 @@
       "email": "luka@luka.hr",
       "password": "sifra",
       "role": "TEAM_LEAD",
-      "office": "C7",
+      "officeId": "3",
       "teamId": "3"
     },
     {
@@ -42,7 +42,7 @@
       "email": "pero@pero.hr",
       "password": "sifra",
       "role": "TEAM_LEAD",
-      "office": "C5",
+      "officeId": "1",
       "teamId": "2"
     },
     {
@@ -51,7 +51,7 @@
       "email": "ante@ante.hr",
       "password": "sifra",
       "role": "TEAM_LEAD",
-      "office": "C2",
+      "officeId": "2",
       "teamId": "2"
     },
     {
@@ -60,7 +60,7 @@
       "email": "puki@puki.hr",
       "password": "sifra",
       "role": "ADMIN",
-      "office": "C7"
+      "officeId": "3"
     }
   ]
 }
