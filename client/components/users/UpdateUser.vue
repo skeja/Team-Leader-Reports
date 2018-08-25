@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       userId: this.$route.params.userId,
-      selected: ''
+      selected: {}
     };
   },
   created() {

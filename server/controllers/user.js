@@ -32,7 +32,7 @@ function findAll({ user: { role, teamId }, query: { search } }, res) {
 function findById({ params: { id } }, res) {
   return db.user.findOne({
     where: { id },
-    attributes: { exclude: ['password', 'teamId'] },
+    attributes: { exclude: ['password'] },
     include: [
       {
         model: db.team,
@@ -53,7 +53,8 @@ function update({ body }, res) {
     lastName: body.lastName,
     email: body.email,
     role: body.role,
-    office: body.office
+    officeId: body.officeId,
+    teamId: body.teamId
   }, { where: { id: body.id } })
     .then(user => res.send(user));
 }

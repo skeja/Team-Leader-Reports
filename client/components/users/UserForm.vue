@@ -107,43 +107,47 @@
         <option value="ADMIN">Admin</option>
       </select>
     </div>
-    <div
-      :class="{ form__error: office.$error }"
-      class="form__group">
-      <label class="form__label">
+    <div class="form__group">
+      <label
+        class="form__label">
         Office
       </label>
-      <input
-        v-model="office.$model"
-        class="form__input"
-        type="text">
+      <select v-model="office.$model">
+        <option
+          value=""
+          selected
+          disabled
+          hidden>
+          Select office
+        </option>
+        <option
+          v-for="office in offices"
+          :key="office.id"
+          :value="office.id">
+          {{ office.name }}
+        </option>
+      </select>
     </div>
-    <div
-      v-if="office.$error && !office.required"
-      class="error">
-      Field is required.
-    </div>
-    <div
-      v-if="office.$error && !office.minLength"
-      class="error">
-      Name must have at least
-      {{ office.$params.minLength.min }} letters.
-    </div>
-    <div
-      :class="{ form__error: team.$error }"
-      class="form__group">
-      <label class="form__label">
+    <div class="form__group">
+      <label
+        class="form__label">
         Team
       </label>
-      <input
-        v-model="team.$model"
-        class="form__input"
-        type="text">
-    </div>
-    <div
-      v-if="team.$error && !team.required"
-      class="error">
-      Field is required.
+      <select v-model="team.$model">
+        <option
+          value=""
+          selected
+          disabled
+          hidden>
+          Select team
+        </option>
+        <option
+          v-for="team in teams"
+          :key="team.id"
+          :value="team.id">
+          {{ team.name }}
+        </option>
+      </select>
     </div>
     <div class="form__buttons">
       <button
@@ -170,6 +174,7 @@
 
 <script>
 import { required, minLength, email } from 'vuelidate/lib/validators';
+import axios from '../../axios-auth';
 
 export default {
   props: {
@@ -183,9 +188,11 @@ export default {
         email: '',
         password: '',
         role: '',
-        office: '',
-        team: ''
+        officeId: '',
+        teamId: ''
       },
+      teams: [],
+      offices: [],
       validator: {
         user: {
           firstName: {
@@ -207,11 +214,10 @@ export default {
           role: {
             required
           },
-          office: {
-            required,
-            minLength: minLength(2)
+          officeId: {
+            required
           },
-          team: {
+          teamId: {
             required
           }
         }
@@ -235,10 +241,10 @@ export default {
       return this.$v.user.role;
     },
     office() {
-      return this.$v.user.office;
+      return this.$v.user.officeId;
     },
     team() {
-      return this.$v.user.team;
+      return this.$v.user.teamId;
     }
   },
   watch: {
@@ -248,6 +254,10 @@ export default {
   },
   created() {
     if (this.updatedUser) this.user = { ...this.updatedUser };
+    axios.get('/teams')
+      .then(({ data }) => { this.teams = data; })
+      .then(() => (axios.get('/offices')))
+      .then(({ data }) => { this.offices = data; });
   },
   methods: {
     emitData() {
