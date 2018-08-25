@@ -16,7 +16,8 @@
           @click="viewUser(user)">
           <td>{{ user | fullName }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.office }}</td>
+          <td v-if="user.office">{{ user.office.name }}</td>
+          <td v-else class="warning">No office</td>
         </tr>
       </table>
     </div>

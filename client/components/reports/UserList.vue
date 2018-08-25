@@ -10,7 +10,8 @@
       :key="user.id"
       @click="$emit('selected', user.id)">
       <td>{{ user | fullName }}</td>
-      <td>{{ user.office }}</td>
+      <td v-if="user.office">{{ user.office.name }}</td>
+      <td v-else class="td-warning">No office</td>
       <td v-if="user.report">{{ user.report.createdAt | dateFormatter }}</td>
       <td v-else class="td-warning">No report</td>
     </tr>
@@ -47,9 +48,5 @@ export default {
 <style lang="scss" scoped>
 td {
   cursor: pointer;
-}
-
-.td-warning {
-  color: #E74C3C;
 }
 </style>

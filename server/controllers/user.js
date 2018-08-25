@@ -12,6 +12,10 @@ function findAll({ user: { role, teamId }, query: { search } }, res) {
       {
         model: db.team,
         attributes: ['name']
+      },
+      {
+        model: db.office,
+        attributes: ['name']
       }
     ]
   };
@@ -32,6 +36,10 @@ function findById({ params: { id } }, res) {
     include: [
       {
         model: db.team,
+        attributes: ['name']
+      },
+      {
+        model: db.office,
         attributes: ['name']
       }
     ]

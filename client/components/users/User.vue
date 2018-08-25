@@ -35,7 +35,10 @@
             home
           </span>
           <div class="card-item">
-            {{ user.office }}
+            <span v-if="user.office">
+              {{ user.office.name }}
+            </span>
+            <span v-else>No office</span>
           </div>
         </div>
         <div class="card-row">
@@ -43,7 +46,10 @@
             people
           </span>
           <div class="card-item">
-            {{ teamName }}
+            <span v-if="user.team">
+              {{ teamName }}
+            </span>
+            <span v-else>No team</span>
           </div>
         </div>
       </div>
@@ -125,7 +131,7 @@ function getUserDefaults() {
     firstName: '',
     lastName: '',
     email: '',
-    office: '',
+    office: { name: '' },
     team: { name: '' }
   };
 }

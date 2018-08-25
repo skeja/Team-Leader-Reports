@@ -18,8 +18,12 @@ function getLastUsersReports({ user: { role, teamId } }, res) {
   const include = [{
     as: 'subject',
     model: db.user,
-    attributes: ['id', 'firstName', 'lastName', 'office'],
-    required: true
+    attributes: ['id', 'firstName', 'lastName'],
+    required: true,
+    include: [{
+      model: db.office,
+      attributes: ['name']
+    }]
   }];
 
   if (role !== 'ADMIN') include[0].where = { teamId };
@@ -32,11 +36,6 @@ function getLastUsersReports({ user: { role, teamId } }, res) {
     order: [['subject_id', 'asc'], ['createdAt', 'desc']],
     include
   };
-
-  // if (role !== 'ADMIN') {
-  //   const [userJoin] = query.include;
-  //   userJoin.where = { team };
-  // }
 
   return db.report.findAll(query)
     .map(report => report.toJSON())
@@ -92,7 +91,7 @@ function remove({ params: { reportId } }, res) {
 
 async function findTeamUsersReports({ user: { role, teamId } }, res) {
   const query = {
-    attributes: ['id', 'firstName', 'lastName', 'office'],
+    attributes: ['id', 'firstName', 'lastName', 'officeId'],
     raw: true
   };
   if (role !== 'ADMIN') query.where = { teamId };
@@ -100,6 +99,11 @@ async function findTeamUsersReports({ user: { role, teamId } }, res) {
   let users = await db.user.findAll(query);
 
   const userIds = users.map(({ id }) => id);
+
+  let offices = await db.office.findAll({
+    attributes: ['id', 'name'],
+    raw: true
+  });
 
   let reports = await db.report.findAll({
     attributes: [
@@ -112,8 +116,17 @@ async function findTeamUsersReports({ user: { role, teamId } }, res) {
   });
 
   reports = keyBy(reports, 'subjectId');
+  // users = map(users, user => {
+  //   user.report = reports[user.id];
+  //   return user;
+  // });
   users = users.map(user => {
     user.report = reports[user.id];
+    offices.forEach(office => {
+      if (office.id === user.officeId) {
+        user.office = office;
+      }
+    });
     return user;
   });
   res.send(users);

@@ -12,7 +12,11 @@ function create({ body }, res) {
 function getTeamUsers({ params: { teamId } }, res) {
   return db.user.findAll({
     where: { teamId },
-    attributes: ['id', 'firstName', 'lastName', 'office']
+    attributes: ['id', 'firstName', 'lastName'],
+    include: [{
+      model: db.office,
+      attributes: ['name']
+    }]
   })
     .then(users => res.send(users));
 }

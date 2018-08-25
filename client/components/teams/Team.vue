@@ -17,7 +17,8 @@
           v-for="user in users"
           :key="user.id">
           <td>{{ user | fullName }}</td>
-          <td>{{ user.office }}</td>
+          <td v-if="user.office">{{ user.office.name }}</td>
+          <td v-else class="td-warning">No office</td>
         </tr>
       </table>
       <div v-else class="name warning">
