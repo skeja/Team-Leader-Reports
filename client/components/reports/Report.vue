@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <span class="fas fa-pen"></span>
     <div class="center">
       <div class="back-icon" @click="$router.back()">
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
@@ -21,18 +20,17 @@
             {{ report.reporter | fullName }}
           </span>
         </div>
-        <div>
+        <div v-if="updating">
           <textarea
-            v-if="updating"
             v-model="report.content"
             class="textarea">
           </textarea>
         </div>
-        <div v-if="!updating" class="report-content inner-shadow">
+        <div v-else class="report-content inner-shadow">
           <span class="material-icons icon-right" @click="updating = !updating">
             edit
           </span>
-          {{ report.content }}
+          <vue-showdown :markdown="report.content" :options="{ tables: true }"></vue-showdown>
         </div>
         <div class="report-dates">
           <div class="report-date">
@@ -84,6 +82,8 @@
 </template>
 
 <script>
+import { VueShowdown } from 'vue-showdown';
+
 import axios from '../../axios-auth';
 import fullName from '../../filters/fullName';
 import dateFormatter from '../../filters/dateFormatter';
@@ -92,7 +92,8 @@ import Confirm from '../common/Confirm.vue';
 
 export default {
   components: {
-    Confirm
+    Confirm,
+    VueShowdown
   },
   filters: {
     fullName,
@@ -102,7 +103,9 @@ export default {
     return {
       userId: this.$route.params.userId,
       reportId: this.$route.params.reportId,
-      report: {},
+      report: {
+        content: ''
+      },
       originalReport: {},
       user: {},
       updating: false,
