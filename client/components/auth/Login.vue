@@ -183,6 +183,7 @@ input:focus {
   transform: translateX(10px);
   opacity: 0;
 }
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
