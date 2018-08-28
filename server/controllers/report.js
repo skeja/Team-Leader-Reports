@@ -1,5 +1,5 @@
 const db = require('../models');
-const { keyBy } = require('lodash');
+const keyBy = require('lodash/keyBy');
 
 function findBySubject({ query: { id } }, res) {
   return db.report.findAll({
@@ -91,19 +91,17 @@ function remove({ params: { reportId } }, res) {
 
 async function findTeamUsersReports({ user: { role, teamId } }, res) {
   const query = {
-    attributes: ['id', 'firstName', 'lastName', 'officeId'],
-    raw: true
+    attributes: ['id', 'firstName', 'lastName'],
+    include: [{
+      model: db.office,
+      attributes: ['name']
+    }]
   };
   if (role !== 'ADMIN') query.where = { teamId };
 
   let users = await db.user.findAll(query);
 
   const userIds = users.map(({ id }) => id);
-
-  let offices = await db.office.findAll({
-    attributes: ['id', 'name'],
-    raw: true
-  });
 
   let reports = await db.report.findAll({
     attributes: [
@@ -114,21 +112,12 @@ async function findTeamUsersReports({ user: { role, teamId } }, res) {
     order: [['subject_id', 'asc'], ['createdAt', 'desc']],
     raw: true
   });
-
   reports = keyBy(reports, 'subjectId');
-  // users = map(users, user => {
-  //   user.report = reports[user.id];
-  //   return user;
-  // });
-  users = users.map(user => {
-    user.report = reports[user.id];
-    offices.forEach(office => {
-      if (office.id === user.officeId) {
-        user.office = office;
-      }
+  users = users.map(user => user.toJSON())
+    .map(user => {
+      user.report = reports[user.id];
+      return user;
     });
-    return user;
-  });
   res.send(users);
 }
 

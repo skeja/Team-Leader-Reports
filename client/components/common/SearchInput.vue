@@ -8,7 +8,8 @@
 </template>
 
 <script>
-import { debounce, filter } from 'lodash';
+import { debounce, filter } from 'lodash-es';
+
 export default {
   props: {
     users: { type: Array, default: () => [] }
@@ -35,7 +36,3 @@ export default {
 
 };
 </script>
-
-<style>
-
-</style>

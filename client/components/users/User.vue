@@ -81,7 +81,7 @@
 <script>
 import axios from '../../axios-auth';
 import fullName from '../../filters/fullName';
-import { capitalize, replace } from 'lodash';
+import { capitalize, replace } from 'lodash-es';
 import Confirm from '../common/Confirm.vue';
 
 export default {

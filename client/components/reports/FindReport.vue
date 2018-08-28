@@ -16,7 +16,7 @@
 import UserList from './UserList.vue';
 import SearchInput from '../common/SearchInput';
 import axios from '../../axios-auth';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 
 export default {
   components: {

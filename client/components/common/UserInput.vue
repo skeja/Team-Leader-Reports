@@ -40,7 +40,7 @@
 
 <script>
 import axios from '../../axios-auth';
-import { debounce, sortBy } from 'lodash';
+import { debounce, sortBy } from 'lodash-es';
 import fullName from '../../filters/fullName';
 
 export default {

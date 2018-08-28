@@ -16,7 +16,7 @@
 <script>
 import UserList from './UserList.vue';
 import axios from '../../axios-auth';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 
 export default {
   components: {

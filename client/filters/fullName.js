@@ -1,4 +1,4 @@
-import { capitalize, compact, map } from 'lodash';
+import { capitalize, compact, map } from 'lodash-es';
 
 export default ({ firstName, lastName } = {}) => {
   if (!firstName && lastName) return '';
