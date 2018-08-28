@@ -5,20 +5,24 @@
         <search-input :users="users" @search="setUsers($event)"></search-input>
       </div>
       <table class="table">
-        <tr>
-          <th @click="sort('lastName')">Name</th>
-          <th @click="sort('email')">Email</th>
-          <th @click="sort('office')">Office</th>
-        </tr>
-        <tr
-          v-for="user in filteredUsers"
-          :key="user.id"
-          @click="viewUser(user)">
-          <td>{{ user | fullName }}</td>
-          <td>{{ user.email }}</td>
-          <td v-if="user.office">{{ user.office.name }}</td>
-          <td v-else class="warning">No office</td>
-        </tr>
+        <thead>
+          <tr>
+            <th @click="sort('lastName')">Name</th>
+            <th @click="sort('email')">Email</th>
+            <th @click="sort('office')">Office</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="user in filteredUsers"
+            :key="user.id"
+            @click="viewUser(user)">
+            <td>{{ user | fullName }}</td>
+            <td>{{ user.email }}</td>
+            <td v-if="user.office">{{ user.office.name }}</td>
+            <td v-else class="warning">No office</td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <span class="material-icons md-60 alt-color add" @click="addUser">add</span>
@@ -28,7 +32,7 @@
 <script>
 import axios from '../../axios-auth';
 import fullName from '../../filters/fullName';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import SearchInput from '../common/SearchInput';
 
 export default {
@@ -95,6 +99,7 @@ td {
 th {
   cursor: pointer;
 }
+
 .container {
   position: relative;
 }

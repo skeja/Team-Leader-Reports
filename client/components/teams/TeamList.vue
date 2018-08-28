@@ -2,15 +2,19 @@
   <div class="container container-top">
     <div class="center">
       <table class="table">
-        <tr>
-          <th>Team name</th>
-        </tr>
-        <tr
-          v-for="team in teams"
-          :key="team.id"
-          @click="viewTeam(team.id)">
-          <td>{{ team.name }}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Team name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="team in teams"
+            :key="team.id"
+            @click="viewTeam(team.id)">
+            <td>{{ team.name }}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <span class="material-icons md-60 alt-color add" @click="addTeam">add</span>

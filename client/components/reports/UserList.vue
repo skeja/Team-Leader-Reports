@@ -1,20 +1,24 @@
 <template>
   <table class="table">
-    <tr>
-      <th>Name</th>
-      <th>Office</th>
-      <th>Last report</th>
-    </tr>
-    <tr
-      v-for="user in users"
-      :key="user.id"
-      @click="$emit('selected', user.id)">
-      <td>{{ user | fullName }}</td>
-      <td v-if="user.office">{{ user.office.name }}</td>
-      <td v-else class="td-warning">No office</td>
-      <td v-if="user.report">{{ user.report.createdAt | dateFormatter }}</td>
-      <td v-else class="td-warning">No report</td>
-    </tr>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Office</th>
+        <th>Last report</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        v-for="user in users"
+        :key="user.id"
+        @click="$emit('selected', user.id)">
+        <td>{{ user | fullName }}</td>
+        <td v-if="user.office">{{ user.office.name }}</td>
+        <td v-else class="td-warning">No office</td>
+        <td v-if="user.report">{{ user.report.createdAt | dateFormatter }}</td>
+        <td v-else class="td-warning">No report</td>
+      </tr>
+    </tbody>
   </table>
 </template>
 

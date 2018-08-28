@@ -9,17 +9,21 @@
         Team: {{ team.name }}
       </div>
       <table v-if="users.length" class="table">
-        <tr>
-          <th>User</th>
-          <th>Office</th>
-        </tr>
-        <tr
-          v-for="user in users"
-          :key="user.id">
-          <td>{{ user | fullName }}</td>
-          <td v-if="user.office">{{ user.office.name }}</td>
-          <td v-else class="td-warning">No office</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Office</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="user in users"
+            :key="user.id">
+            <td>{{ user | fullName }}</td>
+            <td v-if="user.office">{{ user.office.name }}</td>
+            <td v-else class="td-warning">No office</td>
+          </tr>
+        </tbody>
       </table>
       <div v-else class="name warning">
         Team have no users

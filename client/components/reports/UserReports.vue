@@ -9,19 +9,23 @@
         {{ user | fullName }}
       </div>
       <table v-if="reports.length > 0" class="table">
-        <tr>
-          <th>Reporter</th>
-          <th>Created</th>
-          <th>Updated</th>
-        </tr>
-        <tr
-          v-for="report in reports"
-          :key="report.id"
-          @click="viewReport(report.id)">
-          <td>{{ report.reporter | fullName }}</td>
-          <td>{{ report.createdAt | dateFormatter }}</td>
-          <td>{{ report.updatedAt | dateFormatter }}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Reporter</th>
+            <th>Created</th>
+            <th>Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="report in reports"
+            :key="report.id"
+            @click="viewReport(report.id)">
+            <td>{{ report.reporter | fullName }}</td>
+            <td>{{ report.createdAt | dateFormatter }}</td>
+            <td>{{ report.updatedAt | dateFormatter }}</td>
+          </tr>
+        </tbody>
       </table>
       <div v-else class="name warning">
         User have no reports
@@ -37,7 +41,7 @@
 import axios from '../../axios-auth.js';
 import dateFormatter from '../../filters/dateFormatter';
 import fullName from '../../filters/fullName';
-import sortBy from 'lodash/sortBy';
+import { sortBy } from 'lodash-es';
 
 export default {
   filters: {
@@ -77,6 +81,7 @@ export default {
 td {
   cursor: pointer;
 }
+
 .buttons {
   margin-top: 1rem;
   width: 50%;
