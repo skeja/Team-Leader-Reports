@@ -7,6 +7,7 @@
 @import './table';
 @import './card';
 @import './modal';
+@import './loader';
 
 * {
   box-sizing: border-box;
@@ -235,4 +236,14 @@ input:focus {
 
 .warning {
   color: #b30909;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .2s
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0
 }

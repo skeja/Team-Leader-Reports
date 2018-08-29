@@ -1,6 +1,7 @@
 <template>
   <div class="container container-top">
-    <div class="center">
+    <loader v-if="showLoader"></loader>
+    <div v-else class="center">
       <div class="back-icon" @click="$router.back()">
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
@@ -42,25 +43,33 @@ import axios from '../../axios-auth.js';
 import dateFormatter from '../../filters/dateFormatter';
 import fullName from '../../filters/fullName';
 import { sortBy } from 'lodash-es';
+import Loader from '../common/Loader';
+import Promise from 'bluebird';
 
 export default {
   filters: {
     dateFormatter,
     fullName
   },
+  components: {
+    Loader
+  },
   data() {
     return {
       userId: this.$route.params.userId,
       user: {},
-      reports: []
+      reports: [],
+      showLoader: true
     };
   },
   created() {
-    return axios.get(`/users/${this.userId}`)
-      .then(({ data }) => (this.user = data))
-      .then(() => axios.get(`/reports/${this.userId}`))
-      .then(({ data }) => {
-        this.reports = sortBy(data, ['reporter.lastname']);
+    const userUrl = `/users/${this.userId}`;
+    const reportsUrl = `/reports/${this.userId}`;
+    Promise.join(axios.get(userUrl), axios.get(reportsUrl), Promise.delay(500))
+      .spread((userData, reportData) => {
+        this.user = userData.data;
+        this.reports = reportData.data;
+        this.showLoader = false;
       });
   },
   methods: {
