@@ -95,7 +95,8 @@ export default {
     return {
       id: this.$route.params.userId,
       user: getUserDefaults(),
-      showModal: false
+      showModal: false,
+      showLoader: false
     };
   },
   computed: {
@@ -138,7 +139,6 @@ function getUserDefaults() {
 </script>
 
 <style lang="scss" scoped>
-
 .buttons {
   flex-direction: column;
 }

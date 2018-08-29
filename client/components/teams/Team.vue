@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div class="center">
+    <loader v-if="showLoader"></loader>
+    <div v-else class="center">
       <div class="back-icon" @click="$router.back()">
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
@@ -57,11 +58,14 @@ import axios from '../../axios-auth';
 import fullName from '../../filters/fullName';
 import Confirm from '../common/Confirm.vue';
 import UserInput from '../common/UserInput';
+import Loader from '../common/Loader';
+import Promise from 'bluebird';
 
 export default {
   components: {
     Confirm,
-    UserInput
+    UserInput,
+    Loader
   },
   filters: {
     fullName
@@ -74,14 +78,19 @@ export default {
       userList: [],
       toggle: true,
       showModal: false,
+      showLoader: true,
       addUser: false
     };
   },
   created() {
-    return axios.get(`/teams/${this.id}`)
-      .then(({ data }) => (this.team = data))
-      .then(() => axios.get(`/teams/${this.id}/users`))
-      .then(({ data }) => (this.users = data));
+    const teamUrl = `/teams/${this.id}`;
+    const teamUsersUrl = `/teams/${this.id}/users`;
+    Promise.join(axios.get(teamUrl), axios.get(teamUsersUrl), Promise.delay(500))
+      .spread((teamData, userListData) => {
+        this.team = teamData.data;
+        this.users = userListData.data;
+        this.showLoader = false;
+      });
   },
   methods: {
     remove() {
