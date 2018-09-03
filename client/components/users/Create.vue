@@ -5,24 +5,24 @@
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
       </div>
-      <user-form @submitUser="submit($event)"></user-form>
+      <user-input @submitUser="submit($event)"></user-input>
     </div>
   </div>
 </template>
 
 <script>
 import axios from '../../axios-auth';
-import UserForm from './UserForm.vue';
+import UserInput from './UserInput';
 
 export default {
   components: {
-    UserForm
+    UserInput
   },
   methods: {
     submit(user) {
       axios.post('/users', user)
         .then(response => {
-          this.$router.push({ name: 'findUser' });
+          this.$router.push({ name: 'userIndex' });
         });
     }
   }

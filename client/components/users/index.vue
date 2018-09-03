@@ -25,7 +25,12 @@
         </tbody>
       </table>
     </div>
-    <span class="material-icons md-60 alt-color add" @click="addUser">add</span>
+    <span
+      v-if="isAdmin"
+      class="material-icons md-60 alt-color add"
+      @click="addUser">
+      add
+    </span>
   </div>
 </template>
 
@@ -34,6 +39,7 @@ import axios from '../../axios-auth';
 import fullName from '../../filters/fullName';
 import { sortBy } from 'lodash-es';
 import SearchInput from '../common/SearchInput';
+import UserStore from '../../store';
 
 export default {
   filters: {
@@ -47,6 +53,11 @@ export default {
       users: [],
       filteredUsers: []
     };
+  },
+  computed: {
+    isAdmin() {
+      return UserStore.isAdmin();
+    }
   },
   created() {
     axios.get('/users')

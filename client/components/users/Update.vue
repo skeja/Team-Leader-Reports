@@ -6,7 +6,7 @@
         Back
       </div>
       <div v-if="selected">
-        <user-form :updated-user="selected" @submitUser="submit($event)"></user-form>
+        <user-input :updated-user="selected" @submitUser="submit($event)"></user-input>
       </div>
     </div>
   </div>
@@ -14,11 +14,11 @@
 
 <script>
 import axios from '../../axios-auth';
-import UserForm from './UserForm.vue';
+import UserInput from './UserInput';
 
 export default {
   components: {
-    UserForm
+    UserInput
   },
   data() {
     return {
@@ -36,7 +36,7 @@ export default {
   methods: {
     submit(user) {
       axios.put(`/users/${this.selected.id}`, user)
-        .then(response => this.$router.push({ name: 'findUser' }));
+        .then(response => this.$router.push({ name: 'userIndex' }));
     }
   }
 };

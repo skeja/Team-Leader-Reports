@@ -5,56 +5,9 @@
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
       </div>
-      <div class="card">
-        <div class="card-row">
-          <span class="material-icons md-24 main-color icon-align">
-            person
-          </span>
-          <div class="card-item">
-            {{ user | fullName }}
-          </div>
-        </div>
-        <div class="card-row">
-          <span class="material-icons md-24 main-color icon-align">
-            email
-          </span>
-          <div class="card-item">
-            {{ user.email }}
-          </div>
-        </div>
-        <div class="card-row">
-          <span class="material-icons md-24 main-color icon-align">
-            laptop_mac
-          </span>
-          <div class="card-item">
-            {{ role }}
-          </div>
-        </div>
-        <div class="card-row">
-          <span class="material-icons md-24 main-color icon-align">
-            home
-          </span>
-          <div class="card-item">
-            <span v-if="user.office">
-              {{ user.office.name }}
-            </span>
-            <span v-else>No office</span>
-          </div>
-        </div>
-        <div class="card-row">
-          <span class="material-icons md-24 main-color icon-align">
-            people
-          </span>
-          <div class="card-item">
-            <span v-if="user.team">
-              {{ teamName }}
-            </span>
-            <span v-else>No team</span>
-          </div>
-        </div>
-      </div>
+      <user :user="user"></user>
       <div class="icons">
-        <div class="tooltip">
+        <div v-if="isAdmin" class="tooltip">
           <span class="material-icons md-36 alt-color hover" @click="updateUser">edit</span>
           <span class="tooltip-text">Edit user</span>
         </div>
@@ -80,16 +33,18 @@
 
 <script>
 import axios from '../../axios-auth';
+import Confirm from '../common/Confirm';
+import UserStore from '../../store/';
+import User from '../common/User';
 import fullName from '../../filters/fullName';
-import { capitalize, replace } from 'lodash-es';
-import Confirm from '../common/Confirm.vue';
 
 export default {
-  components: {
-    Confirm
-  },
   filters: {
     fullName
+  },
+  components: {
+    Confirm,
+    User
   },
   data() {
     return {
@@ -100,11 +55,8 @@ export default {
     };
   },
   computed: {
-    role() {
-      return capitalize(replace(this.user.role, '_', ' '));
-    },
-    teamName() {
-      return capitalize(this.user.team.name);
+    isAdmin() {
+      return UserStore.isAdmin();
     }
   },
   created() {
@@ -116,7 +68,7 @@ export default {
   methods: {
     deleteUser() {
       return axios.delete(`/users/${this.id}`)
-        .then(response => this.$router.push({ name: 'findUser' }));
+        .then(response => this.$router.push({ name: 'userIndex' }));
     },
     viewReports() {
       this.$router.push({ name: 'userReports', params: { userId: this.id } });
