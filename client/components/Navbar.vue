@@ -2,16 +2,18 @@
   <nav class="navigation">
     <ul class="horizontal">
       <template v-if="user.email">
-        <router-link
+        <li
+          class="nav-brand">
+          <span class="material-icons md-24">home</span>
+        </li>
+        <!-- <router-link
           :to="{ name: 'home' }"
           tag="li"
-          class="nav-brand"
           exact
           exact-active-class="highlighted">
-          <span class="material-icons md-24">home</span>
-        </router-link>
+        </router-link> -->
         <router-link
-          :to="{ name: 'findUser' }"
+          :to="{ name: 'userIndex' }"
           tag="li"
           active-class="highlighted">
           Users
@@ -29,9 +31,12 @@
           Teams
         </router-link>
         <div class="auth">
-          <li>
+          <router-link
+            :to="{ name: 'profile' }"
+            tag="li"
+            active-class="highlighted">
             {{ user.email }}
-          </li>
+          </router-link>
           <li @click="logout">
             <a>Logout</a>
           </li>
@@ -49,7 +54,7 @@
 </template>
 
 <script>
-import UserStore from '../../store';
+import UserStore from '../store';
 
 export default {
   data() {

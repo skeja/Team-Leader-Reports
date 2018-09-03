@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <Header></Header>
+    <navbar></navbar>
     <transition name="fade" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import Header from './components/navigation/Header.vue';
+import Navbar from './components/Navbar';
 
 export default {
   components: {
-    Header
+    Navbar
   }
 };
 </script>
