@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container container-top">
     <loader v-if="showLoader"></loader>
     <div v-else class="center">
       <div class="back-icon" @click="$router.back()">
@@ -30,7 +30,7 @@
         Team have no users
       </div>
       <div class="icons">
-        <div class="tooltip">
+        <div v-if="isAdmin" class="tooltip">
           <span class="material-icons md-36 alt-color hover" @click="showModal = true">delete</span>
           <span class="tooltip-text">Delete team</span>
         </div>
@@ -42,29 +42,35 @@
         <div slot="header">Delete team:</div>
         <div slot="body">{{ team.name }}</div>
       </confirm>
-      <user-input
+      <members
         v-if="addUser"
         @close="addUser = false"
         @addUser="addMember($event)">
         <div slot="body">Add member</div>
-      </user-input>
+      </members>
     </div>
-    <span class="material-icons md-60 alt-color add" @click="addUser = true">add</span>
+    <span
+      v-if="isAdmin"
+      class="material-icons md-60 alt-color add"
+      @click="addUser = true">
+      add
+    </span>
   </div>
 </template>
 
 <script>
 import axios from '../../axios-auth';
 import fullName from '../../filters/fullName';
-import Confirm from '../common/Confirm.vue';
-import UserInput from '../common/UserInput';
+import Confirm from '../common/Confirm';
+import Members from '../common/Members';
 import Loader from '../common/Loader';
 import Promise from 'bluebird';
+import UserStore from '../../store';
 
 export default {
   components: {
     Confirm,
-    UserInput,
+    Members,
     Loader
   },
   filters: {
@@ -81,6 +87,11 @@ export default {
       showLoader: true,
       addUser: false
     };
+  },
+  computed: {
+    isAdmin() {
+      return UserStore.isAdmin();
+    }
   },
   created() {
     const teamUrl = `/teams/${this.id}`;
