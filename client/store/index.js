@@ -20,6 +20,10 @@ const UserStore = {
         localStorage.setItem('user', JSON.stringify(data));
         UserStore.addUser(data);
       });
+  },
+  isAdmin() {
+    if (this.state.currentUser.role === 'ADMIN') return true;
+    return false;
   }
 };
 

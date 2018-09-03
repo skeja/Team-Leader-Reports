@@ -2,14 +2,16 @@ const router = require('express-promise-router')();
 const ctrl = require('../controllers/user');
 const { isAuthenticated } = require('../middleware');
 
-router.get('/users', isAuthenticated(), ctrl.findAll);
+router.use('/users*', isAuthenticated());
 
-router.post('/users', isAuthenticated(), ctrl.create);
+router.get('/users', ctrl.findAll);
 
-router.get('/users/:id', isAuthenticated(), ctrl.findById);
+router.post('/users', ctrl.create);
 
-router.put('/users/:id', isAuthenticated(), ctrl.update);
+router.get('/users/:id', ctrl.findById);
 
-router.delete('/users/:id', isAuthenticated(), ctrl.remove);
+router.put('/users/:id', ctrl.update);
+
+router.delete('/users/:id', ctrl.remove);
 
 module.exports = router;

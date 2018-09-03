@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: { notEmpty: true }
+      validate: { notEmpty: true, len: [5, 100] }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -38,14 +38,16 @@ module.exports = (sequelize, DataTypes) => {
     role: DataTypes.ENUM('ADMIN', 'TEAM_LEAD', 'DEVELOPER')
   }, {
     timestamps: true
-  }
-  );
+  });
 
   User.beforeCreate((user, options) => {
-    return bcrypt.hash(user.password, saltRounds)
-      .then(hash => {
-        user.password = hash;
-      });
+    return hashPassword(user);
+  });
+
+  User.beforeUpdate((user, options) => {
+    return user.changed('password')
+      ? hashPassword(user)
+      : Promise.resolve();
   });
 
   User.prototype.validatePassword = function (password) {
@@ -74,6 +76,13 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: { name: 'officeId', field: 'office_id' }
     });
   };
+
+  function hashPassword(user) {
+    return bcrypt.hash(user.password, saltRounds)
+      .then(hash => {
+        user.password = hash;
+      });
+  }
 
   return User;
 };
