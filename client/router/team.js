@@ -1,22 +1,19 @@
-import Teams from '../components/teams/Teams.vue';
-import TeamList from '../components/teams/TeamList.vue';
-import NewTeam from '../components/teams/NewTeam.vue';
-import Team from '../components/teams/Team.vue';
+import index from '../components/teams/index';
+import Create from '../components/teams/Create';
+import Team from '../components/teams/Team';
 
-export default {
-  path: '/teams',
-  component: Teams,
-  children: [{
-    path: '',
-    component: TeamList,
+export default [
+  {
+    path: '/teams',
+    component: index,
     name: 'teamList'
   }, {
-    path: 'new',
-    component: NewTeam,
+    path: '/teams/new',
+    component: Create,
     name: 'newTeam'
   }, {
-    path: ':id',
+    path: '/teams/:id',
     component: Team,
     name: 'team'
-  }]
-};
+  }
+];

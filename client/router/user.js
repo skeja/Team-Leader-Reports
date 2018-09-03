@@ -1,29 +1,25 @@
-import FindUser from '.././components/users/FindUsers.vue';
-import NewUser from '.././components/users/NewUser.vue';
-import UpdateUser from '.././components/users/UpdateUser.vue';
+import index from '.././components/users/index';
+import Create from '.././components/users/Create';
+import Update from '.././components/users/Update';
 import User from '.././components/users/User.vue';
-import Users from '.././components/users/Users.vue';
 
-export default {
-  path: '/users',
-  component: Users,
-  children: [{
-    path: '',
-    component: FindUser,
-    name: 'findUser'
+export default [
+  {
+    path: '/users',
+    component: index,
+    name: 'userIndex'
   }, {
-    path: 'new',
-    component: NewUser,
+    path: '/users/new',
+    component: Create,
     name: 'newUser',
     meta: { role: 'ADMIN' }
   }, {
-    path: ':userId',
+    path: '/users/:userId',
     component: User,
     name: 'user'
   }, {
-    path: ':userId/update',
-    component: UpdateUser,
+    path: '/users/:userId/update',
+    component: Update,
     name: 'updateUser',
     meta: { role: 'ADMIN' }
-  }]
-};
+  }];
