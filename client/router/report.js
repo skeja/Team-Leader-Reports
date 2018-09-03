@@ -1,34 +1,28 @@
-import Reports from '../components/reports/Reports.vue';
-import FindReports from '../components/reports/FindReport.vue';
-import UserReports from '../components/reports/UserReports.vue';
-import Report from '../components/reports/Report.vue';
-import NewReport from '../components/reports/NewReport.vue';
-import AddReport from '../components/reports/AddReport.vue';
+import index from '../components/reports/index';
+import UserReports from '../components/reports/UserReports';
+import Report from '../components/reports/Report';
+import Create from '../components/reports/Create';
+import Add from '../components/reports/Add';
 
-export default {
-  path: '/reports',
-  component: Reports,
-  redirect: '/reports/users',
-  name: 'reports',
-  children: [{
-    path: 'users',
-    component: FindReports,
+export default [
+  {
+    path: '/reports/users',
+    component: index,
     name: 'findReports'
   }, {
-    path: 'new',
-    component: AddReport,
+    path: '/reports/new',
+    component: Add,
     name: 'addReport'
   }, {
-    path: 'users/:userId',
+    path: '/reports/users/:userId',
     component: UserReports,
     name: 'userReports'
   }, {
-    path: 'new/:userId',
-    component: NewReport,
+    path: '/reports/new/:userId',
+    component: Create,
     name: 'newReport'
   }, {
-    path: 'users/:userId/report/:reportId',
+    path: '/reports/users/:userId/report/:reportId',
     component: Report,
     name: 'report'
-  }]
-};
+  }];

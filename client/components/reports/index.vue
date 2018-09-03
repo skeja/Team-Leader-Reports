@@ -4,7 +4,7 @@
       <div class="filter-input">
         <search-input :users="users" @search="setUsers($event)"></search-input>
       </div>
-      <user-list :users="filteredUsers" @selected="viewUserReports($event)"></user-list>
+      <users :users="filteredUsers" @selected="viewUserReports($event)"></users>
     </div>
     <span class="material-icons md-60 alt-color add" @click="addReport">
       add
@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import UserList from './UserList.vue';
+import Users from './Users';
 import SearchInput from '../common/SearchInput';
 import axios from '../../axios-auth';
 import { sortBy } from 'lodash-es';
 
 export default {
   components: {
-    UserList,
+    Users,
     SearchInput
   },
   data() {

@@ -17,9 +17,9 @@
 
 <script>
 import axios from '../../axios-auth';
-import ReportForm from './ReportForm.vue';
+import ReportForm from './ReportForm';
 import fullName from '../../filters/fullName';
-import Confirm from '../common/Confirm.vue';
+import Confirm from '../common/Confirm';
 import UserStore from '../../store';
 
 export default {

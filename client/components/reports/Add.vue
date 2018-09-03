@@ -8,19 +8,19 @@
       <div class="name">
         Add Reports
       </div>
-      <user-list :users="users" @selected="addUserReport($event)"></user-list>
+      <users :users="users" @selected="addUserReport($event)"></users>
     </div>
   </div>
 </template>
 
 <script>
-import UserList from './UserList.vue';
+import Users from './Users';
 import axios from '../../axios-auth';
 import { sortBy } from 'lodash-es';
 
 export default {
   components: {
-    UserList
+    Users
   },
   data() {
     return {
