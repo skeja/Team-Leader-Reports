@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const mail = require('../shared/mail');
 
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
+const AUTH_SECRET = process.env.SECRET_OR_KEY;
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
@@ -27,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: { notEmpty: true, len: [5, 100] }
     },
+    token: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at'
@@ -52,6 +59,17 @@ module.exports = (sequelize, DataTypes) => {
 
   User.prototype.validatePassword = function (password) {
     return bcrypt.compare(password, this.password);
+  };
+
+  User.prototype.createToken = function (options = {}) {
+    const payload = { id: this.id };
+    return jwt.sign(payload, AUTH_SECRET, options);
+  };
+
+  User.prototype.sendResetToken = function () {
+    this.token = this.createToken({ expiresIn: '2 days' });
+    mail.resetPassword(this);
+    return this.save();
   };
 
   User.associate = function ({ projectHistory, team, teamHistory, report, office }) {

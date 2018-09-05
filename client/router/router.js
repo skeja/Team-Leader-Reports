@@ -2,26 +2,14 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import UserStore from '../store';
 
-import Login from '../components/auth/Login.vue';
-import Profile from '../components/profile/index';
-
 import User from './user';
 import Report from './report';
 import Team from './team';
+import Auth from './auth';
 
 Vue.use(VueRouter);
 const routes = [
-  {
-    path: '/login',
-    component: Login,
-    name: 'login',
-    meta: { noAuth: true }
-  }, {
-    path: '/profile',
-    component: Profile,
-    name: 'profile',
-    meta: { noAuth: true }
-  },
+  ...Auth,
   ...User,
   ...Report,
   ...Team,

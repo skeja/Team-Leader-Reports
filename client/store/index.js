@@ -21,6 +21,9 @@ const UserStore = {
         UserStore.addUser(data);
       });
   },
+  forgotPassword(email) {
+    return axios.post('/forgotPassword', email);
+  },
   isAdmin() {
     if (this.state.currentUser.role === 'ADMIN') return true;
     return false;
