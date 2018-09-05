@@ -9,11 +9,11 @@
           @click="update = !update">
           Update password
         </button>
-        <update-password
+        <password-form
           v-else
           @close="update = !update"
-          @update="updatePassword($event)">
-        </update-password>
+          @submit="updatePassword($event)">
+        </password-form>
       </transition>
     </div>
   </div>
@@ -22,12 +22,12 @@
 <script>
 import axios from '../../axios-auth';
 import User from '../common/User';
-import UpdatePassword from '../auth/UpdatePassword';
+import PasswordForm from '../common/PasswordForm';
 
 export default {
   components: {
     User,
-    UpdatePassword
+    PasswordForm
   },
   data() {
     return {
@@ -52,18 +52,10 @@ export default {
   },
   methods: {
     updatePassword(password) {
-      const data = {
-        password,
-        id: this.user.id
-      };
-      axios.put('/changePassword', data)
+      axios.put('/changePassword', { password })
         .then(this.update = !this.update);
     }
   }
 
 };
 </script>
-
-<style>
-
-</style>
