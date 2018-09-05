@@ -58,6 +58,10 @@ export default {
 
 .login-msg {
   margin: 0 auto;
+
+  & h3 {
+    margin-bottom: 0;
+  }
 }
 
 .login-form {

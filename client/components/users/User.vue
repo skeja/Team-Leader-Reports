@@ -15,7 +15,7 @@
           <span class="material-icons md-36 alt-color hover" @click="viewReports">assignment</span>
           <span class="tooltip-text">View reports</span>
         </div>
-        <div class="tooltip">
+        <div v-if="isAdmin" class="tooltip">
           <span class="material-icons md-36 alt-color hover" @click="showModal = true">delete</span>
           <span class="tooltip-text">Delete user</span>
         </div>

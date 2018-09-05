@@ -19,7 +19,8 @@
         <tbody>
           <tr
             v-for="user in users"
-            :key="user.id">
+            :key="user.id"
+            @click="viewUser(user.id)">
             <td>{{ user | fullName }}</td>
             <td v-if="user.office">{{ user.office.name }}</td>
             <td v-else class="td-warning">No office</td>
@@ -112,6 +113,9 @@ export default {
       return axios.put(`/teams/${this.id}`, user)
         .then(this.users.push(user))
         .catch(() => this.users.pop());
+    },
+    viewUser(id) {
+      this.$router.push({ name: 'user', params: { userId: id } });
     }
   }
 };
@@ -121,5 +125,9 @@ export default {
 .icons {
   justify-content: flex-end;
   padding-top: 1rem;
+}
+
+td {
+  cursor: pointer;
 }
 </style>
