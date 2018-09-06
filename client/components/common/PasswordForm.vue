@@ -24,7 +24,7 @@
     <div
       :class="{ form__error: $v.matchPassword.$error }"
       class="form__group">
-      <label class="form__label">Retype password</label>
+      <label class="form__label">Repeat password</label>
       <input
         v-model="$v.matchPassword.$model"
         placeholder="Enter password.."
@@ -32,15 +32,9 @@
         class="form__input">
     </div>
     <div
-      v-if="$v.matchPassword.$error && !$v.matchPassword.required"
+      v-if="$v.matchPassword.$error && !$v.matchPassword.sameAsPassword"
       class="error">
-      Field is required.
-    </div>
-    <div
-      v-if="$v.matchPassword.$error && !$v.matchPassword.minLength"
-      class="error">
-      Name must have at least
-      {{ $v.matchPassword.$params.minLength.min }} letters.
+      Passwords must be identical
     </div>
     <div class="buttons">
       <button
@@ -49,18 +43,17 @@
         Cancel
       </button>
       <button
-        :disabled="!checkPassword"
+        :disabled="!$v.$isInvalid"
         class="button"
         @click="$emit('submit', password)">
         Submit
       </button>
     </div>
-
   </div>
 </template>
 
 <script>
-import { required, minLength } from 'vuelidate/lib/validators';
+import { required, sameAs, minLength } from 'vuelidate/lib/validators';
 
 export default {
   data() {
@@ -69,24 +62,15 @@ export default {
       matchPassword: ''
     };
   },
-  computed: {
-    checkPassword() {
-      if (!this.password) return false;
-      if ((this.password === this.matchPassword) && !this.$v.$invalid) return true;
-      return false;
-    }
-  },
   validations: {
     password: {
       required,
       minLength: minLength(5)
     },
     matchPassword: {
-      required,
-      minLength: minLength(5)
+      sameAsPassword: sameAs('password')
     }
   }
-
 };
 </script>
 
@@ -98,5 +82,4 @@ export default {
   margin-top: -1.6rem;
   margin-bottom: 0.475rem;
 }
-
 </style>
