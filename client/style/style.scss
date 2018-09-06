@@ -243,6 +243,10 @@ input:focus {
   color: #b30909;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity .2s

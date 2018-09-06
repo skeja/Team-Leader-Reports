@@ -21,6 +21,7 @@
           <tr
             v-for="report in reports"
             :key="report.id"
+            class="pointer"
             @click="viewReport(report.id)">
             <td>{{ report.reporter | fullName }}</td>
             <td>{{ report.createdAt | dateFormatter }}</td>
@@ -87,13 +88,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-td {
-  cursor: pointer;
-}
-
 .buttons {
   margin-top: 1rem;
   width: 50%;
 }
-
 </style>

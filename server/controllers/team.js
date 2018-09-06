@@ -32,7 +32,7 @@ function remove({ params: { id } }, res) {
   return db.team.destroy({
     where: { id }
   })
-    .then(() => res.status(204).send())
+    .then(() => res.status(204))
     .then(db.user.update({
       team: null
     }, { where: { team: id } }

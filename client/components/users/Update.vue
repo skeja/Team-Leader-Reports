@@ -5,9 +5,11 @@
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
       </div>
-      <div v-if="selected">
-        <user-input :updated-user="selected" @submitUser="submit($event)"></user-input>
-      </div>
+      <user-input
+        v-if="selected"
+        :updated-user="selected"
+        @submitUser="submit($event)">
+      </user-input>
     </div>
   </div>
 </template>
@@ -30,8 +32,7 @@ export default {
     axios.get(`/users/${this.userId}`)
       .then(({ data }) => {
         this.selected = data;
-      })
-      .then();
+      });
   },
   methods: {
     submit(user) {

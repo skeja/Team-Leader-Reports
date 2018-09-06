@@ -33,6 +33,5 @@ export default {
       this.$emit('search', this.filteredUsers);
     }, 500)
   }
-
 };
 </script>

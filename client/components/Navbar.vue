@@ -6,12 +6,6 @@
           class="nav-brand">
           <span class="material-icons md-24">home</span>
         </li>
-        <!-- <router-link
-          :to="{ name: 'home' }"
-          tag="li"
-          exact
-          exact-active-class="highlighted">
-        </router-link> -->
         <router-link
           :to="{ name: 'userIndex' }"
           tag="li"

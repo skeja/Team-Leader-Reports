@@ -37,12 +37,6 @@ export default {
       matchPassword: ''
     };
   },
-  computed: {
-    checkPassword() {
-      if (this.password === this.matchPassword) return true;
-      return false;
-    }
-  },
   created() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return axios.get(`/users/${user.id}`)
@@ -56,6 +50,5 @@ export default {
         .then(this.update = !this.update);
     }
   }
-
 };
 </script>

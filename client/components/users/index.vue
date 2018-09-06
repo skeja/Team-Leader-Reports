@@ -107,6 +107,7 @@ div.lastName {
 td {
   cursor: pointer;
 }
+
 th {
   cursor: pointer;
 }
