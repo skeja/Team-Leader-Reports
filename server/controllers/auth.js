@@ -17,6 +17,7 @@ async function login({ body: { email, password } }, res) {
       id: it.id,
       email: email,
       role: it.role,
+      team: it.teamId,
       token: token
     };
     res.send(user);

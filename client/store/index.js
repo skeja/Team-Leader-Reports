@@ -5,14 +5,15 @@ const UserStore = {
     currentUser: {
       id: '',
       email: '',
-      role: ''
+      role: '',
+      team: ''
     }
   },
   removeUser() {
     this.state.currentUser = {};
   },
-  addUser({ id, email, role }) {
-    this.state.currentUser = { id, email, role };
+  addUser({ id, email, role, team }) {
+    this.state.currentUser = { id, email, role, team };
   },
   login(user) {
     return axios.post('/login', user)
