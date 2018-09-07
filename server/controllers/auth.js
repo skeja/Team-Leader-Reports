@@ -1,27 +1,29 @@
 const db = require('../models/');
-const { tokenVerify } = require('../shared/helpers');
+const { tokenVerify, createError } = require('../shared/helpers');
+const { BAD_REQUEST, UNAUTHORIZED } = require('http-status-codes');
 
-async function login({ body: { email, password } }, res) {
+function login({ body: { email, password } }, res) {
   if (!email || !password) {
-    return res.status(400).jsend.error('Input query not filled');
+    return createError(BAD_REQUEST, 'Input query not filled');
   }
-  await db.user.findOne({
+  return db.user.findOne({
     where: { email }
-  }).then(async it => {
-    if (it === null) return res.status(401).jsend.error('Email & password combination not found');
-    const authenticated = await it.validatePassword(password);
-    if (!authenticated) return res.status(401).jsend.error('Email & password combination not found');
-    if (it.role === 'DEVELOPER') return res.status(401).jsend.error('Access denied');
-    const token = it.createToken({});
-    const user = {
-      id: it.id,
-      email: email,
-      role: it.role,
-      team: it.teamId,
-      token: token
-    };
-    res.send(user);
-  });
+  })
+    .then(user => user || createError(UNAUTHORIZED, 'Email & password combination not found'))
+    .then(user => user.validatePassword(password))
+    .then(user => user || createError(UNAUTHORIZED, 'Email & password combination not found'))
+    .then(user => user.isAuthorized() ? user : createError(UNAUTHORIZED, 'Access denied'))
+    .then(user => {
+      const token = user.createToken({});
+      const data = {
+        id: user.id,
+        email: email,
+        role: user.role,
+        team: user.teamId,
+        token: token
+      };
+      res.send(data);
+    });
 }
 
 function changePassword({ body: { password }, user }, res) {
@@ -31,16 +33,16 @@ function changePassword({ body: { password }, user }, res) {
 
 function forgotPassword({ body: { email } }, res) {
   return db.user.findOne({ where: { email } })
-    .then(user => user || Promise.reject(new Error('User not found')))
+    .then(user => user || createError(BAD_REQUEST, 'User not found'))
     .then(user => user.sendResetToken())
     .then(() => res.end());
 }
 
 function resetPassword({ body: { token, password } }, res) {
   const error = tokenVerify(token);
-  if (error) return Promise.reject(new Error(error));
+  if (error) return createError(UNAUTHORIZED, 'Token expired');
   return db.user.findOne({ where: { token } })
-    .then(user => user || Promise.reject(new Error('Invalid token')))
+    .then(user => user || createError(BAD_REQUEST, 'Invalid token'))
     .then(user => {
       user.password = password;
       user.save();

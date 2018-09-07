@@ -1,6 +1,9 @@
 <template>
   <div class="container container-top">
-    <div class="center">
+    <error-mesage v-if="showErrorModal">
+      <div slot="message">{{ message }}</div>
+    </error-mesage>
+    <div v-else class="center">
       <div class="back-icon" @click="$router.back()">
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
@@ -37,6 +40,8 @@ import Confirm from '../common/Confirm';
 import UserStore from '../../store/';
 import User from '../common/User';
 import fullName from '../../filters/fullName';
+import ErrorMesage from '../common/ErrorMessage';
+import { delay } from 'lodash-es';
 
 export default {
   filters: {
@@ -44,14 +49,17 @@ export default {
   },
   components: {
     Confirm,
-    User
+    User,
+    ErrorMesage
   },
   data() {
     return {
       id: this.$route.params.userId,
       user: getUserDefaults(),
       showModal: false,
-      showLoader: false
+      showLoader: false,
+      showErrorModal: false,
+      messsage: ''
     };
   },
   computed: {
@@ -63,6 +71,14 @@ export default {
     axios.get(`/users/${this.id}`)
       .then(({ data }) => {
         this.user = data;
+      })
+      .catch(({ response }) => {
+        this.showErrorModal = true;
+        this.message = response.data;
+        delay(() => {
+          this.showErrorModal = false;
+          this.$router.push({ name: 'userIndex' });
+        }, 2000);
       });
   },
   methods: {

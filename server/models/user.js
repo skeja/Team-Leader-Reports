@@ -58,7 +58,11 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.prototype.validatePassword = function (password) {
-    return bcrypt.compare(password, this.password);
+    return bcrypt.compare(password, this.password)
+      .then(result => {
+        if (result) return this;
+        return false;
+      });
   };
 
   User.prototype.createToken = function (options = {}) {
@@ -70,6 +74,11 @@ module.exports = (sequelize, DataTypes) => {
     this.token = this.createToken({ expiresIn: '2 days' });
     mail.resetPassword(this);
     return this.save();
+  };
+
+  User.prototype.isAuthorized = function () {
+    if (this.role === 'DEVELOPER') return false;
+    return true;
   };
 
   User.associate = function ({ projectHistory, team, teamHistory, report, office }) {

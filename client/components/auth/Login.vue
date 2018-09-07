@@ -43,7 +43,7 @@ export default {
         .then(() => this.$router.push({ name: 'userIndex' }))
         .catch(({ response: { data } }) => {
           this.showErrorModal = true;
-          this.message = data.message;
+          this.message = data;
           delay(() => {
             this.showErrorModal = false;
           }, 2000);

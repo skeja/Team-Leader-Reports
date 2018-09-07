@@ -43,7 +43,7 @@
         Cancel
       </button>
       <button
-        :disabled="!$v.$isInvalid"
+        :disabled="$v.$invalid"
         class="button"
         @click="$emit('submit', password)">
         Submit
