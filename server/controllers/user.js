@@ -1,5 +1,7 @@
 const db = require('../models');
 const omit = require('lodash/omit');
+const { UNAUTHORIZED } = require('http-status-codes');
+const { createError } = require('../shared/helpers');
 
 function create({ body }, res) {
   return db.user.create(body).then(user => res.send(user));
@@ -29,7 +31,8 @@ function findAll({ user: { role, teamId }, query: { search } }, res) {
     .then(users => res.send(users));
 }
 
-function findById({ params: { id } }, res) {
+function findById({ params: { id }, user }, res) {
+  const loggedUser = user;
   return db.user.findOne({
     where: { id },
     attributes: { exclude: ['password'] },
@@ -44,6 +47,10 @@ function findById({ params: { id } }, res) {
       }
     ]
   })
+    .then(user => {
+      if (user.teamId === loggedUser.teamId) return user;
+      return createError(UNAUTHORIZED, 'Not team member');
+    })
     .then(user => res.send(user));
 }
 

@@ -19,7 +19,11 @@ app.use(express.static(path.join(__dirname, 'dist')));
 require('./server/api')(app);
 
 app.use((err, req, res, next) => {
-  res.status(500).send(err.message);
+  if (!err.status) {
+    res.status(500).send(err.message);
+  }
+  const { status, message } = err;
+  res.status(status).send(message);
 });
 
 app.listen(process.env.PORT || 3000, () => {
