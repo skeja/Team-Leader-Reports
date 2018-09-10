@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <div class="center">
+    <error-message v-if="showErrorModal">
+      <div slot="message">{{ message }}</div>
+    </error-message>
+    <div v-else class="center">
       <div class="back-icon" @click="$router.back()">
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
@@ -17,21 +20,34 @@
 <script>
 import axios from '../../axios-auth';
 import UserInput from './UserInput';
+import ErrorMessage from '../common/ErrorMessage';
+import { delay } from 'lodash-es';
 
 export default {
   components: {
-    UserInput
+    UserInput,
+    ErrorMessage
   },
   data() {
     return {
       userId: this.$route.params.userId,
-      selected: {}
+      selected: {},
+      message: '',
+      showErrorModal: false
     };
   },
   created() {
     axios.get(`/users/${this.userId}`)
       .then(({ data }) => {
         this.selected = data;
+      })
+      .catch(({ response }) => {
+        this.showErrorModal = true;
+        this.message = response.data;
+        delay(() => {
+          this.showErrorModal = false;
+          this.$router.push({ name: 'userIndex' });
+        }, 2000);
       });
   },
   methods: {

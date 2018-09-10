@@ -25,6 +25,10 @@ const UserStore = {
   forgotPassword(email) {
     return axios.post('/forgotPassword', email);
   },
+  isLoggedIn() {
+    if (this.state.currentUser.id) return true;
+    return false;
+  },
   isAdmin() {
     if (this.state.currentUser.role === 'ADMIN') return true;
     return false;

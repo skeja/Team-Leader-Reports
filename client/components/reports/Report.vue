@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <div class="center">
+    <error-message v-if="showErrorModal">
+      <div slot="message">{{ message }}</div>
+    </error-message>
+    <div v-else class="center">
       <div class="back-icon" @click="$router.back()">
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         <span>
@@ -83,17 +86,19 @@
 
 <script>
 import { VueShowdown } from 'vue-showdown';
-
+import ErrorMessage from '../common/ErrorMessage';
 import axios from '../../axios-auth';
 import fullName from '../../filters/fullName';
 import dateFormatter from '../../filters/dateFormatter';
 import UserStore from '../../store';
 import Confirm from '../common/Confirm';
+import { delay } from 'lodash-es';
 
 export default {
   components: {
     Confirm,
-    VueShowdown
+    VueShowdown,
+    ErrorMessage
   },
   filters: {
     fullName,
@@ -110,7 +115,8 @@ export default {
       user: {},
       updating: false,
       showDeleteModal: false,
-      showUpdateModal: false
+      showUpdateModal: false,
+      showErrorModal: false
     };
   },
   created() {
@@ -120,6 +126,14 @@ export default {
       .then(({ data }) => {
         this.report = { ...data };
         this.originalReport = { ...data };
+      })
+      .catch(({ response }) => {
+        this.showErrorModal = true;
+        this.message = response.data;
+        delay(() => {
+          this.showErrorModal = false;
+          this.$router.push({ name: 'userIndex' });
+        }, 2000);
       });
   },
   methods: {

@@ -48,7 +48,7 @@ function findById({ params: { id }, user }, res) {
     ]
   })
     .then(user => {
-      if (user.teamId === loggedUser.teamId) return user;
+      if (loggedUser.role === 'ADMIN' || user.teamId === loggedUser.teamId) return user;
       return createError(UNAUTHORIZED, 'Not team member');
     })
     .then(user => res.send(user));

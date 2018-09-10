@@ -1,7 +1,10 @@
 <template>
   <div class="container container-top">
     <loader v-if="showLoader"></loader>
-    <div v-else class="center">
+    <error-message v-if="showErrorModal">
+      <div slot="message">{{ message }}</div>
+    </error-message>
+    <div v-if="!showLoader && !showErrorModal" class="center">
       <div class="back-icon" @click="$router.back()">
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
@@ -43,9 +46,10 @@
 import axios from '../../axios-auth.js';
 import dateFormatter from '../../filters/dateFormatter';
 import fullName from '../../filters/fullName';
-import { sortBy } from 'lodash-es';
+import { delay, sortBy } from 'lodash-es';
 import Loader from '../common/Loader';
 import Promise from 'bluebird';
+import ErrorMessage from '../common/ErrorMessage';
 
 export default {
   filters: {
@@ -53,14 +57,16 @@ export default {
     fullName
   },
   components: {
-    Loader
+    Loader,
+    ErrorMessage
   },
   data() {
     return {
       userId: this.$route.params.userId,
       user: {},
       reports: [],
-      showLoader: true
+      showLoader: true,
+      showErrorModal: false
     };
   },
   created() {
@@ -71,6 +77,15 @@ export default {
         this.user = userData.data;
         this.reports = reportData.data;
         this.showLoader = false;
+      })
+      .catch(({ response }) => {
+        this.showLoader = false;
+        this.showErrorModal = true;
+        this.message = response.data;
+        delay(() => {
+          this.showErrorModal = false;
+          this.$router.push({ name: 'userIndex' });
+        }, 2000);
       });
   },
   methods: {

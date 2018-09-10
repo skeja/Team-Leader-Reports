@@ -19,8 +19,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 require('./server/api')(app);
 
 app.use((err, req, res, next) => {
-  if (!err.status) {
-    res.status(500).send(err.message);
+  if (!err.status || err.status === 500) {
+    return res.status(500).send(err.message);
   }
   const { status, message } = err;
   res.status(status).send(message);

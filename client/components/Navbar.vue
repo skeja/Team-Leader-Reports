@@ -19,10 +19,18 @@
           Reports
         </router-link>
         <router-link
+          v-if="isAdmin"
           :to="{ name: 'teamList' }"
           tag="li"
           active-class="highlighted">
           Teams
+        </router-link>
+        <router-link
+          v-else
+          :to="{ name: 'team', params: { id: user.team } }"
+          tag="li"
+          active-class="highlighted">
+          My team
         </router-link>
         <div class="auth">
           <router-link
@@ -59,6 +67,9 @@ export default {
   computed: {
     user() {
       return this.state.currentUser;
+    },
+    isAdmin() {
+      return UserStore.isAdmin();
     }
   },
   methods: {

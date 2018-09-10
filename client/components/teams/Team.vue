@@ -1,7 +1,10 @@
 <template>
   <div class="container container-top">
     <loader v-if="showLoader"></loader>
-    <div v-else class="center">
+    <error-message v-if="showErrorModal">
+      <div slot="message">{{ message }}</div>
+    </error-message>
+    <div v-if="!showLoader && !showErrorModal" class="center">
       <div class="back-icon" @click="$router.back()">
         <span class="material-icons md-24 alt-color">keyboard_backspace</span>
         Back
@@ -67,12 +70,15 @@ import Members from '../common/Members';
 import Loader from '../common/Loader';
 import Promise from 'bluebird';
 import UserStore from '../../store';
+import ErrorMessage from '../common/ErrorMessage';
+import { delay } from 'lodash-es';
 
 export default {
   components: {
     Confirm,
     Members,
-    Loader
+    Loader,
+    ErrorMessage
   },
   filters: {
     fullName
@@ -86,6 +92,8 @@ export default {
       toggle: true,
       showModal: false,
       showLoader: true,
+      showErrorModal: false,
+      message: '',
       addUser: false
     };
   },
@@ -98,10 +106,19 @@ export default {
     const teamUrl = `/teams/${this.id}`;
     const teamUsersUrl = `/teams/${this.id}/users`;
     Promise.join(axios.get(teamUrl), axios.get(teamUsersUrl), Promise.delay(500))
-      .spread((teamData, userListData) => {
-        this.team = teamData.data;
-        this.users = userListData.data;
+      .spread(({ data: teamData }, { data: userListData }) => {
+        this.team = teamData;
+        this.users = userListData;
         this.showLoader = false;
+      })
+      .catch(({ response }) => {
+        this.showLoader = false;
+        this.showErrorModal = true;
+        this.message = response.data;
+        delay(() => {
+          this.showErrorModal = false;
+          this.$router.push({ name: 'userIndex' });
+        }, 2000);
       });
   },
   methods: {
