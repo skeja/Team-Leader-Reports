@@ -4,7 +4,7 @@ const sequelize = new Sequelize('postgres://@localhost:5432/tlreports');
 
 const db = { Sequelize, sequelize };
 
-const models = ['project', 'report', 'team', 'teamHistory', 'user', 'projectHistory'];
+const models = ['office', 'project', 'report', 'team', 'teamHistory', 'user', 'projectHistory'];
 
 models.forEach(it => {
   db[it] = db.sequelize.import(`./${it}`);

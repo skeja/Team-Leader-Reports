@@ -1,0 +1,290 @@
+<template>
+  <form
+    class="form"
+    @submit.prevent="$emit('submitUser', user);">
+    <div
+      :class="{ form__error: firstName.$error }"
+      class="form__group">
+      <label class="form__label">
+        First name
+      </label>
+      <input
+        v-model="firstName.$model"
+        class="form__input"
+        type="text">
+    </div>
+    <div
+      v-if="firstName.$error && !firstName.required"
+      class="error">
+      Field is required.
+    </div>
+    <div
+      v-if="firstName.$error && !firstName.minLength"
+      class="error">
+      Name must have at least
+      {{ firstName.$params.minLength.min }} letters.
+    </div>
+    <div
+      :class="{ form__error: lastName.$error }"
+      class="form__group">
+      <label class="form__label">Last name</label>
+      <input
+        v-model="lastName.$model"
+        class="form__input"
+        type="text">
+    </div>
+    <div
+      v-if="lastName.$error && !lastName.required"
+      class="error">
+      Field is required.
+    </div>
+    <div
+      v-if="lastName.$error && !lastName.minLength"
+      class="error">
+      Name must have at least
+      {{ lastName.$params.minLength.min }} letters.
+    </div>
+    <div
+      :class="{ form__error: email.$error }"
+      class="form__group">
+      <label class="form__label">
+        Email
+      </label>
+      <input
+        v-model="email.$model"
+        class="form__input"
+        type="email">
+    </div>
+    <div
+      v-if="email.$error && !email.required"
+      class="error">
+      Field is required.
+    </div>
+    <div
+      v-if="email.$error && !email.email"
+      class="error">
+      Email format not correct
+    </div>
+    <div v-if="!updatedUser">
+      <div
+        :class="{ form__error: password.$error }"
+        class="form__group">
+        <label class="form__label">
+          Password
+        </label>
+        <input
+          v-model="password.$model"
+          class="form__input"
+          type="password">
+      </div>
+      <div
+        v-if="password.$error && !password.required"
+        class="error">
+        Field is required.
+      </div>
+      <div
+        v-if="password.$error && !password.minLength"
+        class="error">
+        Name must have at least
+        {{ password.$params.minLength.min }} letters.
+      </div>
+    </div>
+    <div class="form__group">
+      <label
+        class="form__label">
+        Role
+      </label>
+      <select v-model="role.$model">
+        <option
+          value=""
+          selected
+          disabled
+          hidden>
+          Select role
+        </option>
+        <option value="DEVELOPER" selected>Developer</option>
+        <option value="TEAM_LEAD">Team Lead</option>
+        <option value="ADMIN">Admin</option>
+      </select>
+    </div>
+    <div class="form__group">
+      <label
+        class="form__label">
+        Office
+      </label>
+      <select v-model="office.$model">
+        <option
+          value=""
+          selected
+          disabled
+          hidden>
+          Select office
+        </option>
+        <option
+          v-for="office in offices"
+          :key="office.id"
+          :value="office.id">
+          {{ office.name }}
+        </option>
+      </select>
+    </div>
+    <div class="form__group">
+      <label
+        class="form__label">
+        Team
+      </label>
+      <select v-model="team.$model">
+        <option
+          value=""
+          selected
+          disabled
+          hidden>
+          Select team
+        </option>
+        <option
+          v-for="team in teams"
+          :key="team.id"
+          :value="team.id">
+          {{ team.name }}
+        </option>
+      </select>
+    </div>
+    <div class="form__buttons">
+      <button
+        :disabled="$v.$invalid"
+        class="button"
+        type="submit">
+        <span v-if="updatedUser">
+          Update
+        </span>
+        <span v-else>
+          Create
+        </span>
+      </button>
+      <button
+        v-if="updatedUser"
+        class="button"
+        type="button"
+        @click="setUpdatedUser">
+        Reset
+      </button>
+    </div>
+  </form>
+</template>
+
+<script>
+import { required, minLength, email } from 'vuelidate/lib/validators';
+import axios from '../../axios-auth';
+
+export default {
+  props: {
+    updatedUser: { type: Object, default: () => {} }
+  },
+  data() {
+    return {
+      user: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        role: '',
+        officeId: '',
+        teamId: ''
+      },
+      teams: [],
+      offices: [],
+      validator: {
+        user: {
+          firstName: {
+            required,
+            minLength: minLength(2)
+          },
+          lastName: {
+            required,
+            minLength: minLength(2)
+          },
+          email: {
+            required,
+            email
+          },
+          password: {
+            required,
+            minLength: minLength(5)
+          },
+          role: {
+            required
+          },
+          officeId: {
+            required
+          },
+          teamId: {
+            required
+          }
+        }
+      }
+    };
+  },
+  computed: {
+    firstName() {
+      return this.$v.user.firstName;
+    },
+    lastName() {
+      return this.$v.user.lastName;
+    },
+    email() {
+      return this.$v.user.email;
+    },
+    password() {
+      return this.$v.user.password;
+    },
+    role() {
+      return this.$v.user.role;
+    },
+    office() {
+      return this.$v.user.officeId;
+    },
+    team() {
+      return this.$v.user.teamId;
+    }
+  },
+  watch: {
+    updatedUser(val) {
+      this.user = { ...val };
+    }
+  },
+  created() {
+    if (this.updatedUser) this.user = { ...this.updatedUser };
+    axios.get('/teams')
+      .then(({ data }) => { this.teams = data; })
+      .then(() => (axios.get('/offices')))
+      .then(({ data }) => { this.offices = data; });
+  },
+  methods: {
+    emitData() {
+      this.$emit('submitUser', this.user);
+    },
+    setUpdatedUser() {
+      this.user = { ...this.updatedUser };
+    }
+  },
+  validations() {
+    if (this.updatedUser) delete this.validator.user.password;
+    return this.validator;
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.error {
+  color:#f57f6c;
+  font-size: 0.75rem;
+  margin-left: 14px;
+  margin-top: -1.6rem;
+  margin-bottom: 0.475rem;
+}
+
+.form__buttons {
+  display: flex;
+  justify-content: space-around;
+}
+</style>

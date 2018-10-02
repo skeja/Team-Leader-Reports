@@ -1,8 +1,30 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const passport = require('./server/auth/');
+const path = require('path');
+const jsend = require('jsend');
 
-const seedDb = require('./server/seed');
-seedDb();
+app.use(passport.initialize());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(bodyParser.json());
+app.use(cors({ origin: true }));
+app.use(jsend.middleware);
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+require('./server/api')(app);
+
+app.use((err, req, res, next) => {
+  if (!err.status || err.status === 500) {
+    return res.status(500).send(err.message);
+  }
+  const { status, message } = err;
+  res.status(status).send(message);
+});
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('Running at 3000');

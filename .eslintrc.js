@@ -13,6 +13,7 @@ module.exports = {
   // plugin for linting .vue files
   plugins: [ 'vue' ],
 
+  'env' : { "browser": true },
   // add your custom rules here
   'rules': {
     // allow paren-less arrow functions
@@ -32,6 +33,14 @@ module.exports = {
       anonymous: 'always',
       named: 'never'
     }],
-    'object-curly-spacing': ['error', 'always']
+    'object-curly-spacing': ['error', 'always'],
+    'vue/html-self-closing': 0,
+    'vue/max-attributes-per-line': [2, {
+      'singleline': 2,
+      'multiline': {
+        'max': 2,
+        'allowFirstLine': true
+      }
+    }]
   }
 }
